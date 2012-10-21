@@ -1,0 +1,89 @@
+# non-dot files
+/[^.]*
+
+# Don't include files with sensitive data
+/.zshrc-secrets
+
+# iJunk
+.MacOSX
+
+# ZSH junk
+/.zcompdump*
+/.zsh-update
+/.zsh_history
+
+# Python virtual envs
+/.virtualenvs
+
+# Ruby virtual envs
+/.rvm
+
+# Dotfiles
+/.CFUserTextEncoding
+/.Xauthority
+/.XcodeDefaultPerspective.mode1v3
+/.ackrc
+/.adobe
+/.alvzfmtrc
+/.android
+/.appcfg_cookies
+/.appcfg_nag
+/.ascii.io
+/.autoenv
+/.autoenv_authorized
+/.autoenv_authorized.tmp
+/.bash_history
+/.belastingdienst.nl
+/.bi_li3
+/.bzr.log
+/.chef
+/.config
+/.cups
+/.dbshell
+/.dropbox
+/.dvdcss
+/.emacs.d
+/.fontconfig
+/.ftcurlish.json
+/.gdb_history
+/.gem
+/.gist-vim
+/.gitconfig
+/.gitk
+/.gnupg
+/.grc
+/.heroku
+/.ipython
+/.irb-history
+/.irssi
+/.js
+/.lesshst
+/.mitmproxy
+/.msgsrc
+/.netrc
+/.njxnqxgn
+/.npm
+/.oh-my-zsh
+/.pip-tools
+/.pip
+/.profile
+/.psql_history
+/.pypirc
+/.rediscli_history
+/.resty
+/.ri
+/.rnd
+/.s3cfg
+/.sh_history
+/.sqlite_history
+/.srl
+/.ssh
+/.subversion
+/.tmux.conf
+/.tox
+/.ttytterkey
+/.vagrant.d
+/.vim*
+
+# Directories
+Projects
