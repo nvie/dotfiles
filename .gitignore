@@ -59,6 +59,7 @@
 /.irssi
 /.js
 /.lesshst
+/.m2
 /.mitmproxy
 /.msgsrc
 /.netrc
@@ -69,6 +70,8 @@
 /.pip
 /.profile
 /.psql_history
+/.pylint.d
+/.pythonrc.py
 /.pypirc
 /.rediscli_history
 /.resty
@@ -85,6 +88,8 @@
 /.ttytterkey
 /.vagrant.d
 /.vim*
+/.z*
+/.*-dropbox-token
 
 # Directories
 Projects
