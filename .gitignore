@@ -93,3 +93,9 @@
 
 # Directories
 Projects
+
+# Vim generated documentation
+/doc/tags
+
+# Powerline-specific cruft that isn't ignored in their own plugin
+Powerline_*.cache

@@ -130,8 +130,13 @@ function fish_user_key_bindings
     bind \ep prepend-paste
     bind \ev prepend-vim
     bind \ey 'commandline -b | pbcopy'
+    bind \ej 'commandline -i "yes/static/js/yes/"'
+    bind \el 'commandline -i "yes/static/less/"'
     bind \e'>' 'commandline -a -- "| shiftr"'
     bind \e'<' 'commandline -a -- "| shiftl"'
+    bind \es 'git st'
+    bind \ed 'git di'
+    bind \ex 'git x'
 end
 
 # }}}

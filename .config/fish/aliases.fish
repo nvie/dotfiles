@@ -15,21 +15,23 @@ end
 
 set LS_COLORS dxfxcxdxbxegedabagacad
 
-alias ty 'tmux-open yes'
 alias ls 'command ls -FG'
 alias l ls
 alias ll 'ls -la'
 alias g git
 alias c clear
 alias v vim
-alias a 'ack --smart-case'
-function ack -d "ack supporting local .ackrc files"
-    set ackrc
-    if test -f ./.ackrc
-        set ackrc (grep -ve '^#' | awk '/.+/ { print }' < ./.ackrc)
-    end
-    command ack $ackrc $argv
+
+function akk -d "ack supporting local .ackrc files"
+    #set ackrc
+    if test -f .ackrc
+        #set ackrc (grep -ve '^#' | awk '/.+/ { print }' < ./.ackrc)
+        grep -ve '^#' .ackrc | xargs -J % ack % $argv
+    else
+        command ack $ackrc $argv
+    end | cut -c -120
 end
+alias a 'akk --smart-case'
 
 function def -d "Quickly finds where a function is defined."
     a -l "def\s+$argv"
@@ -49,16 +51,39 @@ function vimf
     cowsay "Try to learn to use 'vf', man."
 end
 function vf
-    vim (f $argv)
+    f $argv | selecta | xargs -o vim
 end
 function vfa
-    vim (fa $argv)
+    fa $argv | selecta | xargs -o vim
 end
 function va
-    ack -l --smart-case -- "$argv" ^/dev/null | xargs -o vim -c "/$argv"
+    akk -l --smart-case -- "$argv" ^/dev/null | xargs -o vim -c "/$argv"
 end
 function vaa
-    ack -la --smart-case -- "$argv" ^/dev/null | xargs -o vim -c "/$argv"
+    akk -la --smart-case -- "$argv" ^/dev/null | xargs -o vim -c "/$argv"
+end
+function vc
+    if git modified -q $argv
+        vim (git modified $argv)
+    else
+        echo '(nothing changed)'
+    end
+end
+function vca
+    if git modified -qi
+        vim (git modified -i)
+    else
+        echo '(nothing changed)'
+    end
+end
+function vw
+    vim (which "$argv")
+end
+function vt
+    vim -c "autocmd VimEnter * tag $argv" \
+        -c "autocmd VimEnter * set syntax" \
+        -c "autocmd VimEnter * normal zz" \
+        -c "autocmd VimEnter * normal 6<C-e>"
 end
 alias git hub
 alias gti git
@@ -66,7 +91,7 @@ alias su 'command su -m'
 alias df 'command df -m'
 alias vg vagrant
 
-alias ggpush 'git push origin (git_current_branch)'
+alias ggco 'git recent-branches | selecta | xargs git checkout'
 function git-search
     git log -S"$argv" --pretty=format:%H | map git show 
 end
@@ -135,10 +160,8 @@ function p -d "Start the best Python shell that is available"
 end
 
 alias pm 'python manage.py'
+alias pms 'python manage.py shell_plus'
 alias pmt 'python manage.py test'
-
-# Projects
-alias y 'deactivate ^&1 >/dev/null; cd ~/Projects/yes'
 
 # Directories {{{
 
@@ -171,23 +194,6 @@ end
 alias cx 'chmod +x'
 alias 'c-x' 'chmod -x'
 
-alias l1 'tree --dirsfirst -ChFL 1'
-alias l2 'tree --dirsfirst -ChFL 2'
-alias l3 'tree --dirsfirst -ChFL 3'
-alias l4 'tree --dirsfirst -ChFL 4'
-alias l5 'tree --dirsfirst -ChFL 5'
-alias l6 'tree --dirsfirst -ChFL 6'
-
-alias ll1 'tree --dirsfirst -ChFupDaL 1'
-alias ll2 'tree --dirsfirst -ChFupDaL 2'
-alias ll3 'tree --dirsfirst -ChFupDaL 3'
-alias ll4 'tree --dirsfirst -ChFupDaL 4'
-alias ll5 'tree --dirsfirst -ChFupDaL 5'
-alias ll6 'tree --dirsfirst -ChFupDaL 6'
-
-#alias l l1
-#alias ll ll1
-
 # }}}
 
 function colorize-pboard
@@ -207,3 +213,19 @@ function color-syntax
     end
     pygmentize -f rtf -l $lang
 end
+
+# Projects
+alias ty 'tmux-open yes'
+alias y 'deactivate ^&1 >/dev/null; cd ~/Projects/yes'
+alias yj 'deactivate ^&1 >/dev/null; cd ~/Projects/yes/yes/static/js'
+alias yl 'deactivate ^&1 >/dev/null; cd ~/Projects/yes/yes/static/less'
+alias ya 'deactivate ^&1 >/dev/null; cd ~/Projects/yes/yes/apps'
+function prpm; production run "python manage.py $argv"; end
+function srpm; staging run "python manage.py $argv"; end
+function frpm; fuckyeah run "python manage.py $argv"; end
+function prpms; prpm shell; end
+function srpms; srpm shell; end
+function frpms; frpm shell; end
+alias prb 'production run bash'
+alias srb 'staging run bash'
+alias frb 'fuckyeah run bash'
