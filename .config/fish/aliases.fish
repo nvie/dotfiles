@@ -67,6 +67,13 @@ function vca
         echo '(nothing changed)'
     end
 end
+function vu
+    if git modified -u $argv
+        vim (git modified -u $argv)
+    else
+        echo 'no files with conflicts'
+    end
+end
 function vw
     vim (which "$argv")
 end
