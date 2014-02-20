@@ -27,7 +27,7 @@ append-to-path ~/.pythonz/pythons/CPython-3.3.2/bin
 append-to-path ~/.pythonz/pythons/PyPy-2.0.2/bin
 
 # Put Postgres.app's command line tools on the PATH
-append-to-path /Applications/Postgres.app/Contents/MacOS/bin
+append-to-path /Applications/Postgres93.app/Contents/MacOS/bin
 
 # }}}
 
