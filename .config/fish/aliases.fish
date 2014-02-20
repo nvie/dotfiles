@@ -22,16 +22,7 @@ alias g git
 alias c clear
 alias v vim
 
-function akk -d "ack supporting local .ackrc files"
-    #set ackrc
-    if test -f .ackrc
-        #set ackrc (grep -ve '^#' | awk '/.+/ { print }' < ./.ackrc)
-        grep -ve '^#' .ackrc | xargs -J % ack % $argv
-    else
-        command ack $ackrc $argv
-    end | cut -c -120
-end
-alias a 'akk --smart-case'
+alias a 'ag --smart-case'
 
 function def -d "Quickly finds where a function is defined."
     a -l "def\s+$argv"
@@ -57,10 +48,10 @@ function vfa
     fa $argv | selecta | xargs -o vim
 end
 function va
-    akk -l --smart-case -- "$argv" ^/dev/null | xargs -o vim -c "/$argv"
+    ag -l --smart-case -- "$argv" ^/dev/null | xargs -o vim -c "/$argv"
 end
 function vaa
-    akk -la --smart-case -- "$argv" ^/dev/null | xargs -o vim -c "/$argv"
+    ag -la --smart-case -- "$argv" ^/dev/null | xargs -o vim -c "/$argv"
 end
 function vc
     if git modified -q $argv
