@@ -65,6 +65,7 @@
 /.lein
 /.lesshst
 /.m2
+/.matplotlib
 /.mitmproxy
 /.msgsrc
 /.netrc
@@ -78,6 +79,7 @@
 /.psql_history
 /.pylint.d
 /.pypirc
+/.python-eggs
 /.pythonhist
 /.pythonrc.py
 /.pythonz
