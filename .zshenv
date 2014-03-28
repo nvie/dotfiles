@@ -1,1 +1,0 @@
-Projects/zshrc/.zshenv
