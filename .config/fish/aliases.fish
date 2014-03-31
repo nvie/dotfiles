@@ -154,7 +154,7 @@ function p -d "Start the best Python shell that is available"
 
     # Run the command
     printf "Using "; set_color green; echo $cmd; set_color normal
-    eval $cmd
+    eval $cmd $argv
 end
 
 alias pm 'python manage.py'
