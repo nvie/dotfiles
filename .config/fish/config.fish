@@ -28,6 +28,9 @@ function fish_prompt
 
     git_prompt
     virtualenv_prompt
+
+    set_color normal
+    printf ' (%s)' (date +%H:%M)
     echo
 
     #if test $last_status -eq 0
