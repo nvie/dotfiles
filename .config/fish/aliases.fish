@@ -48,28 +48,28 @@ function vfa
     fa $argv | selecta | xargs -o vim
 end
 function va
-    ag -l --smart-case -- "$argv" ^/dev/null | xargs -o vim -c "/$argv"
+    ag -l --smart-case -- "$argv" ^/dev/null | quote | xargs -o vim -c "/$argv"
 end
 function vaa
-    ag -la --smart-case -- "$argv" ^/dev/null | xargs -o vim -c "/$argv"
+    ag -la --smart-case -- "$argv" ^/dev/null | quote | xargs -o vim -c "/$argv"
 end
 function vc
     if git modified -q $argv
-        vim (git modified $argv)
+        vim (git modified $argv | sed -Ee 's/^"(.*)"$/\1/')
     else
         echo '(nothing changed)'
     end
 end
 function vca
     if git modified -qi
-        vim (git modified -i)
+        vim (git modified -i | sed -Ee 's/^"(.*)"$/\1/')
     else
         echo '(nothing changed)'
     end
 end
 function vu
     if git modified -u $argv
-        vim (git modified -u $argv)
+        vim (git modified -u $argv | sed -Ee 's/^"(.*)"$/\1/')
     else
         echo 'no files with conflicts'
     end
