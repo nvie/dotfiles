@@ -43,3 +43,8 @@ append-to-path /Applications/Postgres.app/Contents/Versions/9.3/bin
 #source /usr/local/bin/virtualenvwrapper.sh
 
 # }}}
+
+
+# Set locale
+set -gx LC_ALL en_US.UTF-8
+set -gx LANG en_US.UTF-8
