@@ -23,6 +23,7 @@ set -gx PYTHONSTARTUP ~/.pythonrc.py
 set -gx WORKON_HOME ~/.virtualenvs
 
 # Add more Python versions on the PATH (pypy and python3)
+append-to-path ~/.pythonz/pythons/CPython-3.4.0/bin
 append-to-path ~/.pythonz/pythons/CPython-3.3.2/bin
 append-to-path ~/.pythonz/pythons/PyPy-2.0.2/bin
 
