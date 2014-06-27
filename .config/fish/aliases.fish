@@ -161,6 +161,24 @@ alias pm 'python manage.py'
 alias pms 'python manage.py shell_plus'
 alias pmt 'python manage.py test'
 
+function pipr -d "Find & install all requirements for this project"
+    pushd (git root)
+    begin
+        set flags
+        if test -f requirements.txt
+            set flags $flags -r requirements.txt
+        end
+        if test -f dev-requirements.txt
+            set flags $flags -r dev-requirements.txt
+        end
+        if test -f .pipignore
+            set flags $flags -r .pipignore
+        end
+        pip install $flags
+    end
+    popd
+end
+
 # Directories {{{
 
 function cdff --description "cd's into the current front-most open Finder window's directory"
