@@ -21,6 +21,7 @@ alias ll 'ls -la'
 alias g git
 alias c clear
 alias v vim
+alias x gitx
 
 alias a 'ag --smart-case'
 
