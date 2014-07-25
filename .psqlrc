@@ -1,0 +1,7 @@
+\set ON_ERROR_ROLLBACK interactive
+
+-- automatically switch between extended and normal
+\x auto
+
+-- always show how long a query takes
+\timing
