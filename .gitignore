@@ -53,6 +53,7 @@
 /.gdb_history
 /.gem
 /.gh-credentials
+/.gist
 /.gist-vim
 /.gitconfig
 /.gitk
@@ -81,6 +82,7 @@
 /.pylint.d
 /.pypirc
 /.python-eggs
+/.python_history
 /.pythonhist
 /.pythonrc.py
 /.pythonz
