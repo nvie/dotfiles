@@ -149,31 +149,7 @@ if status --is-login
 end
 
 if status --is-interactive
-    set CDPATH . ~/Projects ~/Documents/3rd\ Cloud ~
-
-    #function on_exit --on-process %self
-    #end
-
-    # Load virtualenv stuff
-    . ~/.config/fish/virtualenv.fish
-
-    function autoenv --on-event CHDIR
-        if test -f '.env.fish'
-            . .env.fish
-        else if test -f '.env'
-            sed -Ee 's/export (.*)=(.*)$/set -gx \1 \2/' .env | .
-            if test $status -ne 0
-                echo ""
-                set_color red
-                echo "A file named .env was found in this directory."
-                echo "I tried adapting it to be usable in Fish automatically, "
-                echo "but it didn't really work."
-                echo "To use autoenv with fish, create a .env.fish."
-                set_color normal
-                echo ""
-            end
-        end
-    end
+    set CDPATH . ~/Projects
 end
 
 # }}}
