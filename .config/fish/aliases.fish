@@ -203,6 +203,7 @@ function ff
     ' | osascript -
 end
 
+alias cd.. 'cd ..'
 alias .. 'cd ..'
 alias ... 'cd ../..'
 alias .... 'cd ../../..'
