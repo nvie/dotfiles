@@ -22,6 +22,7 @@
 /.*history
 
 # Dotfiles
+/*Drobo*
 /.*-dropbox-token
 /.ackrc
 /.adobe
@@ -47,7 +48,6 @@
 /.dropbox
 /.dropbox-master
 /.dvdcss
-/*Drobo*
 /.emacs.d
 /.fontconfig
 /.ftcurlish.json
