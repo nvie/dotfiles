@@ -29,8 +29,8 @@ alias x gitx
 
 alias a 'ag --smart-case'
 
-function def -d "Quickly finds where a function is defined."
-    a -l "def\s+$argv"
+function def -d "Quickly finds where a function or variable is defined."
+    a -l "def\s+$argv"; or a -l "^\s*$argv\s*[=]"
 end
 
 function vimff
