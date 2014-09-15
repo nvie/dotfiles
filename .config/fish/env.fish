@@ -21,7 +21,6 @@ prepend-to-path /usr/local/bin
 
 set -gx PIP_DOWNLOAD_CACHE ~/Library/Caches/pip-downloads
 set -gx PYTHONSTARTUP ~/.pythonrc.py
-set -gx WORKON_HOME ~/.virtualenvs
 
 # Add more Python versions on the PATH (pypy and python3)
 append-to-path ~/.pythonz/pythons/CPython-3.4.0/bin
