@@ -179,7 +179,8 @@ function pipr -d "Find & install all requirements for this project"
         if test -f .pipignore
             set flags $flags -r .pipignore
         end
-        pip install $flags
+
+        command pip install $argv $flags
     end
     popd
 end
