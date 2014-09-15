@@ -6,6 +6,7 @@ append-to-path /sbin
 append-to-path /usr/bin
 append-to-path /usr/sbin
 append-to-path ~/bin
+append-to-path ~/.local/bin
 append-to-path ~/Projects/scripts
 append-to-path ~/Projects/syncfrom
 append-to-path ~/Projects/git-toolbelt
