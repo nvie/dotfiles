@@ -99,7 +99,6 @@ function git-search
     git log -S"$argv" --pretty=format:%H | map git show 
 end
 
-alias top 'glances'
 function cleanpycs
 	find . -name '*.py[co]' -exec rm -f '{}' ';'
 end
