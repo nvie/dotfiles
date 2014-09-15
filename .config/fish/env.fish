@@ -33,19 +33,6 @@ append-to-path /Applications/Postgres.app/Contents/Versions/9.3/bin
 
 # }}}
 
-
-# TODO: This was in my zshrc file, and needs to find a place in my fish config {{{
-
-#[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
-
-#export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
-#[[ ! -d $WORKON_HOME ]] && mkdir -p $WORKON_HOME
-#source /usr/local/bin/virtualenvwrapper_lazy.sh
-#source /usr/local/bin/virtualenvwrapper.sh
-
-# }}}
-
-
 # Set locale
 set -gx LC_ALL en_US.UTF-8
 set -gx LANG en_US.UTF-8
