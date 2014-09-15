@@ -100,7 +100,8 @@ function git-search
 end
 
 function cleanpycs
-	find . -name '*.py[co]' -exec rm -f '{}' ';'
+    find . -name '*.py[co]' -exec rm -f '{}' ';'
+    find . -name '__pycache__' -exec rm -rf '{}' ';'
 end
 function cleanorigs
     find . '(' -name '*.orig' -o -name '*.BACKUP.*' -o -name '*.BASE.*' -o -name '*.LOCAL.*' -o -name '*.REMOTE.*' ')' -print0 | xargs -0 rm -f
