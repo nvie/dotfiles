@@ -11,13 +11,15 @@
 # ZSH junk
 /.zcompdump*
 /.zsh-update
-/.zsh_history
 
 # Python virtual envs
 /.virtualenvs
 
 # Ruby virtual envs
 /.rvm
+
+# History files
+/.*history
 
 # Dotfiles
 /.*-dropbox-token
@@ -31,7 +33,6 @@
 /.autoenv
 /.autoenv_authorized
 /.autoenv_authorized.tmp
-/.bash_history
 /.belastingdienst.nl
 /.bi_li3
 /.bower
@@ -50,7 +51,6 @@
 /.emacs.d
 /.fontconfig
 /.ftcurlish.json
-/.gdb_history
 /.gem
 /.gh-credentials
 /.gist
@@ -61,7 +61,6 @@
 /.grc
 /.heroku
 /.ipython
-/.irb-history
 /.irssi
 /.js
 /.lein
@@ -78,21 +77,16 @@
 /.pip-accel
 /.pip-tools
 /.profile
-/.psql_history
 /.pylint.d
 /.pypirc
 /.python-eggs
-/.python_history
 /.pythonhist
 /.pythonrc.py
 /.pythonz
-/.rediscli_history
 /.resty
 /.ri
 /.rnd
 /.s3cfg
-/.sh_history
-/.sqlite_history
 /.srl
 /.ssh
 /.subversion
