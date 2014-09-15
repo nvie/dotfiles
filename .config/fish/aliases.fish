@@ -238,11 +238,7 @@ function color-syntax
 end
 
 # Projects
-alias ty 'tmux-open yes'
-alias y 'deactivate ^&1 >/dev/null; cd ~/Projects/yes'
-alias yj 'deactivate ^&1 >/dev/null; cd ~/Projects/yes/yes/static/js'
-alias yl 'deactivate ^&1 >/dev/null; cd ~/Projects/yes/yes/static/less'
-alias ya 'deactivate ^&1 >/dev/null; cd ~/Projects/yes/yes/apps'
+alias y 'cd ~/Projects/signallens'
 function prpm; production run "python manage.py $argv"; end
 function srpm; staging run "python manage.py $argv"; end
 function frpm; fuckyeah run "python manage.py $argv"; end
