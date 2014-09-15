@@ -107,8 +107,6 @@ function cleanorigs
     find . '(' -name '*.orig' -o -name '*.BACKUP.*' -o -name '*.BASE.*' -o -name '*.LOCAL.*' -o -name '*.REMOTE.*' ')' -print0 | xargs -0 rm -f
 end
 alias json 'prettify-json'
-alias shiftr "sed -Ee 's/^/    /'"
-alias shiftl "sed -Ee 's/^([ ]{4}|[\t])//'"
 alias map 'xargs -n1'
 alias collapse "sed -e 's/  */ /g'"
 alias cuts 'cut -d\ '
