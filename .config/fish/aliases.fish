@@ -106,6 +106,9 @@ end
 function cleanorigs
     find . '(' -name '*.orig' -o -name '*.BACKUP.*' -o -name '*.BASE.*' -o -name '*.LOCAL.*' -o -name '*.REMOTE.*' ')' -print0 | xargs -0 rm -f
 end
+function cleandsstores
+    find . -name '.DS_Store' -exec rm -f '{}' ';'
+end
 alias json 'prettify-json'
 alias map 'xargs -n1'
 alias collapse "sed -e 's/  */ /g'"
