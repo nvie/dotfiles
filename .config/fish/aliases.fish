@@ -239,7 +239,7 @@ function color-syntax
 end
 
 # Projects
-alias y 'cd ~/Projects/signallens'
+alias y 'cd ~/Projects/yesgraph/signallens'
 function prpm; production run "python manage.py $argv"; end
 function srpm; staging run "python manage.py $argv"; end
 function frpm; fuckyeah run "python manage.py $argv"; end
