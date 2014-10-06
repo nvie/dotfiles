@@ -22,6 +22,10 @@ set LS_COLORS dxfxcxdxbxegedabagacad
 alias ls 'command ls -FG'
 alias l ls
 alias ll 'ls -la'
+
+# Colorized cat (will guess file type based on contents)
+alias ccat 'pygmentize -g'
+
 alias g git
 alias c clear
 alias v vim
