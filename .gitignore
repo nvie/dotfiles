@@ -105,6 +105,7 @@
 /.vim*
 /.Xauthority
 /.XcodeDefaultPerspective.mode1v3
+/.yesgraph-*
 /.z*
 
 # Directories
