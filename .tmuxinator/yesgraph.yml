@@ -25,6 +25,9 @@ windows:
         - run:
           - cd auth.yesgraph.com
           - make run
+        - emails:
+          - cd auth.yesgraph.com
+          - swu-send-emails -v
         - redis:
           - cd auth.yesgraph.com
           - redis-server
