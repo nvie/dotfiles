@@ -30,8 +30,7 @@ alias g git
 alias c clear
 alias v vim
 alias x gitx
-
-alias a 'ag --smart-case'
+alias xx 'tig --all'
 
 function def -d "Quickly finds where a function or variable is defined."
     a -l "def\s+$argv"; or a -l "^\s*$argv\s*[=]"
@@ -97,6 +96,8 @@ alias gti git
 alias su 'command su -m'
 alias df 'command df -m'
 alias vg vagrant
+
+alias a 'git amend'
 
 alias ggco 'git recent-branches | selecta | xargs git checkout'
 function git-search
