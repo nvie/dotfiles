@@ -27,10 +27,10 @@ windows:
           - make run
         - emails:
           - cd auth.yesgraph.com
-          - swu-send-emails -v
-        - redis:
+          - swu-send-emails --local -v
+        - test-watcher:
           - cd auth.yesgraph.com
-          - redis-server
+          - make test
   - api:
       layout: main-vertical
       panes:
@@ -40,3 +40,8 @@ windows:
         - run:
           - cd api.yesgraph.com
           - make run
+  - redis:
+      layout: main-vertical
+      panes:
+        - redis:
+          - redis-server
