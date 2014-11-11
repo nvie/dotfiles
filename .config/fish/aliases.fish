@@ -6,15 +6,15 @@ alias ev 'vim ~/.vimrc'
 alias et 'vim ~/.tmux.conf'
 
 function serve
-	if test (count $argv) -ge 1
-	    if python -c 'import sys; sys.exit(sys.version_info[0] != 3)'
-                /bin/sh -c "(cd $argv[1] && python -m http.server)"
-            else
-                /bin/sh -c "(cd $argv[1] && python -m SimpleHTTPServer)"
-            end
-	else
-	    python -m SimpleHTTPServer
-	end
+    if test (count $argv) -ge 1
+        if python -c 'import sys; sys.exit(sys.version_info[0] != 3)'
+            /bin/sh -c "(cd $argv[1] && python -m http.server)"
+        else
+            /bin/sh -c "(cd $argv[1] && python -m SimpleHTTPServer)"
+        end
+    else
+        python -m SimpleHTTPServer
+    end
 end
 
 set LS_COLORS dxfxcxdxbxegedabagacad
@@ -37,30 +37,38 @@ function def -d "Quickly finds where a function or variable is defined."
 end
 
 function vimff
-	vim (ffind -tf $argv)
+    vim (ffind -tf $argv)
 end
+
 function f
     ffind -tf | grep -v "/migrations/" | fuzzymatch.py $argv
 end
+
 function fa
     ffind -tf | fuzzymatch.py $argv
 end
+
 function vimf
     #vim (f $argv)
     cowsay "Try to learn to use 'vf', man."
 end
+
 function vf
     f $argv | selecta | xargs -o vim
 end
+
 function vfa
     fa $argv | selecta | xargs -o vim
 end
+
 function va
     ag -l --smart-case --null -- "$argv" ^/dev/null | xargs -0 -o vim -c "/$argv"
 end
+
 function vaa
     ag -la --smart-case --null -- "$argv" ^/dev/null | xargs -0 -o vim -c "/$argv"
 end
+
 function vc
     if git modified -q $argv
         vim (git modified $argv | sed -Ee 's/^"(.*)"$/\1/')
@@ -68,6 +76,7 @@ function vc
         echo '(nothing changed)'
     end
 end
+
 function vca
     if git modified -qi
         vim (git modified -i | sed -Ee 's/^"(.*)"$/\1/')
@@ -75,6 +84,7 @@ function vca
         echo '(nothing changed)'
     end
 end
+
 function vu
     if git modified -u $argv
         vim (git modified -u $argv | sed -Ee 's/^"(.*)"$/\1/')
@@ -82,24 +92,18 @@ function vu
         echo 'no files with conflicts'
     end
 end
+
 function vw
     vim (which "$argv")
 end
-function vt
-    vim -c "autocmd VimEnter * tag $argv" \
-        -c "autocmd VimEnter * set syntax" \
-        -c "autocmd VimEnter * normal zz" \
-        -c "autocmd VimEnter * normal 6<C-e>"
-end
+
 alias git hub
 alias gti git
 alias su 'command su -m'
 alias df 'command df -m'
-alias vg vagrant
 
 alias a 'git amend'
 
-alias ggco 'git recent-branches | selecta | xargs git checkout'
 function git-search
     git log -S"$argv" --pretty=format:%H | map git show 
 end
@@ -108,20 +112,19 @@ function cleanpycs
     find . -name '*.py[co]' -exec rm -f '{}' ';'
     find . -name '__pycache__' -exec rm -rf '{}' ';'
 end
+
 function cleanorigs
     find . '(' -name '*.orig' -o -name '*.BACKUP.*' -o -name '*.BASE.*' -o -name '*.LOCAL.*' -o -name '*.REMOTE.*' ')' -print0 | xargs -0 rm -f
 end
+
 function cleandsstores
     find . -name '.DS_Store' -exec rm -f '{}' ';'
 end
+
 alias json 'prettify-json'
 alias map 'xargs -n1'
 alias collapse "sed -e 's/  */ /g'"
 alias cuts 'cut -d\ '
-
-function pgr -d "Grep for a running process, returning its PID and full string"
-    ps auxww | grep --color=always $argv | grep -v grep | collapse | cuts -f 2,11-
-end
 
 function p -d "Start the best Python shell that is available"
     set -l cmd
@@ -170,7 +173,6 @@ end
 
 alias pm 'python manage.py'
 alias pms 'python manage.py shell_plus'
-alias pmt 'python manage.py test'
 
 function pipr -d "Find & install all requirements for this project"
     pushd (git root)
