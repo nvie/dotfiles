@@ -242,15 +242,3 @@ function color-syntax
     end
     pygmentize -f rtf -l $lang
 end
-
-# Projects
-alias y 'cd ~/Projects/yesgraph/signallens'
-function prpm; production run "python manage.py $argv"; end
-function srpm; staging run "python manage.py $argv"; end
-function frpm; fuckyeah run "python manage.py $argv"; end
-function prpms; prpm shell; end
-function srpms; srpm shell; end
-function frpms; frpm shell; end
-alias prb 'production run bash'
-alias srb 'staging run bash'
-alias frb 'fuckyeah run bash'
