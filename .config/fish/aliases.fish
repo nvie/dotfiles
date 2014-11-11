@@ -19,9 +19,11 @@ end
 
 set LS_COLORS dxfxcxdxbxegedabagacad
 
-alias ls 'command ls -FG'
+alias df 'command df -m'
 alias l ls
 alias ll 'ls -la'
+alias ls 'command ls -FG'
+alias su 'command su -m'
 
 # Colorized cat (will guess file type based on contents)
 alias ccat 'pygmentize -g'
@@ -46,11 +48,6 @@ end
 
 function fa
     ffind -tf | fuzzymatch.py $argv
-end
-
-function vimf
-    #vim (f $argv)
-    cowsay "Try to learn to use 'vf', man."
 end
 
 function vf
@@ -99,8 +96,6 @@ end
 
 alias git hub
 alias gti git
-alias su 'command su -m'
-alias df 'command df -m'
 
 alias a 'git amend'
 
