@@ -56,10 +56,10 @@ function vfa
     fa $argv | selecta | xargs -o vim
 end
 function va
-    ag -l --smart-case -- "$argv" ^/dev/null | quote | xargs -o vim -c "/$argv"
+    ag -l --smart-case --null -- "$argv" ^/dev/null | xargs -0 -o vim -c "/$argv"
 end
 function vaa
-    ag -la --smart-case -- "$argv" ^/dev/null | quote | xargs -o vim -c "/$argv"
+    ag -la --smart-case --null -- "$argv" ^/dev/null | xargs -0 -o vim -c "/$argv"
 end
 function vc
     if git modified -q $argv
