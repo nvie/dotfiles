@@ -1,0 +1,20 @@
+!/bin/sh
+set -e
+
+pipsi install autopep8
+pipsi install cookiecutter
+pipsi install flake8
+pipsi install httpie
+pipsi install pygments
+pipsi install python-fu
+pipsi install sr
+pipsi install tox
+pipsi install unp
+pipsi install watchdog
+
+# Custom projects
+pipsi install --editable ~/Projects/git-setdate
+pipsi install --editable ~/Projects/important-bits
+
+# Unreleased (newer) version of s3cmd
+pipsi install https://pypi.python.org/packages/source/s/s3cmd/s3cmd-1.5.0-alpha3.tar.gz#egg=s3cmd
