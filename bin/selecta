@@ -1,0 +1,610 @@
+#!/usr/bin/env bash
+# vim: set ft=ruby:
+
+# This file executes as a bash script, which turns around and executes Ruby via
+# the line below. The -x argument to Ruby makes it discard everything before
+# the second "!ruby" shebang. This allows us to work on Linux, where the
+# shebang can only have one argument so we can't directly say
+# "#!/usr/bin/env ruby --disable-gems". Thanks for that, Linux.
+#
+# If this seems confusing, don't worry. You can treat it as a normal Ruby file
+# starting with the "!ruby" shebang below.
+
+exec /usr/bin/env ruby --disable-gems -x "$0" $*
+#!ruby
+
+if RUBY_VERSION < '1.9.3'
+  abort "error: Selecta requires Ruby 1.9.3 or higher."
+end
+
+require "optparse"
+require "io/console"
+
+KEY_CTRL_C = ?\C-c
+KEY_CTRL_N = ?\C-n
+KEY_CTRL_P = ?\C-p
+KEY_CTRL_U = ?\C-u
+KEY_CTRL_H = ?\C-h
+KEY_CTRL_W = ?\C-w
+KEY_DELETE = 127.chr # Equivalent to ?\C-?
+
+class Selecta
+  def main
+    # We have to parse options before setting up the screen or trying to read
+    # the input in case the user did '-h', an invalid option, etc. and we need
+    # to terminate.
+    options = Configuration.parse_options(ARGV)
+
+    search = Screen.with_screen do |screen, tty|
+      config = Configuration.from_inputs($stdin.readlines, options, screen.height)
+      run_in_screen(config, screen, tty)
+    end
+
+    puts search.selected_choice
+  rescue ScreenValidator::NotATTY
+    $stderr.puts(
+      "Can't get a working TTY. Selecta requires an ANSI-compatible terminal.")
+  end
+
+  def run_in_screen(config, screen, tty)
+    search = Search.blank(config)
+
+    # We emit the number of lines we'll use later so we don't clobber whatever
+    # was already on the screen.
+    config.visible_choices.times { tty.puts }
+    begin
+      search = ui_event_loop(search, screen, tty)
+    ensure
+      # Always move the cursor to the bottom so the next program doesn't draw
+      # over whatever we left on the screen.
+      screen.move_cursor(screen.height - 1, 0)
+    end
+    search
+  end
+
+  # Use the search and screen to process user actions until they quit.
+  def ui_event_loop(search, screen, tty)
+    while not search.done?
+      Renderer.render!(search, screen)
+      search = handle_key(search, tty.get_char)
+    end
+    search
+  end
+
+  # On each keystroke, generate a new search object
+  def handle_key(search, key)
+    case key
+
+    when KEY_CTRL_N then search.down
+    when KEY_CTRL_P then search.up
+
+    when KEY_CTRL_U then search.clear_query
+    when KEY_CTRL_W then search.delete_word
+    when KEY_CTRL_H, KEY_DELETE then search.backspace
+
+    when ?\r then search.done
+    when KEY_CTRL_C then raise SystemExit
+
+    when /[[:print:]]/ then search.append_search_string(key.chr)
+
+    else search
+    end
+  end
+end
+
+class Configuration < Struct.new(:visible_choices, :initial_search, :choices)
+  def initialize(visible_choices, initialize, choices)
+    # Constructor is defined to force argument presence; otherwise Struct
+    # defaults missing arguments to nil
+    super
+  end
+
+  def self.from_inputs(choices, options, screen_height=21)
+    # Shrink the number of visible choices if the screen is too small
+    visible_choices = [20, screen_height - 1].min
+
+    choices = massage_choices(choices)
+    Configuration.new(visible_choices, options.fetch(:search), choices)
+  end
+
+  def self.default_options
+    parse_options([])
+  end
+
+  def self.parse_options(argv)
+    options = {}
+
+    parser = OptionParser.new do |opts|
+      opts.banner = "Usage: #{$PROGRAM_NAME} [options]"
+
+      opts.on("-h", "--help", "Show this message") do |v|
+        puts opts
+        exit
+      end
+
+      options[:search] = ""
+      opts.on("-s", "--search SEARCH", "Specify an initial search string") do |search|
+        options[:search] = search
+      end
+    end
+
+    begin
+      parser.parse!(argv)
+    rescue OptionParser::InvalidOption => e
+      $stderr.puts e
+      $stderr.puts parser
+      exit 1
+    end
+
+    options
+  end
+
+  def self.massage_choices(choices)
+    choices.map do |choice|
+      # Encoding to UTF-8 with `:invalid => :replace` isn't good enough; it
+      # still leaves some invalid characters. For example, this string will fail:
+      #
+      # echo "девуш\xD0:" | selecta
+      #
+      # Round-tripping through UTF-16, with `:invalid => :replace` as well,
+      # fixes this. I don't understand why. I found it via:
+      #
+      # http://stackoverflow.com/questions/2982677/ruby-1-9-invalid-byte-sequence-in-utf-8
+      utf16 = choice.encode('UTF-16', 'UTF-8', :invalid => :replace, :replace => '')
+      utf16.encode('UTF-8', 'UTF-16')
+    end.map(&:strip)
+  end
+end
+
+class Search
+  attr_reader :choices, :index, :query, :config
+
+  def initialize(vars)
+    @vars = vars
+    @config = vars.fetch(:config)
+    @choices = vars.fetch(:choices)
+    @index = vars.fetch(:index)
+    @query = vars.fetch(:query)
+    @done = vars.fetch(:done)
+  end
+
+  def self.blank(config)
+    new(:config => config,
+        :choices => config.choices,
+        :index => 0,
+        :query => config.initial_search,
+        :done => false)
+  end
+
+  def merge(vars)
+    Search.new(@vars.merge(vars))
+  end
+
+  def done?
+    @done
+  end
+
+  def selected_choice
+    raise SystemExit if matches.empty?
+    matches.fetch(@index)
+  end
+
+  def down
+    index = [@index + 1, matches.count - 1, config.visible_choices - 1].min
+    merge(:index => index)
+  end
+
+  def up
+    merge(:index => [@index - 1, 0].max)
+  end
+
+  def append_search_string(string)
+    merge(:index => 0,
+          :query => @query + string)
+  end
+
+  def backspace
+    merge(:index => 0,
+          :query => @query[0...-1])
+  end
+
+  def clear_query
+    merge(:index => 0,
+          :query => "")
+  end
+
+  def delete_word
+    merge(:index => 0,
+          :query => @query.sub(/[^ ]* *$/, ""))
+  end
+
+  def matches
+    @choices.map do |choice|
+      [choice, Score.score(choice, query)]
+    end.select do |choice, score|
+      score > 0.0
+    end.sort_by do |choice, score|
+      -score
+    end.map do |choice, score|
+      choice
+    end
+  end
+
+  def done
+    merge(:done => true)
+  end
+end
+
+class Score
+  class << self
+    def score(choice, query)
+      return 1.0 if query.length == 0
+      return 0.0 if choice.length == 0
+
+      choice = choice.downcase
+      query = query.downcase
+
+      match_length = compute_match_length(choice, query.each_char.to_a)
+      return 0.0 unless match_length
+
+      # Penalize longer matches.
+      score = query.length.to_f / match_length.to_f
+
+      # Normalize vs. the length of the choice, penalizing longer strings.
+      score / choice.length
+    end
+
+    # Find the length of the shortest substring matching the given characters.
+    def compute_match_length(string, chars)
+      first_char, *rest = chars
+      first_indexes = find_char_in_string(string, first_char)
+
+      first_indexes.map do |first_index|
+        last_index = find_end_of_match(string, rest, first_index)
+        if last_index
+          last_index - first_index + 1
+        else
+          nil
+        end
+      end.compact.min
+    end
+
+    # Find all occurrences of the character in the string, returning their indexes.
+    def find_char_in_string(string, char)
+      index = 0
+      indexes = []
+      while index
+        index = string.index(char, index)
+        if index
+          indexes << index
+          index += 1
+        end
+      end
+      indexes
+    end
+
+    # Find each of the characters in the string, moving strictly left to right.
+    def find_end_of_match(string, chars, first_index)
+      last_index = first_index
+      chars.each do |this_char|
+        index = string.index(this_char, last_index + 1)
+        return nil unless index
+        last_index = index
+      end
+      last_index
+    end
+  end
+end
+
+class Renderer < Struct.new(:search, :screen)
+  def self.render!(search, screen)
+    rendered = Renderer.new(search, screen).render
+    start_line = screen.height - search.config.visible_choices - 1
+    screen.with_cursor_hidden do
+      screen.write_lines(start_line, rendered.choices)
+      screen.move_cursor(start_line, rendered.search_line.length)
+    end
+  end
+
+  def render
+    search_line = "> " + search.query
+    matches = search.matches
+    unless matches.empty?
+      matches[search.index] = Text[:inverse, matches.fetch(search.index), :reset]
+    end
+    matches = correct_match_count(matches)
+    lines = [search_line] + matches
+    Rendered.new(lines, search_line)
+  end
+
+  def correct_match_count(matches)
+    limited = matches[0, search.config.visible_choices]
+    padded = limited + [""] * (search.config.visible_choices - limited.length)
+    padded
+  end
+
+  class Rendered < Struct.new(:choices, :search_line)
+  end
+end
+
+class Screen
+  def self.with_screen
+    TTY.with_tty do |tty|
+      screen = self.new(tty)
+      screen.configure_tty
+      begin
+        ScreenValidator.raise_unless_screen_is_valid(screen.height)
+        yield screen, tty
+      ensure
+        screen.restore_tty
+        tty.puts
+      end
+    end
+  end
+
+  attr_reader :tty, :ansi
+
+  def initialize(tty)
+    @tty = tty
+    @ansi = ANSI.new(tty.out_file)
+    @original_stty_state = tty.stty("-g")
+  end
+
+
+  def configure_tty
+    # raw: Disable input and output processing
+    # -echo: Don't echo keys back
+    # cbreak: Set up lots of standard stuff, including INTR signal on ^C
+    tty.stty("raw -echo cbreak")
+  end
+
+  def restore_tty
+    tty.stty("#{@original_stty_state}")
+  end
+
+  def suspend
+    restore_tty
+    begin
+      yield
+      configure_tty
+    rescue
+      restore_tty
+    end
+  end
+
+  def with_cursor_hidden(&block)
+    ansi.hide_cursor!
+    begin
+      block.call
+    ensure
+      ansi.show_cursor!
+    end
+  end
+
+  def height
+    size[0]
+  end
+
+  def width
+    size[1]
+  end
+
+  def size
+    height, width = tty.winsize
+    [height, width]
+  end
+
+  def move_cursor(line, column)
+    ansi.setpos!(line, column)
+  end
+
+  def write_line(line, text)
+    write(line, 0, text)
+  end
+
+  def write_lines(line, texts)
+    texts.each_with_index do |text, index|
+      write(line + index, 0, text)
+    end
+  end
+
+  def write(line, column, text)
+    # Discard writes outside the main screen area
+    write_unrestricted(line, column, text) if line < height
+  end
+
+  def write_unrestricted(line, column, text)
+    text = Text[:default, text] unless text.is_a? Text
+    write_text_object(line, column,text)
+  end
+
+  def write_text_object(line, column, text)
+    # Blank the line before drawing to it
+    ansi.setpos!(line, 0)
+    ansi.addstr!(" " * width)
+
+    text.components.each do |component|
+      if component.is_a? String
+        ansi.setpos!(line, column)
+        # Don't draw off the edge of the screen.
+        #   - width - 1 is the last column we have (zero-indexed)
+        #   - subtract the current column from that to get the number of
+        #   columns we have left.
+        chars_to_draw = [0, width - 1 - column].max
+        component = component[0..chars_to_draw]
+        ansi.addstr!(component)
+        column += component.length
+      elsif component == :inverse
+        ansi.inverse!
+      elsif component == :reset
+        ansi.reset!
+      else
+        if component =~ /_/
+          fg, bg = component.to_s.split(/_/).map(&:to_sym)
+        else
+          fg, bg = component, :default
+        end
+        ansi.color!(fg, bg)
+      end
+    end
+  end
+end
+
+class ScreenValidator
+  def self.raise_unless_screen_is_valid(screen_height)
+    raise NotATTY if screen_height == 0
+  end
+
+  class NotATTY < RuntimeError; end
+end
+
+class Text
+  attr_reader :components
+
+  def self.[](*args)
+    new(args)
+  end
+
+  def initialize(components)
+    @components = components
+  end
+
+  def ==(other)
+    components == other.components
+  end
+
+  def +(other)
+    Text[*(components + other.components)]
+  end
+end
+
+class ANSI
+  ESC = 27.chr
+
+  attr_reader :file
+
+  def initialize(file)
+    @file = file
+  end
+
+  def escape(sequence)
+    ESC + "[" + sequence
+  end
+
+  def clear
+    escape "2J"
+  end
+
+  def hide_cursor
+    escape "?25l"
+  end
+
+  def show_cursor
+    escape "?25h"
+  end
+
+  def setpos(line, column)
+    escape "#{line + 1};#{column + 1}H"
+  end
+
+  def addstr(str)
+    str
+  end
+
+  def color(fg, bg=:default)
+    fg_codes = {
+      :black => 30,
+      :red => 31,
+      :green => 32,
+      :yellow => 33,
+      :blue => 34,
+      :magenta => 35,
+      :cyan => 36,
+      :white => 37,
+      :default => 39,
+    }
+    bg_codes = {
+      :black => 40,
+      :red => 41,
+      :green => 42,
+      :yellow => 43,
+      :blue => 44,
+      :magenta => 45,
+      :cyan => 46,
+      :white => 47,
+      :default => 49,
+    }
+    fg_code = fg_codes.fetch(fg)
+    bg_code = bg_codes.fetch(bg)
+    escape "#{fg_code};#{bg_code}m"
+  end
+
+  def inverse
+    escape("7m")
+  end
+
+  def reset
+    escape("0m")
+  end
+
+  def clear!(*args); write clear(*args); end
+  def setpos!(*args); write setpos(*args); end
+  def addstr!(*args); write addstr(*args); end
+  def color!(*args); write color(*args); end
+  def inverse!(*args); write inverse(*args); end
+  def reset!(*args); write reset(*args); end
+  def hide_cursor!(*args); write hide_cursor(*args); end
+  def show_cursor!(*args); write show_cursor(*args); end
+
+  def write(bytes)
+    file.write(bytes)
+  end
+end
+
+class TTY < Struct.new(:in_file, :out_file)
+  def self.with_tty(&block)
+    File.open("/dev/tty", "r") do |in_file|
+      File.open("/dev/tty", "w") do |out_file|
+        tty = TTY.new(in_file, out_file)
+        block.call(tty)
+      end
+    end
+  end
+
+  def get_char
+    in_file.getc
+  end
+
+  def puts
+    out_file.puts
+  end
+
+  def winsize
+    out_file.winsize
+  end
+
+  def stty(args)
+    command("stty #{args}")
+  end
+
+  private
+
+  # Run a command with the TTY as stdin, capturing the output via a pipe
+  def command(command)
+    IO.pipe do |read_io, write_io|
+      pid = Process.spawn(command, :in => "/dev/tty", :out => write_io)
+      Process.wait(pid)
+      raise "Command failed: #{command.inspect}" unless $?.success?
+      write_io.close
+      read_io.read
+    end
+  end
+end
+
+if $0 == __FILE__
+  begin
+    Selecta.new.main
+  rescue SystemExit, Interrupt
+    exit(1)
+  end
+end
