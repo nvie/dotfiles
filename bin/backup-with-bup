@@ -1,0 +1,25 @@
+#!/bin/sh
+set -e
+
+if [ $EUID -ne 0 ]; then
+    echo "You must be root to do this." >&2
+    exit 2
+fi
+
+DRIVE="/Volumes/Errol HD2"
+export BUP_DIR="$DRIVE/bup"
+
+if [ ! -e "$DRIVE" ]; then
+    echo "Backup drive not connected." >&2
+    exit 3
+fi
+
+bup init
+
+if [ -n "$1" ]; then
+    ROOT="$1"
+else
+    ROOT="/"
+fi
+
+time tar -cvf - -X ~/bin/exclude-from-backups.txt "$ROOT" | bup split -n HDD -v
