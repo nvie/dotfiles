@@ -3,5 +3,5 @@ set -e
 (ls -Ur ~/Desktop/Screen\ Shot* 2>/dev/null || echo) \
     | head -n1 \
     | while read f; do
-        open -a Glui "$f"
+        reattach-to-user-namespace open -a Glui "$f"
     done
