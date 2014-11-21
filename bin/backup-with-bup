@@ -6,13 +6,25 @@ if [ $EUID -ne 0 ]; then
     exit 2
 fi
 
-DRIVE="/Volumes/Errol HD2"
-export BUP_DIR="$DRIVE/bup"
+DRIVE0="/Volumes/Backups"
+DRIVE1="/Volumes/Errol HD"
+DRIVE2="/Volumes/Errol HD2"
+DRIVE3="/Volumes/Mickey-HD"
 
-if [ ! -e "$DRIVE" ]; then
+if [ -e "$DRIVE0" ]; then
+    DRIVE="$DRIVE0"
+elif [ -e "$DRIVE1" ]; then
+    DRIVE="$DRIVE1"
+elif [ -e "$DRIVE2" ]; then
+    DRIVE="$DRIVE2"
+elif [ -e "$DRIVE3" ]; then
+    DRIVE="$DRIVE3"
+else
     echo "Backup drive not connected." >&2
     exit 3
 fi
+
+export BUP_DIR="$DRIVE/bup"
 
 bup init
 
@@ -22,4 +34,7 @@ else
     ROOT="/"
 fi
 
-time tar -cvf - -X ~/bin/exclude-from-backups.txt "$ROOT" | bup split -n HDD -v
+time bup index -uv --exclude-rx-from ~/bin/exclude-from-backups-re.txt "$ROOT"
+
+# Then, back up anything from the index
+time bup save -n backups /

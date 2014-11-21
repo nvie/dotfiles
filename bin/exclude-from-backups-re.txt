@@ -1,0 +1,44 @@
+#
+# Base list to exclude from Mac OSX (from Honza's blog post)
+# http://honza.ca/2013/07/how-i-back-up-my-laptop
+#
+
+# Anchored
+^/afs/
+^/automount/
+^/cores/
+^/dev/
+^/Network/
+^/private/
+^/Previous Systems\.localized
+^/tmp/
+^/Volumes/
+^/\.DocumentRevisions-.*/
+^/\.MobileBackups/
+
+# Exclude homebrew
+^/usr/local/Cellar/
+
+# Non-anchored dirs
+/\.Trash/
+/\.Spotlight-.*/
+/\.Trashes/
+
+# Exclude typically large files I don't need
+^/Users/[^/]+/\.cache/
+^/Users/[^/]+/\.pip-tools/
+^/Users/[^/]+/Caches/
+^/Users/[^/]+/Downloads/
+
+# Various locations of caches
+/Library/Caches/
+
+# Dirs I typically don't care about
+/\.direnv/
+/\.tox/
+/site-packages/
+/\.DS_Store
+
+# Very large apps
+^/Applications/Xcode\.app/
+^/Applications/Xcode-Beta\.app/
