@@ -34,6 +34,7 @@ else
     ROOT="/"
 fi
 
+time bup index --clear
 time bup index -uv --exclude-rx-from ~/bin/exclude-from-backups-re.txt "$ROOT"
 
 # Then, back up anything from the index
