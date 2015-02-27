@@ -37,6 +37,15 @@ alias v vim
 alias x gitx
 alias xx 'tig --all'
 
+function da -d "Allow or disallow .envrc after printing it."
+    echo "------------------------------------------------"
+    cat .envrc
+    echo "------------------------------------------------"
+    echo "To allow, hit Return."
+    read answer
+    direnv allow
+end
+
 function def -d "Quickly finds where a function or variable is defined."
     a -l "def\s+$argv"; or a -l "^\s*$argv\s*[=]"
 end
