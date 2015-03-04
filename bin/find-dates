@@ -1,0 +1,55 @@
+#!/usr/bin/env python
+#
+# Finds any dates occurring in standard input, and prints them to stdout in
+# a YYYY-MM-DD format.
+#
+
+import re
+import sys
+
+months = [
+    ('jan', 'januari', 'january'),
+    ('feb', 'febr', 'februari', 'february'),
+    ('mar', 'mrt', 'maart', 'march'),
+    ('apr', 'april'),
+    ('mei', 'may'),
+    ('jun', 'juni', 'june'),
+    ('jul', 'juli', 'july'),
+    ('aug', 'augustus', 'august'),
+    ('sep', 'sept', 'september'),
+    ('okt', 'oct', 'oktober', 'october'),
+    ('nov', 'november'),
+    ('dec', 'december'),
+]
+month_lut = {month: i for i, spellings in enumerate(months, start=1) for month in spellings}
+
+dutch_date_with_nonnumeric_month_re = re.compile(r'(?P<day>[0-9]{1,2})[-\s]*(?P<month>' +
+                                                 '|'.join(month_lut) +
+                                                 ')[-\s]*(?P<year>[0-9]{4})')  # noqa
+dutch_date_with_numeric_month_re = re.compile(r'(?P<day>[0-9]{1,2})[-\s]+(?P<month>[0-9]{1,2})[-\s]+(?P<year>[0-9]{4})')
+# us_date_with_numeric_month_re = re.compile(r'...')
+
+for line in sys.stdin:
+    m = (dutch_date_with_nonnumeric_month_re.search(line) or
+         dutch_date_with_numeric_month_re.search(line))
+    if m:
+        doc = m.groupdict()
+        year, month, day = doc['year'], doc['month'], doc['day']
+
+        year = int(year)
+        if not (1970 <= year < 2100):
+            continue  # year out of range
+
+        if month.isdigit():
+            month = int(month)
+        else:
+            month = month_lut.get(month, 0)
+
+        if not (1 <= month <= 12):
+            continue  # not a valid month
+
+        day = int(day)
+        if not (1 <= day <= 31):
+            continue  # not a valid day
+
+        print("{year:04}-{month:02}-{day:02}".format(year=year, month=month, day=day))
