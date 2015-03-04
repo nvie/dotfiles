@@ -1,0 +1,54 @@
+#!/bin/sh
+set -e
+
+# Prerequisites
+brew install -q moreutils
+brew install -q pdfgrep
+
+
+move_matching_files () {
+    target="$1"
+    pattern="$2"
+
+    # Allow for 
+    if [ -z "$pattern" ]; then
+        pattern="$target"
+    fi
+
+    mkdir -p "$target"
+    pdfgrep -Hi "$pattern" _Unsorted/*.pdf | cut -d: -f1 | sort -fu | while read f; do
+        echo "$f => $target"
+        mv "$f" "$target"
+    done
+}
+
+
+main () {
+    (
+        cd ~/Dropbox/Scans
+
+        move_matching_files "Sportbedrijf Deventer" "sportbedrijfdeventer"
+        move_matching_files "Sportbedrijf Deventer" "zwemlessen"
+        move_matching_files "Raad voor de Kinderbescherming" "veiligheid en justitie"
+        move_matching_files "Regionale Belastingsamenwerking"
+        move_matching_files "VvE" "Beheer Fetlaer"
+        move_matching_files "Kinderdagverblijf"
+        move_matching_files "Ontdekking" "De Ontdekking"
+        move_matching_files "Ontdekking" "Ambiente"
+        move_matching_files "Randstad" "Randstad Payroll"
+        move_matching_files "Auto Fischer"
+        move_matching_files "Riesewijk Fietsen" "Riesewijk"
+        move_matching_files "Cinance"
+        move_matching_files "OHRA"
+        move_matching_files "Ziggo"
+        move_matching_files "Kvik"
+        move_matching_files "Conrad"
+        move_matching_files "Vodafone"
+        move_matching_files "T-mobile"
+        move_matching_files "Belastingdienst"
+        move_matching_files "Rabobank"
+    )
+}
+
+
+main
