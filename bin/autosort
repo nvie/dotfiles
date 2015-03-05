@@ -53,33 +53,42 @@ main () {
         move_matching_files "Kinderdagverblijf" "kdv bubbels"
         move_matching_files "Kinderdagverblijf" "BIXO"
 
-        move_matching_files "Ontdekking" "De Ontdekking"
-        move_matching_files "Ontdekking" "Ambiente"
+        move_matching_files "De Ontdekking"
+        move_matching_files "De Ontdekking" "Ambiente"
+
         move_matching_files "Randstad" "Randstad Payroll"
 
         move_matching_files "Auto" "Auto Fischer"
         move_matching_files "Auto" "vrijwaringsbewijs"
         move_matching_files "Auto" "Ford Focus"
         move_matching_files "Auto" "89-KKT-8"
+        move_matching_files "Auto" "93-PX-PL"
 
         move_matching_files "Meubels" "eijerkamp"
         move_matching_files "Meubels" "allinhouse.nl"
         move_matching_files "Meubels" "trendhopper"
+
+        move_matching_files "Naviva"
+        move_matching_files "Naviva" "kraamzorg"
 
         move_matching_files "Riesewijk Fietsen" "Riesewijk"
         move_matching_files "Cinance"
         move_matching_files "OHRA"
         move_matching_files "Ziggo"
         move_matching_files "XS4ALL"
+
         move_matching_files "Waterschappen" "waterschapsbelasting"
         move_matching_files "Waterschappen" "lococensus"
-        move_matching_files "Gemeentelijke Belastingen" "Regionale Belastingsamenwerking"
-        move_matching_files "Gemeentelijke Belastingen" "Circulus"
-        move_matching_files "Gemeentelijke Belastingen" "Afvalstoffenheffing"
+
+        move_matching_files "Gemeente" "Regionale Belastingsamenwerking"
+        move_matching_files "Gemeente" "Circulus"
+        move_matching_files "Gemeente" "Afvalstoffenheffing"
+
         move_matching_files "Kvik"
         move_matching_files "Conrad"
         move_matching_files "Vodafone"
         move_matching_files "T-mobile"
+
         move_matching_files "Pensioen" "ABP"
         move_matching_files "Pensioen" "pensioenfonds"
         move_matching_files "Uitvaartverzekering" "DELA"
