@@ -111,8 +111,8 @@ end
 
 alias git hub
 alias gti git
-
 alias a 'git amend'
+alias gb 'git recent-branches 2.days.ago'
 
 function git-search
     git log -S"$argv" --pretty=format:%H | map git show 
