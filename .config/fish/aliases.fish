@@ -38,6 +38,8 @@ alias v vim
 alias x gitx
 alias xx 'tig --all'
 
+alias reset-mailbox 'rm -v ~/Library/Caches/com.dropbox.mbd.external-beta/mailbox.db'
+
 function da -d "Allow or disallow .envrc after printing it."
     echo "------------------------------------------------"
     cat .envrc
