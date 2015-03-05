@@ -1,0 +1,37 @@
+#!/bin/sh
+#
+# Renames the given files 
+#
+set -e
+
+if [ "$#" -eq 0 ]; then
+    echo "usage: autodate <file1> [<file2> ...]"
+    exit 2
+fi
+
+# Prerequisites
+brew install -q pdfgrep  # will also install pdftotext (as a dependency)
+
+
+rename_pdf () {
+    filename="$1"
+
+    sha=$(shasum "$filename" | cut -c -8)
+    pdftotext -layout "$filename" - | find-dates | while read date; do
+        dir=$(dirname "$filename")
+        output="$dir/$date - $sha.pdf"
+        echo "$filename => $output"
+        mv "$filename" "$output"
+        break  # process only the first ever match
+    done
+}
+
+
+main () {
+    for filename in "$@"; do
+        rename_pdf "$filename"
+    done
+}
+
+
+main "$@"

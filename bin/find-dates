@@ -23,13 +23,14 @@ months = [
 ]
 month_lut = {month: i for i, spellings in enumerate(months, start=1) for month in spellings}
 
-dutch_date_with_nonnumeric_month_re = re.compile(r'(?P<day>[0-9]{1,2})[-\s]*(?P<month>' +
+dutch_date_with_nonnumeric_month_re = re.compile(r'(?P<day>[0-9]{1,2})[-.\s]*(?P<month>' +
                                                  '|'.join(month_lut) +
-                                                 ')[-\s]*(?P<year>[0-9]{4})')  # noqa
-dutch_date_with_numeric_month_re = re.compile(r'(?P<day>[0-9]{1,2})[-\s]+(?P<month>[0-9]{1,2})[-\s]+(?P<year>[0-9]{4})')
+                                                 ')[-.\s]*(?P<year>[0-9]{4})')  # noqa
+dutch_date_with_numeric_month_re = re.compile(r'(?P<day>[0-9]{1,2})[-/.\s]+(?P<month>[0-9]{1,2})[-/.\s]+(?P<year>[0-9]{4})')
 # us_date_with_numeric_month_re = re.compile(r'...')
 
 for line in sys.stdin:
+    line = line.lower()  # match case-insensitive
     m = (dutch_date_with_nonnumeric_month_re.search(line) or
          dutch_date_with_numeric_month_re.search(line))
     if m:
