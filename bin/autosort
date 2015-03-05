@@ -3,7 +3,7 @@ set -e
 
 # Prerequisites
 brew install -q moreutils
-brew install -q pdfgrep
+brew install -q pdfgrep  # will also install pdftotext (as a dependency)
 
 
 move_matching_files () {
@@ -23,30 +23,73 @@ move_matching_files () {
 }
 
 
+_print_unsorted_files () {
+    (
+        cd _Unsorted
+        ls | grep -vF 'Backups'
+    )
+}
+
+
+show_unsorted_files () {
+    _print_unsorted_files | ifne open _Unsorted
+}
+
+
 main () {
     (
         cd ~/Dropbox/Scans
 
         move_matching_files "Sportbedrijf Deventer" "sportbedrijfdeventer"
         move_matching_files "Sportbedrijf Deventer" "zwemlessen"
+
+        move_matching_files "Boetes" "justitieel incassobureau"
+
         move_matching_files "Raad voor de Kinderbescherming" "veiligheid en justitie"
-        move_matching_files "Regionale Belastingsamenwerking"
+        move_matching_files "DAS Rechtsbijstand" "rechtsbijstandverzekering"
         move_matching_files "VvE" "Beheer Fetlaer"
+
         move_matching_files "Kinderdagverblijf"
+        move_matching_files "Kinderdagverblijf" "kdv bubbels"
+        move_matching_files "Kinderdagverblijf" "BIXO"
+
         move_matching_files "Ontdekking" "De Ontdekking"
         move_matching_files "Ontdekking" "Ambiente"
         move_matching_files "Randstad" "Randstad Payroll"
-        move_matching_files "Auto Fischer"
+
+        move_matching_files "Auto" "Auto Fischer"
+        move_matching_files "Auto" "vrijwaringsbewijs"
+        move_matching_files "Auto" "Ford Focus"
+        move_matching_files "Auto" "89-KKT-8"
+
+        move_matching_files "Meubels" "eijerkamp"
+        move_matching_files "Meubels" "allinhouse.nl"
+        move_matching_files "Meubels" "trendhopper"
+
         move_matching_files "Riesewijk Fietsen" "Riesewijk"
         move_matching_files "Cinance"
         move_matching_files "OHRA"
         move_matching_files "Ziggo"
+        move_matching_files "XS4ALL"
+        move_matching_files "Waterschappen" "waterschapsbelasting"
+        move_matching_files "Waterschappen" "lococensus"
+        move_matching_files "Gemeentelijke Belastingen" "Regionale Belastingsamenwerking"
+        move_matching_files "Gemeentelijke Belastingen" "Circulus"
+        move_matching_files "Gemeentelijke Belastingen" "Afvalstoffenheffing"
         move_matching_files "Kvik"
         move_matching_files "Conrad"
         move_matching_files "Vodafone"
         move_matching_files "T-mobile"
+        move_matching_files "Pensioen" "ABP"
+        move_matching_files "Pensioen" "pensioenfonds"
+        move_matching_files "Uitvaartverzekering" "DELA"
+        move_matching_files "Uitvaartverzekering" "uitvaart"
+        move_matching_files "ANWB"
+        move_matching_files "Interpolis"
         move_matching_files "Belastingdienst"
         move_matching_files "Rabobank"
+
+        show_unsorted_files
     )
 }
 
