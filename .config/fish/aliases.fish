@@ -28,6 +28,9 @@ alias l ls
 alias ll 'ls -la'
 alias ls 'command ls -FG'
 alias su 'command su -m'
+function man
+    open "dash://man:$1"
+end
 
 # Colorized cat (will guess file type based on contents)
 alias ccat 'pygmentize -g'
