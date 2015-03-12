@@ -40,6 +40,7 @@ alias c clear
 alias v vim
 alias x gitx
 alias xx 'tig --all'
+alias notes 'ag "TODO|HACK|FIXME|OPTIMIZE"'
 
 alias reset-mailbox 'rm -v ~/Library/Caches/com.dropbox.mbd.external-beta/mailbox.db'
 
