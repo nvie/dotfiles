@@ -29,7 +29,7 @@ alias ll 'ls -la'
 alias ls 'command ls -FG'
 alias su 'command su -m'
 function man
-    open "dash://man:$1"
+    open "dash://man:$argv"
 end
 
 # Colorized cat (will guess file type based on contents)
