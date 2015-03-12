@@ -62,11 +62,11 @@ function vimff
 end
 
 function f
-    ffind -tf | grep -v "/migrations/" | fuzzymatch.py $argv
+    ffind -tf | grep -v "/migrations/"
 end
 
 function fa
-    ffind -tf | fuzzymatch.py $argv
+    ffind -tf
 end
 
 function vf
