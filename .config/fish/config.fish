@@ -149,7 +149,7 @@ if status --is-login
 end
 
 if status --is-interactive
-    set CDPATH . ~/Projects/yesgraph ~/Projects
+    set CDPATH . ~/Projects/yesgraph ~/Projects ~/Dropbox/Scans
 end
 
 # }}}
