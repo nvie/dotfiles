@@ -49,10 +49,12 @@
 /.cookiecutters
 /.cups
 /.dbshell
+/.devpi
 /.direnvrc
 /.dropbox
 /.dropbox-master
 /.dvdcss
+/.eaglerc
 /.emacs.d
 /.fontconfig
 /.ftcurlish.json
@@ -118,3 +120,6 @@ Projects
 
 # Powerline-specific cruft that isn't ignored in their own plugin
 Powerline_*.cache
+
+# Postgres stuff
+/.pg*
