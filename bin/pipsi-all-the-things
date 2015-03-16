@@ -1,4 +1,4 @@
-!/bin/sh
+#!/bin/sh
 set -e
 
 pipsi install autopep8
@@ -16,9 +16,9 @@ pipsi install unp
 pipsi install watchdog
 
 # Custom projects
-pipsi install --editable ~/Projects/git-setdate
-pipsi install --editable ~/Projects/important-bits
-pipsi install --editable ~/Projects/yg-github-sync
+(cd ~/Projects/git-setdate && pipsi install --editable .)
+(cd ~/Projects/important-bits && pipsi install --editable .)
+(cd ~/Projects/yesgraph/yg-github-sync && pipsi install --editable .)
 
 # Unreleased (newer) version of s3cmd
 pipsi install https://pypi.python.org/packages/source/s/s3cmd/s3cmd-1.5.0-alpha3.tar.gz#egg=s3cmd
