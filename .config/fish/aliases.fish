@@ -9,6 +9,10 @@ alias et 'vim ~/.tmux.conf'
 alias vim-norc 'vim -u NORC'
 alias vim-none 'vim -u NONE'
 
+function pdftext
+    pdftotext -layout $argv[1] -
+end
+
 function serve
     if test (count $argv) -ge 1
         if python -c 'import sys; sys.exit(sys.version_info[0] != 3)'
