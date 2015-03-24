@@ -7,7 +7,7 @@ pipsi install cookiecutter
 pipsi install devpi-client
 pipsi install flake8
 pipsi install httpie
-pipsi install invoke
+pipsi install --python python3 invoke
 pipsi install pygments
 pipsi install python-fu
 pipsi install sr
