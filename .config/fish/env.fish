@@ -21,9 +21,8 @@ set -gx PIP_DOWNLOAD_CACHE ~/Library/Caches/pip-downloads
 set -gx PYTHONSTARTUP ~/.pythonrc.py
 
 # Add more Python versions on the PATH (pypy and python3)
-append-to-path ~/.pythonz/pythons/CPython-3.4.2/bin
-append-to-path ~/.pythonz/pythons/CPython-3.3.2/bin
-append-to-path ~/.pythonz/pythons/CPython-3.2.4/bin
+append-to-path ~/.pythonz/pythons/CPython-3.4.3/bin
+append-to-path ~/.pythonz/pythons/CPython-2.7.9/bin
 append-to-path ~/.pythonz/pythons/PyPy-2.0.2/bin
 
 # Put Postgres.app's command line tools on the PATH
