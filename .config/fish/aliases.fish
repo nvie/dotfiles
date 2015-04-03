@@ -36,6 +36,10 @@ function man
     open "dash://man:$argv"
 end
 
+function lsd -d 'List only directories (in the current dir)'
+    command ls -d */ | sed -Ee 's,/+$,,'
+end
+
 # Colorized cat (will guess file type based on contents)
 alias ccat 'pygmentize -g'
 
