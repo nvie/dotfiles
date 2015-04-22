@@ -153,13 +153,20 @@ function p -d "Start the best Python shell that is available"
     set -l cmd
 
     if test -f manage.py
-        if pip freeze ^/dev/null | grep -q 'django-extensions'
+        if pip freeze ^/dev/null | grep -iq 'django-extensions'
             set cmd (which python) manage.py shell_plus
         else
-            set cmd (which python) manage.py shell
+            if pip freeze ^/dev/null | grep -iq 'flask-script'
+                # do nothing, use manage.py, fall through
+                set -e cmd
+            else
+                set cmd (which python) manage.py shell
+            end
         end
-    else
-        set -l interpreters (which ipython ^/dev/null; which python ^/dev/null)
+    end
+
+    if test -z $cmd
+        set -l interpreters (which bpython ^/dev/null; which ipython ^/dev/null; which python ^/dev/null)
 
         if test -z "$interpreters"
             set_color red
