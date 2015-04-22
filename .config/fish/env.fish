@@ -18,7 +18,6 @@ prepend-to-path /usr/local/bin
 # Python {{{
 
 set -gx PIP_DOWNLOAD_CACHE ~/Library/Caches/pip-downloads
-set -gx PYTHONSTARTUP ~/.pythonrc.py
 
 # Add more Python versions on the PATH (pypy and python3)
 append-to-path ~/.pythonz/pythons/CPython-3.4.3/bin
