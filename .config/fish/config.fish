@@ -53,6 +53,13 @@ function fish_prompt
     set_color normal
 end
 
+function demo-mode
+    function fish_prompt
+        set last_status $status
+        printf '$ '
+    end
+end
+
 function git_current_branch -d 'Prints a human-readable representation of the current branch'
   set -l ref (git symbolic-ref HEAD ^/dev/null; or git rev-parse --short HEAD ^/dev/null)
   if test -n "$ref"
