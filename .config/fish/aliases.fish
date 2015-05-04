@@ -129,8 +129,8 @@ function git-search
 end
 
 function cleanpycs
-    find . -type d -name '__pycache__' -print0 | ifne xargs -0 rm -rv
-    find . -name '*.py[co]' -delete
+    find . -name '.git' -prune -o -name '__pycache__' -delete
+    find . -name '.git' -prune -o -name '*.py[co]' -delete
 end
 
 function cleanorigs
