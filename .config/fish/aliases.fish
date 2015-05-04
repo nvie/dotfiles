@@ -32,9 +32,6 @@ alias l ls
 alias ll 'ls -la'
 alias ls 'command ls -FG'
 alias su 'command su -m'
-function man
-    open "dash://man:$argv"
-end
 
 function lsd -d 'List only directories (in the current dir)'
     command ls -d */ | sed -Ee 's,/+$,,'
