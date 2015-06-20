@@ -28,6 +28,7 @@ end
 set LS_COLORS dxfxcxdxbxegedabagacad
 
 alias df 'command df -m'
+alias j jobs
 alias l ls
 alias ll 'ls -la'
 alias ls 'command ls -FG'
