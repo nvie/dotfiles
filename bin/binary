@@ -1,0 +1,14 @@
+#!/bin/sh
+# Checks whether the given input file is a binary file or not.
+
+usage() {
+    echo "usage: $(basename "$0") <file>" >&2
+    echo "Exit code tells whether the file is binary (0) or not (1)." >&2
+}
+
+if [ $# -eq 1 ]; then
+    dd if="$1" bs=8k count=1 2>/dev/null | od -b | egrep -q '\b000\b'
+else
+    usage
+    exit 2
+fi
