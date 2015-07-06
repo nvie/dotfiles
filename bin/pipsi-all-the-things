@@ -17,6 +17,7 @@ pipsi install unp
 pipsi install watchdog
 
 # Custom projects
+(cd ~/Projects/bucketize && pipsi install --editable .)
 (cd ~/Projects/git-setdate && pipsi install --editable .)
 (cd ~/Projects/important-bits && pipsi install --editable .)
 (cd ~/Projects/yesgraph/yg-github-sync && pipsi install --editable .)
