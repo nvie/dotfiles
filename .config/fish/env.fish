@@ -25,7 +25,7 @@ append-to-path ~/.pythonz/pythons/CPython-2.7.9/bin
 append-to-path ~/.pythonz/pythons/PyPy-2.0.2/bin
 
 # Put Postgres.app's command line tools on the PATH
-append-to-path /Applications/Postgres.app/Contents/Versions/9.3/bin
+append-to-path /Applications/Postgres.app/Contents/Versions/9.4/bin
 
 # }}}
 
