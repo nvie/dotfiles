@@ -84,11 +84,15 @@ function vfa
 end
 
 function va
-    ag -l --smart-case --null -- "$argv" ^/dev/null | xargs -0 -o vim -c "/$argv"
+    set ag_pattern (echo "$argv" | sed -Ee 's/[<>]/\\\\b/g')
+    set vim_pattern (echo "$argv" | sed -Ee 's,.*,/\\\\v&,')
+    ag -l --smart-case --null $ag_pattern ^/dev/null | xargs -0 -o vim -c $vim_pattern
 end
 
 function vaa
-    ag -la --smart-case --null -- "$argv" ^/dev/null | xargs -0 -o vim -c "/$argv"
+    set ag_pattern (echo "$argv" | sed -Ee 's/[<>]/\\\\b/g')
+    set vim_pattern (echo "$argv" | sed -Ee 's,.*,/\\\\v&,')
+    ag -l --smart-case --null -a $ag_pattern ^/dev/null | xargs -0 -o vim -c $vim_pattern
 end
 
 function vc
