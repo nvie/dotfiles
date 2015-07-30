@@ -85,13 +85,13 @@ end
 
 function va
     set ag_pattern (echo "$argv" | sed -Ee 's/[<>]/\\\\b/g')
-    set vim_pattern (echo "$argv" | sed -Ee 's,.*,/\\\\v&,')
+    set vim_pattern (echo "$argv" | sed -E -e 's,/,\\\\/,g' -e 's,.*,/\\\\v&,')
     ag -l --smart-case --null $ag_pattern ^/dev/null | xargs -0 -o vim -c $vim_pattern
 end
 
 function vaa
     set ag_pattern (echo "$argv" | sed -Ee 's/[<>]/\\\\b/g')
-    set vim_pattern (echo "$argv" | sed -Ee 's,.*,/\\\\v&,')
+    set vim_pattern (echo "$argv" | sed -E -e 's,/,\\\\/,g' -e 's,.*,/\\\\v&,')
     ag -l --smart-case --null -a $ag_pattern ^/dev/null | xargs -0 -o vim -c $vim_pattern
 end
 
