@@ -52,6 +52,9 @@ alias x gitx
 alias xx 'tig --all'
 alias notes 'ag "TODO|HACK|FIXME|OPTIMIZE"'
 
+alias m make
+alias mm 'make run'
+
 alias reset-mailbox 'rm -v ~/Library/Caches/com.dropbox.mbd.external-beta/mailbox.db'
 
 function da -d "Allow or disallow .envrc after printing it."
