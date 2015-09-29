@@ -25,6 +25,10 @@ function serve
     end
 end
 
+function timestamp
+    python -c 'import time; print(int(time.time()))'
+end
+
 set LS_COLORS dxfxcxdxbxegedabagacad
 
 alias df 'command df -m'
