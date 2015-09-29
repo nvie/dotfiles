@@ -294,3 +294,6 @@ function color-syntax
     end
     pygmentize -f rtf -l $lang
 end
+
+alias h=heroku
+alias gp='cd ~/Projects/gitprime/GitPrime'
