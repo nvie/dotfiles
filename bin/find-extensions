@@ -1,0 +1,22 @@
+#!/bin/sh
+set -e
+
+extensions=$*
+
+main() {
+    if [ -z "$extensions" ]; then
+        find .
+    else
+        echo "find . $(build_find_command_arguments)" | sh
+    fi
+}
+
+build_find_command_arguments() {
+    args=""
+    for ext in $extensions; do
+        args="${args} -o -name '*.${ext}'"
+    done
+    echo $args | cut -c 4-
+}
+
+main
