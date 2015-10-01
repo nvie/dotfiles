@@ -9,6 +9,7 @@ pipsi install flake8
 pipsi install howdoi
 pipsi install httpie
 pipsi install --python python3 invoke
+pipsi install --python python3 iron[all]
 pipsi install pygments
 pipsi install --python python3 python-fu
 pipsi install sr
