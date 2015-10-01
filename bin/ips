@@ -1,0 +1,14 @@
+#!/bin/sh
+ifconfig | awk '
+
+    /^[a-zA-Z0-9]+:/ {
+        name=$1
+    }
+
+    /inet / {
+        print name, $2
+    }
+
+'
+
+echo "external: $(curl -s http://icanhazip.com/)"
