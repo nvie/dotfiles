@@ -300,7 +300,7 @@ alias gp='cd ~/Projects/gitprime/GitPrime'
 
 function wtf -d "Print which and --version output for the given command"
     for arg in $argv
-        which $arg
-        eval $arg --version
+        echo $arg: (which $arg)
+        echo $arg: (sh -c "$arg --version")
     end
 end
