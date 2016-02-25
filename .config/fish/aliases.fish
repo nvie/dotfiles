@@ -132,6 +132,8 @@ function vca
     end
 end
 
+alias vch 'vc head'
+
 function vu
     if git modified -u $argv
         vim (git modified -u $argv | sed -Ee 's/^"(.*)"$/\1/')
