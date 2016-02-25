@@ -66,8 +66,8 @@ function da -d "Allow or disallow .envrc after printing it."
     direnv allow
 end
 
-function def -d "Quickly finds where a function or variable is defined."
-    a -l "def\s+$argv"; or a -l "^\s*$argv\s*[=]"
+function def -d "Quickly jump to place where a function, method, or variable is defined"
+    va "^\s*(def\s+$argv|$argv\s*[=])"
 end
 
 function vimff
