@@ -228,6 +228,7 @@ end
 
 alias pm 'python manage.py'
 alias pms 'python manage.py shell_plus'
+alias pmr 'python manage.py runserver_plus 0.0.0.0:8000'
 
 function pipr -d "Find & install all requirements for this project"
     pushd (git root)
