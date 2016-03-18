@@ -12,6 +12,7 @@ curl https://raw.githubusercontent.com/nvie/pipsi/master/get-pipsi.py | python2
     git clone git@github.com:mitsuhiko/pipsi.git src
     (
         cd src/
+        ../bin/pip install --upgrade pip
         ../bin/pip install -e .
     )
 )
