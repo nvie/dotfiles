@@ -133,7 +133,17 @@ function vca
     end
 end
 
+function vci
+    if git modified -qi
+        vim (begin; git modified -i; git modified; end | sort | uniq -u | sed -Ee 's/^"(.*)"$/\1/')
+    else
+        echo '(nothing changed)'
+    end
+end
+
 alias vch 'vc head'
+alias vch1 'vc head~1'
+alias vch2 'vc head~2'
 
 function vu
     if git modified -u $argv
