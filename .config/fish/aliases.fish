@@ -49,7 +49,8 @@ alias g git
 alias c clear
 alias v vim
 alias x gitx
-alias xx 'tig --all'
+alias xx 'tig --branches'
+alias xxa 'tig --all'
 alias notes 'ag "TODO|HACK|FIXME|OPTIMIZE"'
 
 alias m make
