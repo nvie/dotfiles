@@ -159,7 +159,7 @@ end
 
 alias git hub
 alias gti git
-alias a 'git amend'
+alias a 'git amend --allow-empty'
 alias gb 'git recent-branches 2.days.ago'
 alias ggco 'git switch'
 
