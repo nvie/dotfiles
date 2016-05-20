@@ -21,7 +21,7 @@ set -gx PIP_DOWNLOAD_CACHE ~/Library/Caches/pip-downloads
 # Add more Python versions on the PATH (pypy and python3)
 
 # Put Postgres.app's command line tools on the PATH
-append-to-path /Applications/Postgres.app/Contents/Versions/9.4/bin
+append-to-path /Applications/Postgres.app/Contents/Versions/9.5/bin
 
 # }}}
 
