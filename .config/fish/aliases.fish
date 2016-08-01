@@ -311,6 +311,7 @@ end
 
 alias h=heroku
 alias gp='cd ~/Projects/gitprime/GitPrime'
+alias gcs='cd ~/Projects/gitprime/grandcentral'
 
 function wtf -d "Print which and --version output for the given command"
     for arg in $argv
