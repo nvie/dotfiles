@@ -156,7 +156,7 @@ if status --is-login
 end
 
 if status --is-interactive
-    set CDPATH . ~/Projects/gitprime ~/Projects/yesgraph ~/Projects ~/Dropbox/Scans
+    set CDPATH . ~/Projects/gitprime ~/Projects
 end
 
 # }}}
