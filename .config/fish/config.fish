@@ -165,4 +165,4 @@ set -gx __fish_initialized 1
 
 eval (direnv hook fish)
 
-test -e {$HOME}/.iterm2_shell_integration.fish ; and source {$HOME}/.iterm2_shell_integration.fish
+test -e ~/.iterm2_shell_integration.fish ; and source ~/.iterm2_shell_integration.fish
