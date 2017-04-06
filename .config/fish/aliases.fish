@@ -48,9 +48,10 @@ alias ccat 'pygmentize -g'
 alias g git
 alias c clear
 alias v vim
-alias x gitx
-alias xx 'tig --branches'
-alias xxa 'tig --all'
+alias x xx  # this used to be a gitx alias
+alias xx 'tig --exclude=production --exclude="*/production" --exclude=canary --exclude="*/canary" --branches'
+alias xxa 'tig --exclude=production --exclude="*/production" --exclude=canary --exclude="*/canary" --all'
+alias xxaa 'tig --all'
 alias notes 'ag "TODO|HACK|FIXME|OPTIMIZE"'
 
 alias m make
