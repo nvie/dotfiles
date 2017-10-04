@@ -48,7 +48,7 @@ alias ccat 'pygmentize -g'
 alias g git
 alias c clear
 alias v vim
-alias x xx  # this used to be a gitx alias
+alias x 'tig HEAD'
 alias xx 'tig --exclude=production --exclude="*/production" --exclude=canary --exclude="*/canary" --branches'
 alias xxa 'tig --exclude=production --exclude="*/production" --exclude=canary --exclude="*/canary" --all'
 alias xxaa 'tig --all'
