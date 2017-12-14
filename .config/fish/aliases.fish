@@ -77,19 +77,11 @@ function vimff
 end
 
 function f
-    ffind -tf | grep -v "/migrations/"
-end
-
-function fa
-    ffind -tf
+    git ls-tree -r --name-only HEAD
 end
 
 function vf
-    f $argv | selecta | xargs -o vim
-end
-
-function vfa
-    fa $argv | selecta | xargs -o vim
+    f | fzf | xargs -o vim
 end
 
 function va
@@ -160,7 +152,7 @@ end
 
 alias git hub
 alias gti git
-alias a 'git amend --allow-empty'
+alias a 'git amend --allow-empty --no-verify'
 alias gb 'git recent-branches 2.days.ago'
 alias ggco 'git switch'
 
@@ -313,8 +305,7 @@ function color-syntax
 end
 
 alias h=heroku
-alias gp='cd ~/Projects/gitprime/GitPrime'
-alias gcs='cd ~/Projects/gitprime/grandcentral'
+alias gp='cd ~/Projects/SimpleContacts/simplecontacts'
 
 function wtf -d "Print which and --version output for the given command"
     for arg in $argv
