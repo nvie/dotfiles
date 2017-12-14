@@ -3,10 +3,10 @@ set -e
 
 if [ $# -ge 1 ]; then
     max=$1
+    shift
 else
     max=1
 fi
-shift
 
 flow --color=always "$@" | awk -v max=$max '
     BEGIN { num = 0; }
