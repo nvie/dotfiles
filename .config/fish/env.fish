@@ -8,7 +8,6 @@ append-to-path /usr/sbin
 append-to-path ~/bin
 append-to-path ~/.local/bin
 append-to-path ~/Projects/syncfrom
-append-to-path ~/Projects/git-toolbelt
 append-to-path /usr/X11R6/bin
 prepend-to-path /usr/local/sbin
 prepend-to-path /usr/local/bin
