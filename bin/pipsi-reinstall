@@ -2,19 +2,6 @@
 set -e
 
 rm -rf ~/.local
-curl https://raw.githubusercontent.com/nvie/pipsi/master/get-pipsi.py | python2
-
-# Until the latest version with Python 3 support is made available on PyPI, we
-# need to avoid the normal install instructions, and do this instead:
-(
-    cd ~/.local/venvs/pipsi/
-    ./bin/pip uninstall pipsi
-    git clone git@github.com:mitsuhiko/pipsi.git src
-    (
-        cd src/
-        ../bin/pip install --upgrade pip
-        ../bin/pip install -e .
-    )
-)
+curl https://raw.githubusercontent.com/nvie/pipsi/master/get-pipsi.py | python3
 
 pipsi-all-the-things
