@@ -1,7 +1,20 @@
 #!/bin/sh
 set -e
 
-rm -rf ~/.local/bin ~/.local/venvs
+# Remove all stuff pipsi leaves behind
+# It puts all venvs inside ~/.local/venvs, and symlinks binaries from ~/.local/bin
+# Let's only remove the binaries that are pointing to these pipsi "venvs", so
+# we don't remove stuff that isn't pipsi's
+pipsi_bins() {
+  find ~/.local/bin -maxdepth 1 -type l | \
+  while read f; do
+    echo "$f,$(readlink "$f")"
+  done | \
+  grep -Ee '\.local/venvs' | \
+  cut -d, -f1
+}
+
+rm -rf $(pipsi_bins) ~/.local/venvs
 curl https://raw.githubusercontent.com/nvie/pipsi/master/get-pipsi.py | python3
 
 pipsi-all-the-things
