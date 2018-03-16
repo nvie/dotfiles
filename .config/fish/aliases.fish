@@ -150,11 +150,17 @@ function vw
     vim (which "$argv")
 end
 
+function vconflicts
+    # Opens all files with merge conflict markers
+    va '^([<]{7}|[>]{7}|[=]{7})([ ].*)?$'
+end
+
 alias git hub
 alias gti git
 alias a 'git amend --allow-empty --no-verify'
 alias gb 'git recent-branches 2.days.ago'
 alias ggco 'git switch'
+alias fl 'clear; and flow-limit'
 
 function git-search
     git log -S"$argv" --pretty=format:%H | map git show 
