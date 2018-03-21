@@ -8,8 +8,18 @@ else
     max=1
 fi
 
-flow --color=always "$@" | awk -v max=$max '
+# Flow < 0.66
+# flow --color=always "$@" | awk -v max=$max '
+#     BEGIN { num = 0; }
+#     /^([^[:space:]]+)(Library type error|Error|Warning):/ { num++ }
+#     num <= max { print $0 }
+# '
+
+# Flow >= 0.66
+width=$(expr $(tput cols) - 1)
+flow --color=always --message-width="${width}" --show-all-errors | awk -v max=$max '
+
     BEGIN { num = 0; }
-    /^([^[:space:]]+)(Error|Warning):/ { num++ }
+    /^([^[:space:]]+)(Error|Warning) -+/ { num++ }
     num <= max { print $0 }
 '
