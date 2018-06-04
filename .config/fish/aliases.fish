@@ -158,7 +158,7 @@ function vflow -d 'Opens all files with Flow issues in Vim'
     flow | grep -Ee '^Error --' | rev | cut -d' ' -f1 | rev | cut -d: -f1 | sort -u | xargs -o vim
 end
 
-alias git hub
+# alias git hub
 alias gti git
 alias a 'git amend --allow-empty --no-verify'
 alias gb 'git recent-branches 2.days.ago'

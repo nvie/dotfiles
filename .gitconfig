@@ -1,0 +1,148 @@
+[user]
+    name = Vincent Driessen
+    email = me@nvie.com
+
+[core]
+    excludesfile = ~/.git/ignore-global
+    quotepath = false
+    trustctime = false
+    # Taken from (and adapted)
+    # https://github.com/paulirish/dotfiles/commit/6743b907ff586c28cd36e08d1e1c634e2968893e#commitcomment-13349456
+    pager = sh -c '/usr/local/share/git-core/contrib/diff-highlight/diff-highlight | less -r' -
+
+[merge]
+    tool = splice
+    conflictstyle = diff3
+
+[mergetool "mvimdiff"]
+    cmd = "mvim -f -d $MERGED $LOCAL $BASE $REMOTE -c 'wincmd J'"
+    trustExitCode = true
+    keepbackup = false
+
+[mergetool "splice"]
+    cmd = "mvim -f $BASE $LOCAL $REMOTE $MERGED -c 'SpliceInit'"
+    trustExitCode = true
+    keepbackup = false
+
+[color]
+    ui = auto
+
+[color "diff-highlight"]
+    oldNormal = "red"
+    oldHighlight = "red 52"
+    newNormal = "green"
+    newHighlight = "green 22"
+
+[alias]
+    amend = commit --amend --no-verify
+    fixup = commit --amend --no-edit --no-verify
+    br = branch -a
+    lb = local-branches
+    ci = commit --no-verify
+    civ = commit --no-verify -v
+    co = checkout
+    cp = cherry-pick
+    dc = diff --cached
+    di = diff
+    dt = difftool -t Kaleidoscope
+    incoming = !git fetch -q github develop && git log HEAD..FETCH_HEAD
+    kick = push
+    la = !git lg --all
+    last = !git show | awk \"NR==1 {print \\$2}\"
+    copylast = !git last | xargs echo -n | pbcopy
+    lg = log --graph \"--pretty=format:%C(yellow bold)%h%Creset by %C(red)%an%Creset (%ar)%C(cyan bold)%d%Creset%n%s%n%b\"
+    jsonlog = log --pretty=format:'{%n  \"commit\": \"%H\",%n  \"abbreviated_commit\": \"%h\",%n  \"tree\": \"%T\",%n  \"abbreviated_tree\": \"%t\",%n  \"parent\": \"%P\",%n  \"abbreviated_parent\": \"%p\",%n  \"refs\": \"%D\",%n  \"encoding\": \"%e\",%n  \"subject\": \"%s\",%n  \"sanitized_subject_line\": \"%f\",%n  \"body\": \"%b\",%n  \"commit_notes\": \"%N\",%n  \"verification_flag\": \"%G?\",%n  \"signer\": \"%GS\",%n  \"signer_key\": \"%GK\",%n  \"author\": {%n    \"name\": \"%aN\",%n    \"email\": \"%aE\",%n    \"date\": \"%aD\"%n  },%n  \"commiter\": {%n    \"name\": \"%cN\",%n    \"email\": \"%cE\",%n    \"date\": \"%cD\"%n  }%n},'
+    outgoing = !git fetch -q github develop && git log FETCH_HEAD..HEAD
+    praise = blame
+    st = status -s -b
+    su = submodule update
+    wtf = what-the-hell-just-happened
+    wth = what-the-hell-just-happened
+    x = !"f () { if [ $# -ge 1 ]; then gitx \"$@\"; else gitx HEAD; fi }; f"
+    aa = add --all
+    pullff = pull --ff-only
+    hd = log -1 \"--pretty=format:%C(yellow bold)%h%Creset by %C(red)%an%Creset (%ar)%C(cyan bold)%d%Creset%n%s%n%b\"
+    expand = rev-list -1
+    ap = add -p
+    cc = reset HEAD
+    rhh = reset --hard HEAD~1
+    ra = rebase --abort
+    rc = rebase --continue
+    ri = rebase --interactive --autosquash --autostash
+    r2 = rebase --interactive --autosquash --autostash HEAD~2
+    r3 = rebase --interactive --autosquash --autostash HEAD~3
+    r4 = rebase --interactive --autosquash --autostash HEAD~4
+    r5 = rebase --interactive --autosquash --autostash HEAD~5
+    r6 = rebase --interactive --autosquash --autostash HEAD~6
+    r7 = rebase --interactive --autosquash --autostash HEAD~7
+    r8 = rebase --interactive --autosquash --autostash HEAD~8
+    r9 = rebase --interactive --autosquash --autostash HEAD~9
+    n = !"git ls-files | xargs notes | awk -F: '{ printf(\"%s:%s\\n\", $1, $2); print $3, $4; print \"\" }' | grcat conf.notes"
+    #mt = "! [ -f /Applications/MacVim.app/Contents/MacOS/Vim ] && git mergetool -t mvimdiff || git mergetool -t vimdiff"
+    #mt = mergetool
+    mt = mergetool -t Kaleidoscope
+    pr = pull --rebase=preserve
+
+    # really, really, really stash
+    rrrs = stash-everything
+    rrrsp = stash pop
+
+    # fetch, for fuck's sake
+    fffs = ff
+    ff = fetch origin "+master:master" "+production:production" "+canary:canary" "+refs/heads/*:refs/remotes/origin/*"
+
+    # Restore some of my favorite Hub subcommands as Git aliases.
+    # Previously I could simply alias hub => git entirely, but this didn't work
+    # as they extended the number of subcommands to conflicth with some of my
+    # favorite daily commands.
+    browse = !hub browse
+    ci-status = !hub ci-status
+    compare = !hub compare
+    prs = !hub pr
+    release = !hub release
+
+    blast = !hub browse -- commit/`git last`
+    wiki = !hub browse -- wiki
+    browse-commit = !"hub browse -- commit/\"$1\" #"
+    bc = browse-commit
+    snap = !"git aa && git ci -m CHECKPOINT"
+    switch = !"git recent-branches | fzf | ifne xargs git checkout"
+
+    pc = push-current
+    pt = push --tags
+    ms = merge-status
+    ua = update-all
+    b = !hub browse
+
+# [github]
+#     user = ********
+#     token = ********
+
+[url "https://github.com/"]
+    insteadOf = gh
+
+[diff]
+    # compactionHeuristic = true  # for more beautiful diffs that favor whitespace lines to the hunk boundaries
+    indentHeuristic = true  # for more beautiful diffs that favor whitespace lines to the hunk boundaries
+    tool = mvim -d
+    algorithm = patience
+
+[help]
+    autocorrect = 1
+
+[push]
+    default = simple
+
+[difftool "Kaleidoscope"]
+    cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+
+[mergetool "Kaleidoscope"]
+    cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+    trustExitCode = true
+
+[filter "media"]
+    clean = git-media-clean %f
+    smudge = git-media-smudge %f
+
+[credential]
+    helper = osxkeychain
