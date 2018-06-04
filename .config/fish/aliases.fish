@@ -150,9 +150,12 @@ function vw
     vim (which "$argv")
 end
 
-function vconflicts
-    # Opens all files with merge conflict markers
+function vconflicts -d 'Opens all files with merge conflict markers in Vim'
     va '^([<]{7}|[>]{7}|[=]{7})([ ].*)?$'
+end
+
+function vflow -d 'Opens all files with Flow issues in Vim'
+    flow | grep -Ee '^Error --' | rev | cut -d' ' -f1 | rev | cut -d: -f1 | sort -u | xargs -o vim
 end
 
 alias git hub
