@@ -1,0 +1,29 @@
+#!/bin/sh
+set -e
+
+usage () {
+    echo "usage: make-mp3s-smaller-for-yfke [-Q <quality>] [-O <output-dir>] [-m(ono)] <file ...>" >&2
+}
+
+quality="128k"
+num_channels=2
+output_dir=~/Desktop/LQ\ Music
+while getopts Q:O:mh flag; do
+    case "$flag" in
+        Q) quality="$OPTARG";;
+        O) output_dir="$OPTARG";;
+        m) num_channels=1;;
+        h) usage; exit 2;;
+    esac
+done
+shift $(($OPTIND - 1))
+
+mkdir -p "$output_dir"
+open "$output_dir"
+for f in "$@"; do
+    rel=$(basename "$f")
+    relmp3=$(echo "$rel" | sed -Ee 's/^(.*)[.]([^.]+)$/\1.mp3/')
+    ffmpeg -v 5 -y -i "$f" -acodec libmp3lame -ac $num_channels -ab "$quality" "$output_dir/$relmp3"
+    du -h "$output_dir/$relmp3"
+done
+du -h "$output_dir"
