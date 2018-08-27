@@ -52,7 +52,7 @@ alias x 'tig HEAD'
 alias xx 'tig --exclude=production --exclude="*/production" --exclude=canary --exclude="*/canary" --branches'
 alias xxa 'tig --exclude=production --exclude="*/production" --exclude=canary --exclude="*/canary" --all'
 alias xxaa 'tig --all'
-alias notes 'ag "TODO|HACK|FIXME|OPTIMIZE"'
+alias notes 'rg "TODO|HACK|FIXME|OPTIMIZE"'
 
 alias m make
 alias mm 'make run'
@@ -92,9 +92,9 @@ function va
         set argv
     end
 
-    set ag_pattern (echo $pattern | sed -Ee 's/[<>]/\\\\b/g')
+    set rg_pattern (echo $pattern | sed -Ee 's/[<>]/\\\\b/g')
     set vim_pattern (echo $pattern | sed -E -e 's,([/=]),\\\\\1,g' -e 's,.*,/\\\\v&,')
-    ag -l --smart-case --null $ag_pattern -- $argv ^/dev/null | xargs -0 -o vim -c $vim_pattern
+    rg -l --smart-case --null $rg_pattern -- $argv ^/dev/null | xargs -0 -o vim -c $vim_pattern
 end
 
 function vaa
@@ -105,9 +105,9 @@ function vaa
         set argv
     end
 
-    set ag_pattern (echo $argv | sed -Ee 's/[<>]/\\\\b/g')
+    set rg_pattern (echo $argv | sed -Ee 's/[<>]/\\\\b/g')
     set vim_pattern (echo $argv | sed -E -e 's,([/=]),\\\\\1,g' -e 's,.*,/\\\\v&,')
-    ag -l --smart-case --null -a $ag_pattern -- $argv ^/dev/null | xargs -0 -o vim -c $vim_pattern
+    rg -l --smart-case --null $rg_pattern -- $argv ^/dev/null | xargs -0 -o vim -c $vim_pattern
 end
 
 function vc
@@ -314,7 +314,7 @@ function color-syntax
 end
 
 alias h=heroku
-alias gp='cd ~/Projects/SimpleContacts/simplecontacts'
+alias gp='cd ~/Projects/SimpleContacts/core/app_website'
 
 function wtf -d "Print which and --version output for the given command"
     for arg in $argv

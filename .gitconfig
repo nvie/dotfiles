@@ -37,6 +37,8 @@
     amend = commit --amend --no-verify
     fixup = commit --amend --no-edit --no-verify
     br = branch -a
+    bd = branch -d
+    bdd = branch -D
     lb = local-branches
     ci = commit --no-verify
     civ = commit --no-verify -v
@@ -101,10 +103,11 @@
     prs = !hub pr
     release = !hub release
 
+    pulls = !hub browse -- pulls
     blast = !hub browse -- commit/`git last`
     wiki = !hub browse -- wiki
-    browse-commit = !"hub browse -- commit/\"$1\" #"
-    bc = browse-commit
+    browse-commit = !"hub browse -- commit/\"$1\""
+    bc = !"git browse-commit $(git sha ${1:-@})"
     snap = !"git aa && git ci -m CHECKPOINT"
     switch = !"git recent-branches | fzf | ifne xargs git checkout"
 
@@ -113,10 +116,6 @@
     ms = merge-status
     ua = update-all
     b = !hub browse
-
-# [github]
-#     user = ********
-#     token = ********
 
 [url "https://github.com/"]
     insteadOf = gh
