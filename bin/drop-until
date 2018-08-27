@@ -1,0 +1,10 @@
+#!/bin/sh
+set -e
+
+pattern="$1"
+
+awk "
+    BEGIN { matched = 0; }
+    /$pattern/ { matched = 1 }
+    { if (matched) { print \$0 } }
+"
