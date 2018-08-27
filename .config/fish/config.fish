@@ -156,7 +156,7 @@ if status --is-login
 end
 
 if status --is-interactive
-    set CDPATH . ~/Projects/SimpleContacts ~/Projects
+    set CDPATH . ~/Projects/SimpleContacts/core ~/Projects/SimpleContacts ~/Projects
 end
 
 # }}}
