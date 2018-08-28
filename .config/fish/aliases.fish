@@ -92,21 +92,20 @@ function va
         set argv
     end
 
-    set rg_pattern (echo $pattern | sed -Ee 's/[<>]/\\\\b/g')
-    set vim_pattern (echo $pattern | sed -E -e 's,([/=]),\\\\\1,g' -e 's,.*,/\\\\v&,')
-    rg -l --smart-case --null $rg_pattern -- $argv ^/dev/null | xargs -0 -o vim -c $vim_pattern
-end
-
-function vaa
-    set pattern $argv[1]
-    if test (count $argv) -gt 1
-        set argv $argv[2..-1]
-    else
-        set argv
+    function to_safe
+        sed -E -e 's/[\\][=]/__EQ__/g' -e 's/[\\][<]/__LT__/g' -e 's/[\\][>]/__GT__/g'
     end
 
-    set rg_pattern (echo $argv | sed -Ee 's/[<>]/\\\\b/g')
-    set vim_pattern (echo $argv | sed -E -e 's,([/=]),\\\\\1,g' -e 's,.*,/\\\\v&,')
+    function to_unsafe_rg
+        sed -E -e 's/__LT__/</g' -e 's/__GT__/>/g' -e 's/__EQ__/=/g'
+    end
+
+    function to_unsafe_vim
+        sed -E -e 's/__LT__/[<]/g' -e 's/__GT__/[>]/g' -e 's/__EQ__/[=]/g'
+    end
+
+    set rg_pattern (echo $pattern | to_safe | sed -E -e 's/[<>]/\\\\b/g' | to_unsafe_rg)
+    set vim_pattern (echo $pattern | to_safe | sed -E -e 's,([/=]),\\\\\1,g' -e 's,.*,/\\\\v&,' | to_unsafe_vim)
     rg -l --smart-case --null $rg_pattern -- $argv ^/dev/null | xargs -0 -o vim -c $vim_pattern
 end
 
@@ -151,7 +150,7 @@ function vw
 end
 
 function vconflicts -d 'Opens all files with merge conflict markers in Vim'
-    va '^([<]{7}|[>]{7}|[=]{7})([ ].*)?$'
+    va '^(\<{7}|\>{7}|\={7})([ ].*)?$'
 end
 
 function vflow -d 'Opens all files with Flow issues in Vim'
