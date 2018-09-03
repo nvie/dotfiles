@@ -142,9 +142,6 @@ function fish_user_key_bindings
     bind \ey 'commandline -b | pbcopy'
     bind \e'>' 'commandline -a -- "| shiftr"'
     bind \e'<' 'commandline -a -- "| shiftl"'
-    bind \es 'git st'
-    bind \ed 'git di'
-    bind \ex 'git x'
 end
 
 # }}}
