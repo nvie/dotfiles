@@ -83,7 +83,7 @@
     #mt = "! [ -f /Applications/MacVim.app/Contents/MacOS/Vim ] && git mergetool -t mvimdiff || git mergetool -t vimdiff"
     #mt = mergetool
     mt = mergetool -t Kaleidoscope
-    pr = pull --rebase=preserve
+    pr = pull --rebase=preserve --autostash
 
     # really, really, really stash
     rrrs = stash-everything
