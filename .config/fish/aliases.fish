@@ -314,6 +314,7 @@ end
 
 alias h=heroku
 alias gp='cd ~/Projects/SimpleContacts/core/app_website'
+alias ga='cd ~/Projects/SimpleContacts/core/app_admin'
 
 function wtf -d "Print which and --version output for the given command"
     for arg in $argv
