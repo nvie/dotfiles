@@ -1,0 +1,20 @@
+#!/bin/sh
+set -e
+
+cd ~/Projects/SimpleContacts/core
+
+if [ "$(git current-branch)" = "master" ]; then
+  echo "Current branch cannot be master" >&2
+  exit 2
+fi
+
+if [ ! -d ~/Desktop/SimpleContacts ]; then
+  git worktree add ~/Desktop/SimpleContacts master
+fi
+
+cd ~/Desktop/SimpleContacts
+touch DEPLOYING  # to mark worktree dirty, so it cannot be removed
+set +e
+bin/deploy "$1"
+set -e
+rm DEPLOYING  # to mark worktree clean again
