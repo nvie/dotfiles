@@ -33,7 +33,6 @@ lolcat
 moreutils
 mysql
 mysql@5.7
-neovim
 nginx
 ngrep
 openssl@1.1
@@ -44,7 +43,6 @@ pngquant
 postgresql
 pv
 pyenv
-pypy
 reattach-to-user-namespace
 redis
 ripgrep
@@ -52,6 +50,7 @@ sphinx-doc
 ssh-copy-id
 tesseract
 tig
+tldr
 tree
 unrar
 vim
@@ -62,5 +61,7 @@ yarn
 "
 
 echo "$PACKAGES" | while read line; do
-    brew install $line
+    if [ "$line" != "" ]; then
+        brew install "$line"
+    fi
 done
