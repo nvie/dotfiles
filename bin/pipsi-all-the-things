@@ -1,29 +1,32 @@
 #!/bin/sh
 set -e
 
-pipsi install --python python2 autopep8
-pipsi install --python python2 bpython
-pipsi install --python python2 cookiecutter
-pipsi install --python python2 devpi-client
-pipsi install --python python2 flake8
-pipsi install --python python2 howdoi
-pipsi install --python python2 httpie
-pipsi install --python python3 invoke
-pipsi install --python python3 iron[all]
-pipsi install --python python2 pygments
-pipsi install --python python3 python-fu
-pipsi install --python python2 sr
-pipsi install --python python2 supervisor
-pipsi install --python python2 tox
-pipsi install --python python2 unp
-pipsi install --python python2 watchdog
+python2="/Users/nvie/.pyenv/versions/2.7.15/bin/python2"
+python3="/Users/nvie/.pyenv/versions/3.7.0/bin/python3"
+
+# pipsi install --python $python2 autopep8
+# pipsi install --python $python2 bpython
+# pipsi install --python $python2 cookiecutter
+# pipsi install --python $python2 devpi-client
+# pipsi install --python $python2 flake8
+pipsi install --python $python2 howdoi
+pipsi install --python $python2 httpie
+# pipsi install --python $python3 invoke
+pipsi install --python $python3 iron[all]
+pipsi install --python $python2 pygments
+# pipsi install --python $python3 python-fu
+pipsi install --python $python2 sr
+# pipsi install --python $python2 supervisor
+# pipsi install --python $python2 tox
+# pipsi install --python $python2 unp
+# pipsi install --python $python2 watchdog
 
 # Custom projects
-(cd ~/Projects/git-setdate && pipsi install --python python2 --editable .)
-(cd ~/Projects/important-bits && pipsi install --python python2 --editable .)
+(cd ~/Projects/git-setdate && pipsi install --python $python2 --editable .)
+(cd ~/Projects/important-bits && pipsi install --python $python2 --editable .)
 
 # Unreleased (newer) version of s3cmd
-pipsi install --python python2 https://pypi.python.org/packages/source/s/s3cmd/s3cmd-1.5.0-alpha3.tar.gz#egg=s3cmd
+# pipsi install --python $python2 https://pypi.python.org/packages/source/s/s3cmd/s3cmd-1.5.0-alpha3.tar.gz#egg=s3cmd
 
 # Upgrade all pip versions
 for pip in ~/.local/venvs/*/bin/pip; do
