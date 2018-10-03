@@ -10,6 +10,9 @@
 .MacOSX
 .Trash
 
+# Node stuff
+/.v8flags.*
+
 # ZSH junk
 /.zcompdump*
 /.zsh-update
