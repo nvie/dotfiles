@@ -6,6 +6,7 @@
 /.zshrc-secrets
 
 # iJunk
+.DS_Store
 .MacOSX
 .Trash
 
