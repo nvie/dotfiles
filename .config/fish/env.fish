@@ -12,14 +12,12 @@ append-to-path ~/Projects/git-toolbelt
 prepend-to-path /usr/local/sbin
 prepend-to-path /usr/local/bin
 
-# Python {{{
+# Old MySQL version (5.7)
+append-to-path /usr/local/Cellar/mysql@5.7/5.7.23/bin
 
+# Python: source pyenv config for fish
 set -gx PIP_DOWNLOAD_CACHE ~/Library/Caches/pip-downloads
-
-# Source pyenv config for fish
 . (pyenv init - fish | psub)
-
-# }}}
 
 # Set locale
 set -gx LC_ALL en_US.UTF-8
