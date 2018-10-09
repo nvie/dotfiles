@@ -28,7 +28,7 @@ TARGET="$DRIVE/Manual Backups/$(date -u +"%Y-%m-%d")"
 mkdir -p "$TARGET"
 
 # Dotfiles take a little special command to copy properly
-find $(ls -d .* | grep -vEe '^[.][.]?$') -print0 | rsync -avz --progress --files-from=- --from0 ./ "$TARGET/dotfiles/" | sed -Ee 's/^/[dotfiles] /'
+find $(ls -d .* | grep -vEe '^[.][.]?$' | grep -v .Trash) -print0 | rsync -avz --progress --files-from=- --from0 ./ "$TARGET/dotfiles/" | sed -Ee 's/^/[dotfiles] /'
 
 # Normal full dir backups
 rsync -avz --progress ~/Projects/  "$TARGET/Projects/" --exclude node_modules | sed -Ee 's/^/[Projects] /'
@@ -36,7 +36,8 @@ rsync -avz --progress ~/bin/       "$TARGET/bin/"                             | 
 rsync -avz --progress ~/Desktop/   "$TARGET/Desktop/"                         | sed -Ee 's/^/[Desktop] /'
 rsync -avz --progress ~/Downloads/ "$TARGET/Downloads/"                       | sed -Ee 's/^/[Downloads] /'
 rsync -avz --progress ~/Dropbox/   "$TARGET/Dropbox/"                         | sed -Ee 's/^/[Dropbox] /'
-rsync -avz --progress ~/Library/   "$TARGET/Library/" --exclude Caches        | sed -Ee 's/^/[Library] /'
+rsync -avz --progress ~/Library/   "$TARGET/Library/" \
+    --exclude Caches --exclude Arq                                            | sed -Ee 's/^/[Library] /'
 rsync -avz --progress ~/Movies/    "$TARGET/Movies/"                          | sed -Ee 's/^/[Movies] /'
 rsync -avz --progress ~/Music/     "$TARGET/Music/"                           | sed -Ee 's/^/[Music] /'
 rsync -avz --progress ~/Pictures/  "$TARGET/Pictures/"                        | sed -Ee 's/^/[Pictures] /'
