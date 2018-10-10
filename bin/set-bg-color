@@ -1,0 +1,14 @@
+#!/bin/bash
+
+R=${1:-0}
+G=${2:-0}
+B=${3:-0}
+osascript <<EOF
+
+  tell application "iTerm2"
+    tell current session of current window
+      set background color to {$(($R*65535/255)), $(($G*65535/255)), $(($B*65535/255))}
+    end tell
+  end tell
+
+EOF
