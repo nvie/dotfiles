@@ -238,11 +238,11 @@ function p -d "Start the best Python shell that is available"
     eval $cmd $argv
 end
 
-alias pm 'python manage.py'
-alias pmm 'python manage.py migrate'
-alias pmmm 'python manage.py makemigrations'
-alias pms 'python manage.py shell_plus'
-alias pmr 'python manage.py runserver_plus 0.0.0.0:8000'
+# alias pm 'python manage.py'
+# alias pmm 'python manage.py migrate'
+# alias pmmm 'python manage.py makemigrations'
+# alias pms 'python manage.py shell_plus'
+# alias pmr 'python manage.py runserver_plus 0.0.0.0:8000'
 
 function pipr -d "Find & install all requirements for this project"
     pushd (git root)
