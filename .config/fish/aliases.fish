@@ -31,15 +31,15 @@ end
 
 set LS_COLORS dxfxcxdxbxegedabagacad
 
-alias df 'command df -m'
+alias df 'df -m'
 alias j jobs
 alias l ls
 alias ll 'ls -la'
-alias ls 'command ls -FG'
-alias su 'command su -m'
+alias ls 'ls -FG'
+alias su 'su -m'
 
 function lsd -d 'List only directories (in the current dir)'
-    command ls -d */ | sed -Ee 's,/+$,,'
+    ls -d */ | sed -Ee 's,/+$,,'
 end
 
 # Colorized cat (will guess file type based on contents)
@@ -250,13 +250,13 @@ function pipr -d "Find & install all requirements for this project"
     pushd (git root)
     begin
         if test -f requirements.txt
-            command pip install -r requirements.txt
+            pip install -r requirements.txt
         end
         if test -f dev-requirements.txt
-            command pip install -r dev-requirements.txt
+            pip install -r dev-requirements.txt
         end
         if test -f .pipignore
-            command pip install -r .pipignore
+            pip install -r .pipignore
         end
     end
     popd
