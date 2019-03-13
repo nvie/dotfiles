@@ -47,7 +47,6 @@
     cp = cherry-pick
     dc = diff --cached
     di = diff
-    dt = difftool -t Kaleidoscope
     incoming = !git fetch -q github develop && git log HEAD..FETCH_HEAD
     kick = push
     la = !git lg --all
