@@ -36,6 +36,7 @@
 [alias]
     amend = commit --amend --no-verify
     fixup = commit --amend --no-edit --no-verify
+    fw = !"git fixup-with"
     br = branch -a
     bd = branch -d
     bdd = branch -D
@@ -79,6 +80,8 @@
     r7 = rebase --interactive --autosquash --autostash HEAD~7
     r8 = rebase --interactive --autosquash --autostash HEAD~8
     r9 = rebase --interactive --autosquash --autostash HEAD~9
+    sep = separator
+    shatter = shatter-by-file
     n = !"git ls-files | xargs notes | awk -F: '{ printf(\"%s:%s\\n\", $1, $2); print $3, $4; print \"\" }' | grcat conf.notes"
     #mt = "! [ -f /Applications/MacVim.app/Contents/MacOS/Vim ] && git mergetool -t mvimdiff || git mergetool -t vimdiff"
     #mt = mergetool
@@ -91,7 +94,7 @@
 
     # fetch, for fuck's sake
     fffs = ff
-    ff = fetch origin "+master:master" "+production:production" "+canary:canary" "+refs/heads/*:refs/remotes/origin/*"
+    ff = fetch origin '+refs/heads/*:refs/remotes/origin/*' '+master:master'
 
     # Restore some of my favorite Hub subcommands as Git aliases.
     # Previously I could simply alias hub => git entirely, but this didn't work
