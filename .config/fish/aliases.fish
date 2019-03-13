@@ -162,7 +162,9 @@ alias gti git
 alias a 'git amend --allow-empty --no-verify'
 alias gb 'git recent-branches 2.days.ago'
 alias ggco 'git switch'
+alias ggbd 'git branch -D (g local-branches | fzf)'
 alias fl 'clear; and flow-limit'
+alias fflow 'flow stop; and flow'
 
 function git-search
     git log -S"$argv" --pretty=format:%H | map git show 
@@ -313,8 +315,10 @@ function color-syntax
 end
 
 alias h=heroku
-alias gp='cd ~/Projects/SimpleContacts/core/app_website'
+alias gp='cd ~/Projects/SimpleContacts/core/api'
+alias gw='cd ~/Projects/SimpleContacts/core/app_contact_lenses'
 alias ga='cd ~/Projects/SimpleContacts/core/app_admin'
+alias gs='cd ~/Projects/SimpleContacts/api-schema'
 
 function wtf -d "Print which and --version output for the given command"
     for arg in $argv
