@@ -106,7 +106,7 @@ function va
 
     set rg_pattern (echo $pattern | to_safe | sed -E -e 's/[<>]/\\\\b/g' | to_unsafe_rg)
     set vim_pattern (echo $pattern | to_safe | sed -E -e 's,([/=]),\\\\\1,g' -e 's,.*,/\\\\v&,' | to_unsafe_vim)
-    rg -l --smart-case --null $rg_pattern -- $argv ^/dev/null | xargs -0 -o vim -c $vim_pattern
+    rg -l --smart-case --null $rg_pattern -- $argv 2>/dev/null | xargs -0 -o vim -c $vim_pattern
 end
 
 function vc
@@ -192,10 +192,10 @@ function p -d "Start the best Python shell that is available"
     set -l cmd
 
     if test -f manage.py
-        if pip freeze ^/dev/null | grep -iq 'django-extensions'
+        if pip freeze 2>/dev/null | grep -iq 'django-extensions'
             set cmd (which python) manage.py shell_plus
         else
-            if pip freeze ^/dev/null | grep -iq 'flask-script'
+            if pip freeze 2>/dev/null | grep -iq 'flask-script'
                 # do nothing, use manage.py, fall through
                 set -e cmd
             else
@@ -205,7 +205,7 @@ function p -d "Start the best Python shell that is available"
     end
 
     if test -z $cmd
-        set -l interpreters (which bpython ^/dev/null; which ipython ^/dev/null; which python ^/dev/null)
+        set -l interpreters (which bpython 2>/dev/null; which ipython 2>/dev/null; which python 2>/dev/null)
 
         if test -z "$interpreters"
             set_color red
