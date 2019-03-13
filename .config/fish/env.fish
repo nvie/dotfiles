@@ -13,7 +13,7 @@ prepend-to-path /usr/local/sbin
 prepend-to-path /usr/local/bin
 
 # Old MySQL version (5.7)
-append-to-path /usr/local/Cellar/mysql@5.7/5.7.23/bin
+append-to-path /usr/local/Cellar/mysql@5.7/5.7.25/bin
 
 # Python: source pyenv config for fish
 set -gx PIP_DOWNLOAD_CACHE ~/Library/Caches/pip-downloads
