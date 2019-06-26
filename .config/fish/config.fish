@@ -23,7 +23,7 @@ function fish_prompt
     printf ' in '
 
     set_color $fish_color_cwd
-    printf '%s' (echo $PWD | sed -e "s|^$HOME|~|" -e 's|^/private||')
+    printf '%s' (echo $PWD | sed -e "s|^$HOME|~|" -e 's|^/private||' -e 's|~/Projects/SimpleContacts/core/||')
     set_color normal
 
     git_prompt
