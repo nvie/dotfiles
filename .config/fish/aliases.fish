@@ -321,6 +321,7 @@ end
 alias h=heroku
 alias gp='cd ~/Projects/SimpleContacts/core/api'
 alias gw='cd ~/Projects/SimpleContacts/core/app_contact_lenses'
+alias gbc='cd ~/Projects/SimpleContacts/core/app_birth_control'
 alias ga='cd ~/Projects/SimpleContacts/core/app_admin'
 alias gs='cd ~/Projects/SimpleContacts/api-schema'
 
