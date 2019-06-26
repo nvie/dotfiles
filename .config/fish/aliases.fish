@@ -153,8 +153,12 @@ function vconflicts -d 'Opens all files with merge conflict markers in Vim'
     va '^(\<{7}|\>{7}|\={7})([ ].*)?$'
 end
 
+function fll -d 'Lists all files with Flow issues'
+    flow | grep -Ee '^Error --' | rev | cut -d' ' -f1 | rev | cut -d: -f1 | sort -u
+end
+
 function vflow -d 'Opens all files with Flow issues in Vim'
-    flow | grep -Ee '^Error --' | rev | cut -d' ' -f1 | rev | cut -d: -f1 | sort -u | xargs -o vim
+    fll | xargs -o vim
 end
 
 # alias git hub
