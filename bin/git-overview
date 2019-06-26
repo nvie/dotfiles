@@ -1,0 +1,18 @@
+#!/bin/sh
+set -eu
+
+git log \
+  --color=always \
+  --oneline \
+  --decorate \
+  --decorate-refs-exclude="refs/remotes/*" \
+  --decorate-refs-exclude="refs/heads/origin/*" \
+  --graph \
+  --simplify-by-decoration \
+  $(git local-branches) \
+  --pretty="tformat:%h%C(bold)%d%C(reset)" \
+  | sed -E \
+        -e 's/origin\/[[:alnum:]/-]+//g' \
+        -e 's/HEAD -\> //' -e 's/, //g' \
+        -e 's/\(\)//' \
+  | less -R
