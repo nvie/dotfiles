@@ -139,6 +139,7 @@ function fish_user_key_bindings
     bind \ec append-copy
     bind \ep prepend-paste
     bind \ev prepend-vim
+    bind \ea search-for-pboard
     bind \ey 'commandline -b | pbcopy'
     bind \e'>' 'commandline -a -- "| shiftr"'
     bind \e'<' 'commandline -a -- "| shiftl"'
