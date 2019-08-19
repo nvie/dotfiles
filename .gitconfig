@@ -110,7 +110,7 @@
     browse-commit = !"hub browse -- commit/\"$1\""
     bc = !"git browse-commit $(git sha ${1:-@})"
     snap = !"git aa && git ci -m CHECKPOINT"
-    switch = !"git recent-branches | fzf | ifne xargs git checkout"
+    switchi = !"git recent-branches | fzf | ifne xargs git checkout"
 
     pc = push-current
     pt = push --tags

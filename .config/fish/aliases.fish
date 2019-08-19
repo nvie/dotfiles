@@ -165,7 +165,7 @@ end
 alias gti git
 alias a 'git amend --allow-empty --no-verify'
 alias gb 'git recent-branches 2.days.ago'
-alias ggco 'git switch'
+alias ggco 'git switchi'
 alias ggbd 'git branch -D (g local-branches | fzf)'
 alias fl 'clear; and flow-limit'
 alias fflow 'flow stop; and flow'

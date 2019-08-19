@@ -2,4 +2,24 @@
 # Shamelessly stolen from https://github.com/nficano/dotfiles/blob/master/bin/kill-by-port
 set -eu
 
-lsof -i :"$@" | grep LISTEN | sed -Ee 's/^[^0-9]+([0-9]+).*$/\1/' | xargs kill
+PORT="$1"
+
+find_proc_by_port () {
+    lsof -i :"$1" | grep LISTEN | sed -Ee 's/^[^0-9]+([0-9]+).*$/\1/' 
+}
+
+if [ "$(find_proc_by_port "$PORT" | wc -l)" -ge 1 ]; then
+    THEPID="$(find_proc_by_port "$PORT")"
+    echo kill "$THEPID"
+    kill "$THEPID"
+
+    echo ""
+    echo "If the above did not work, try these:"
+    echo ""
+    echo "    kill -9 $THEPID"
+    echo "    sudo kill -9 $THEPID"
+    echo ""
+else
+    echo "(no processes owning port $@)" >&2
+    exit 0
+fi
