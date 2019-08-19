@@ -33,6 +33,7 @@
 /.adobe
 /.alvzfmtrc
 /.android
+/.ansible/
 /.ansible_galaxy
 /.ansible_roles/
 /.appcfg_cookies
@@ -63,6 +64,7 @@
 /.docker/
 /.dropbox
 /.dropbox-master
+/.dts/
 /.dvdcss
 /.eaglerc
 /.emacs.d
@@ -95,6 +97,7 @@
 /.msgsrc
 /.my.cnf
 /.netrc
+/.ngrok2/
 /.njxnqxgn
 /.node-gyp/
 /.npm
