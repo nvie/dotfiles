@@ -13,7 +13,7 @@ prepend-to-path /usr/local/sbin
 prepend-to-path /usr/local/bin
 
 # Old MySQL version (5.7)
-append-to-path /usr/local/Cellar/mysql@5.7/5.7.27/bin
+append-to-path /usr/local/Cellar/mysql@5.7/5.7.27_1/bin
 
 # Old MongoDB version (3.0) for Sleutelzorg/Heroku
 append-to-path /usr/local/opt/mongodb@3.0/bin
