@@ -15,13 +15,13 @@ function fish_prompt
     set_color magenta
     printf '%s' $user
     set_color normal
-    printf ' at '
 
-    set_color yellow
-    printf '%s' (hostname -s)
-    set_color normal
+    # printf ' at '
+    # set_color yellow
+    # printf '%s' (hostname -s)
+    # set_color normal
+
     printf ' in '
-
     set_color $fish_color_cwd
     printf '%s' (echo $PWD | sed -e "s|^$HOME|~|" -e 's|^/private||' -e 's|~/Projects/SimpleContacts/core/||')
     set_color normal
