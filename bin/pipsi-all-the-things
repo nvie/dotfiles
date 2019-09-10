@@ -1,8 +1,8 @@
 #!/bin/sh
 set -e
 
-python2="/Users/nvie/.pyenv/versions/2.7.15/bin/python2"
-python3="/Users/nvie/.pyenv/versions/3.7.0/bin/python3"
+python2="/Users/nvie/.pyenv/versions/2.7.16/bin/python2"
+python3="/Users/nvie/.pyenv/versions/3.7.4/bin/python3"
 
 # pipsi install --python $python2 autopep8
 # pipsi install --python $python2 bpython
