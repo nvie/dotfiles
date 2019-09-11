@@ -27,7 +27,6 @@ function fish_prompt
     set_color normal
 
     git_prompt
-    virtualenv_prompt
 
     set_color normal
     printf ' (%s)' (date +%H:%M)
@@ -76,15 +75,6 @@ function git_prompt
         printf '%s' (git_current_branch)
         set_color green
         #git_prompt_status
-        set_color normal
-    end
-end
-
-function virtualenv_prompt
-    if [ -n "$VIRTUAL_ENV" ]
-        printf ' inside '
-        set_color yellow
-        printf '%s ' (basename "$VIRTUAL_ENV")
         set_color normal
     end
 end
