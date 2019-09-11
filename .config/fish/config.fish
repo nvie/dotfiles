@@ -72,7 +72,7 @@ function git_prompt
     if git rev-parse --show-toplevel >/dev/null 2>&1
         set_color normal
         printf ' on '
-        set_color magenta
+        set_color yellow
         printf '%s' (git_current_branch)
         set_color green
         #git_prompt_status
