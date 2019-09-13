@@ -12,7 +12,7 @@ git log \
   $(git local-branches) \
   --pretty="tformat:%h%C(bold)%d%C(reset)" \
   | sed -E \
-        -e 's/origin\/[[:alnum:]/-]+//g' \
+        -e 's/origin\/[^, )]+//g' \
         -e 's/HEAD -\> //' -e 's/, //g' \
         -e 's/\(\)//' \
   | less -R
