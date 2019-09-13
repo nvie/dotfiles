@@ -324,6 +324,7 @@ alias gw='cd ~/Projects/SimpleContacts/core/app_contact_lenses'
 alias gbc='cd ~/Projects/SimpleContacts/core/app_birth_control'
 alias ga='cd ~/Projects/SimpleContacts/core/app_admin'
 alias gs='cd ~/Projects/SimpleContacts/api-schema'
+alias cg='codegen'
 
 function wtf -d "Print which and --version output for the given command"
     for arg in $argv
