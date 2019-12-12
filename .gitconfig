@@ -85,6 +85,7 @@
     #mt = mergetool
     mt = mergetool -t Kaleidoscope
     pr = pull --rebase=merges --autostash
+    cdf = clean -df
 
     # really, really, really stash
     rrrs = stash-everything
