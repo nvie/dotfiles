@@ -80,8 +80,6 @@
     r9 = rebase --interactive --autosquash --autostash HEAD~9
     sep = separator --no-verify
     shatter = shatter-by-file
-    n = !"git ls-files | xargs notes | awk -F: '{ printf(\"%s:%s\\n\", $1, $2); print $3, $4; print \"\" }' | grcat conf.notes"
-    #mt = "! [ -f /Applications/MacVim.app/Contents/MacOS/Vim ] && git mergetool -t mvimdiff || git mergetool -t vimdiff"
     #mt = mergetool
     mt = mergetool -t Kaleidoscope
     pr = pull --rebase=merges --autostash
