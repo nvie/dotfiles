@@ -29,14 +29,6 @@ function timestamp
     python -c 'import time; print(int(time.time()))'
 end
 
-function g
-    if test (count $argv) -ge 1
-      git $argv
-    else
-      git st
-    end
-end
-
 set LS_COLORS dxfxcxdxbxegedabagacad
 
 alias df 'df -m'
@@ -53,6 +45,7 @@ end
 # Colorized cat (will guess file type based on contents)
 alias ccat 'pygmentize -g'
 
+alias g git
 alias c clear
 alias v vim
 alias x 'tig HEAD'
