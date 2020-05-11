@@ -67,6 +67,7 @@
 /.dts/
 /.dvdcss
 /.eaglerc
+/.elm
 /.emacs.d
 /.flow-typed/
 /.fontconfig
@@ -107,6 +108,7 @@
 /.pip
 /.pip-accel
 /.pip-tools
+/.pkg-cache
 /.pm2/
 /.pre-commit/
 /.profile
