@@ -22,7 +22,7 @@ pipsi install --python $python2 sr
 # pipsi install --python $python2 watchdog
 
 # Custom projects
-(cd ~/Projects/git-setdate && pipsi install --python $python2 --editable .)
+(cd ~/Projects/git-setdate && pipsi install --python $python3 --editable .)
 (cd ~/Projects/important-bits && pipsi install --python $python2 --editable .)
 
 # Unreleased (newer) version of s3cmd
