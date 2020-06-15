@@ -72,6 +72,8 @@ function f
     git ls-tree -r --name-only HEAD
 end
 
+alias drop-dependabot-branches "rm -rvf (git rev-parse --git-dir)/refs/remotes/origin/dependabot"
+
 function vf
     f | fzf | xargs -o vim
 end
