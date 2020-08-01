@@ -1,3 +1,6 @@
+[init]
+    defaultBranch = main
+
 [user]
     name = Vincent Driessen
     email = me@nvie.com
