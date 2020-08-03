@@ -94,7 +94,7 @@
 
     # fetch, for fuck's sake
     fffs = ff
-    ff = fetch origin '+refs/heads/*:refs/remotes/origin/*' '+master:master'
+    ff = !"git fetch origin '+refs/heads/*:refs/remotes/origin/*' \"+$(git main-branch):$(git main-branch)\""
 
     # Restore some of my favorite Hub subcommands as Git aliases.
     # Previously I could simply alias hub => git entirely, but this didn't work
