@@ -139,11 +139,11 @@ end
 
 # Interactive/login shells {{{
 
-if status --is-login
+if status is-login
     . ~/.config/fish/env.fish
 end
 
-if status --is-interactive
+if status is-interactive
     set CDPATH . ~/Projects/SimpleContacts/core ~/Projects/SimpleContacts ~/Projects
 end
 
