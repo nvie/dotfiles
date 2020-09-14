@@ -210,6 +210,7 @@ end
 # alias git hub
 alias gti git
 alias a 'git amend --allow-empty --no-verify'
+alias gs 'git status -s'
 alias gb 'git recent-branches 2.days.ago'
 alias ggco 'git switchi'
 alias ggbd 'git branch -D (g local-branches | fzf)'
@@ -369,7 +370,6 @@ alias gp='cd ~/Projects/SimpleContacts/core/api'
 alias gw='cd ~/Projects/SimpleContacts/core/app_contact_lenses'
 alias gbc='cd ~/Projects/SimpleContacts/core/app_birth_control'
 alias ga='cd ~/Projects/SimpleContacts/core/app_admin'
-alias gs='cd ~/Projects/SimpleContacts/api-schema'
 alias cg='codegen'
 
 function wtf -d "Print which and --version output for the given command"
