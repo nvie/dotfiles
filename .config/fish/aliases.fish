@@ -207,6 +207,10 @@ function vflow -d 'Opens all files with Flow issues in Vim'
     fll | xargs -o vim
 end
 
+function vts -d 'Opens all files with TypeScript issues in Vim'
+    tsc | grep -vEe '^\s' | cut -d'(' -f1 | sort -u | xargs -o vim
+end
+
 # alias git hub
 alias gti git
 alias a 'git amend --allow-empty --no-verify'
