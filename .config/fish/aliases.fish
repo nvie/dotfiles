@@ -182,6 +182,8 @@ end
 alias vch 'vc head'
 alias vch1 'vc head~1'
 alias vch2 'vc head~2'
+alias vch3 'vc head~3'
+alias vch4 'vc head~4'
 
 function vu
     if git modified -u $argv
