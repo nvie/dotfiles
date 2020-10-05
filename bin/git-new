@@ -1,0 +1,16 @@
+#!/bin/sh
+set -eu
+
+if [ $# -ne 1 ]; then
+   echo "usage: git new <name>" >&2
+   exit 2
+fi
+
+main="$(git main-branch)"
+if [ "$main" = "$(git current-branch)" ]; then
+    git pr
+else
+    git ff
+fi
+
+git switch -c "$1" "$main"
