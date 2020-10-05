@@ -91,6 +91,7 @@
 /.lein
 /.lesshst
 /.local
+/.locks
 /.m2
 /.matplotlib
 /.mitmproxy
