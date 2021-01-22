@@ -134,6 +134,7 @@
 /.ttytterkey
 /.vagrant.d
 /.vim*
+/.volta/
 /.vscode/
 /.wget-hsts
 /.Xauthority

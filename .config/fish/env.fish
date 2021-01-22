@@ -28,3 +28,7 @@ set -gx LANG en_US.UTF-8
 
 # Configure fzf to use fd by default (fd respects .gitignore defaults)
 set -gx FZF_DEFAULT_COMMAND 'fd --type f'
+
+# Volta, for working with multiple node/yarn/npm environments simulatenously
+set -gx VOLTA_HOME "$HOME/.volta"
+prepend-to-path "$VOLTA_HOME/bin"
