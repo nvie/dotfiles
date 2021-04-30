@@ -205,6 +205,10 @@ function fll -d 'Lists all files with Flow issues'
     flow | grep -Ee '^Error --' | rev | cut -d' ' -f1 | rev | cut -d: -f1 | sort -u
 end
 
+function veslint -d 'Opens all files in Vim with ESLint issues'
+    eslint $argv | grep -Ee '^/' | xargs -o vim
+end
+
 function vflow -d 'Opens all files with Flow issues in Vim'
     fll | xargs -o vim
 end
