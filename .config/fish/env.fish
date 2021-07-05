@@ -20,7 +20,10 @@ append-to-path /usr/local/opt/mongodb@3.0/bin
 
 # Python: source pyenv config for fish
 set -gx PIP_DOWNLOAD_CACHE ~/Library/Caches/pip-downloads
-pyenv init - fish | source
+set -Ux PYENV_ROOT $HOME/.pyenv
+append-to-path $PYENV_ROOT/bin
+status is-login; and pyenv init --path | source
+pyenv init - | source
 
 # Set locale
 set -gx LC_ALL en_US.UTF-8
