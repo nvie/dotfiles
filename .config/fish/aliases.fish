@@ -377,9 +377,9 @@ end
 
 alias h=heroku
 alias gp='cd ~/Projects/SimpleContacts/core/api'
-alias gw='cd ~/Projects/SimpleContacts/core/app_contact_lenses'
-alias gbc='cd ~/Projects/SimpleContacts/core/app_birth_control'
 alias ga='cd ~/Projects/SimpleContacts/core/app_admin'
+alias gbc='echo "Please use `gsh` instead!"'
+alias gsh='cd ~/Projects/SimpleContacts/core/app_simplehealth'
 alias cg='codegen'
 
 function wtf -d "Print which and --version output for the given command"
