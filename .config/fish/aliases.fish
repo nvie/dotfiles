@@ -42,7 +42,7 @@ alias ccat 'pygmentize -g'
 
 alias g git
 alias c clear
-alias vv vim
+alias vv 'command vim'
 alias v nvim
 alias vim nvim
 alias x 'tig HEAD'
