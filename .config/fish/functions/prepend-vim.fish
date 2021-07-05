@@ -1,3 +1,3 @@
 function prepend-vim
-	commandline -- 'vim '(commandline)
+	commandline -- 'nvim '(commandline)
 end

@@ -98,7 +98,7 @@ end
 # }}}
 
 # Globals
-set -gx EDITOR vim
+set -gx EDITOR nvim
 #set -gx PIP_DOWNLOAD_CACHE ...
 
 # Auto push/pop of directories {{{

@@ -1,13 +1,16 @@
 # Quick edits
-alias ea 'vim ~/.config/fish/aliases.fish'
-alias ef 'vim ~/.config/fish/config.fish'
-alias eg 'vim ~/.gitconfig'
-alias ev 'vim ~/.vimrc'
-alias es 'vim ~/bin/autosort'
-alias et 'vim ~/.tmux.conf'
+alias ea 'nvim ~/.config/fish/aliases.fish'
+alias ef 'nvim ~/.config/fish/config.fish'
+alias eg 'nvim ~/.gitconfig'
+alias ev 'nvim ~/.config/nvim/init.vim'
+alias evv 'vim ~/.vimrc'
+alias es 'nvim ~/bin/autosort'
+alias et 'nvim ~/.tmux.conf'
 
 alias vim-norc 'vim -u NORC'
 alias vim-none 'vim -u NONE'
+alias nvim-norc 'nvim -u NORC'
+alias nvim-none 'nvim -u NONE'
 
 function pdftext
     pdftotext -layout $argv[1] -
@@ -39,7 +42,9 @@ alias ccat 'pygmentize -g'
 
 alias g git
 alias c clear
-alias v vim
+alias vv vim
+alias v nvim
+alias vim nvim
 alias x 'tig HEAD'
 alias xx 'tig --exclude=production --exclude="*/production" --exclude=canary --exclude="*/canary" --branches'
 alias xxa 'tig --exclude=production --exclude="*/production" --exclude=canary --exclude="*/canary" --all'
@@ -65,7 +70,7 @@ function def -d "Quickly jump to place where a function, method, or variable is 
 end
 
 function vimff
-    vim (ffind -tf $argv)
+    nvim (ffind -tf $argv)
 end
 
 function f
@@ -75,7 +80,7 @@ end
 alias drop-dependabot-branches "rm -rvf (git rev-parse --git-dir)/refs/remotes/origin/dependabot"
 
 function vf
-    f | fzf | xargs -o vim
+    f | fzf | xargs -o nvim
 end
 
 function val
@@ -125,7 +130,7 @@ function va
 
     set rg_pattern (echo $pattern | to_safe | sed -E -e 's/[<>]/\\\\b/g' | to_unsafe_rg)
     set vim_pattern (echo $pattern | to_safe | sed -E -e 's,([/=]),\\\\\1,g' -e 's,.*,/\\\\v&,' | to_unsafe_vim)
-    rg -l --smart-case --null $rg_pattern -- $argv 2>/dev/null | xargs -0 -o vim -c $vim_pattern
+    rg -l --smart-case --null $rg_pattern -- $argv 2>/dev/null | xargs -0 -o nvim -c $vim_pattern
 end
 
 # "va", but case-sensitive (it's a copy of the above, but without the
@@ -152,12 +157,12 @@ function vacs
 
     set rg_pattern (echo $pattern | to_safe | sed -E -e 's/[<>]/\\\\b/g' | to_unsafe_rg)
     set vim_pattern (echo $pattern | to_safe | sed -E -e 's,([/=]),\\\\\1,g' -e 's,.*,/\\\\v&,' | to_unsafe_vim)
-    rg -l --null $rg_pattern -- $argv 2>/dev/null | xargs -0 -o vim -c $vim_pattern
+    rg -l --null $rg_pattern -- $argv 2>/dev/null | xargs -0 -o nvim -c $vim_pattern
 end
 
 function vc
     if git modified -q $argv
-        vim (git modified $argv | sed -Ee 's/^"(.*)"$/\1/')
+        nvim (git modified $argv | sed -Ee 's/^"(.*)"$/\1/')
     else
         echo '(nothing changed)'
     end
@@ -165,7 +170,7 @@ end
 
 function vca
     if git modified -qi
-        vim (git modified -i | sed -Ee 's/^"(.*)"$/\1/')
+        nvim (git modified -i | sed -Ee 's/^"(.*)"$/\1/')
     else
         echo '(nothing changed)'
     end
@@ -173,7 +178,7 @@ end
 
 function vci
     if git modified -qi
-        vim (begin; git modified -i; git modified; end | sort | uniq -u | sed -Ee 's/^"(.*)"$/\1/')
+        nvim (begin; git modified -i; git modified; end | sort | uniq -u | sed -Ee 's/^"(.*)"$/\1/')
     else
         echo '(nothing changed)'
     end
@@ -187,14 +192,14 @@ alias vch4 'vc head~4'
 
 function vu
     if git modified -u $argv
-        vim (git modified -u $argv | sed -Ee 's/^"(.*)"$/\1/')
+        nvim (git modified -u $argv | sed -Ee 's/^"(.*)"$/\1/')
     else
         echo 'no files with conflicts'
     end
 end
 
 function vw
-    vim (which "$argv")
+    nvim (which "$argv")
 end
 
 function vconflicts -d 'Opens all files with merge conflict markers in Vim'
@@ -206,15 +211,15 @@ function fll -d 'Lists all files with Flow issues'
 end
 
 function veslint -d 'Opens all files in Vim with ESLint issues'
-    eslint $argv | grep -Ee '^/' | xargs -o vim
+    eslint $argv | grep -Ee '^/' | xargs -o nvim
 end
 
 function vflow -d 'Opens all files with Flow issues in Vim'
-    fll | xargs -o vim
+    fll | xargs -o nvim
 end
 
 function vts -d 'Opens all files with TypeScript issues in Vim'
-    tsc | grep -vEe '^\s' | cut -d'(' -f1 | sort -u | xargs -o vim
+    tsc | grep -vEe '^\s' | cut -d'(' -f1 | sort -u | xargs -o nvim
 end
 
 # alias git hub
