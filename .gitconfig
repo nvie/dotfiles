@@ -132,11 +132,7 @@
     renameLimit = 3000
     noprefix = true
 
-[help]
-    autocorrect = 1
 
-[push]
-    default = simple
 
 [difftool "Kaleidoscope"]
     cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
@@ -144,6 +140,12 @@
 [mergetool "Kaleidoscope"]
     cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
     trustExitCode = true
+
+[help]
+    autocorrect = 1
+
+[push]
+    default = simple
 
 [filter "media"]
     clean = git-media-clean %f
