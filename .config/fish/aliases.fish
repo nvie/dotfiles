@@ -57,9 +57,9 @@ alias mm 'make run'
 alias reset-mailbox 'rm -v ~/Library/Caches/com.dropbox.mbd.external-beta/mailbox.db'
 
 function da -d "Allow or disallow .envrc after printing it."
-    echo "------------------------------------------------"
+    echo ------------------------------------------------
     cat .envrc
-    echo "------------------------------------------------"
+    echo ------------------------------------------------
     echo "To allow, hit Return."
     read answer
     direnv allow
@@ -233,11 +233,11 @@ alias fl 'clear; and flow-limit'
 alias fflow 'flow stop; and flow'
 
 function git-search
-    git log -S"$argv" --pretty=format:%H | map git show 
+    git log -S"$argv" --pretty=format:%H | map git show
 end
 
 function cleanpycs
-    find . -name '.git' -prune -o -name '__pycache__' -delete
+    find . -name '.git' -prune -o -name __pycache__ -delete
     find . -name '.git' -prune -o -name '*.py[co]' -delete
 end
 
@@ -249,7 +249,7 @@ function cleandsstores
     find . -name '.DS_Store' -exec rm -f '{}' ';'
 end
 
-alias json 'prettify-json'
+alias json prettify-json
 alias map 'xargs -n1'
 alias collapse "sed -e 's/  */ /g'"
 alias cuts 'cut -d\ '
@@ -258,10 +258,10 @@ function p -d "Start the best Python shell that is available"
     set -l cmd
 
     if test -f manage.py
-        if pip freeze 2>/dev/null | grep -iq 'django-extensions'
+        if pip freeze 2>/dev/null | grep -iq django-extensions
             set cmd (which python) manage.py shell_plus
         else
-            if pip freeze 2>/dev/null | grep -iq 'flask-script'
+            if pip freeze 2>/dev/null | grep -iq flask-script
                 # do nothing, use manage.py, fall through
                 set -e cmd
             else
@@ -302,7 +302,10 @@ function p -d "Start the best Python shell that is available"
     end
 
     # Run the command
-    printf "Using "; set_color green; echo $cmd; set_color normal
+    printf "Using "
+    set_color green
+    echo $cmd
+    set_color normal
     eval $cmd $argv
 end
 
@@ -358,7 +361,7 @@ function take
     mkdir -p $dir; and cd $dir
 end
 alias cx 'chmod +x'
-alias 'c-x' 'chmod -x'
+alias c-x 'chmod -x'
 
 # }}}
 
@@ -366,7 +369,7 @@ function colorize-pboard
     if test (count $argv) -gt 0
         set lang $argv[1]
     else
-        set lang 'python'
+        set lang python
     end
     pbpaste | strip-indents | color-syntax | pbcopy
 end
@@ -375,7 +378,7 @@ function color-syntax
     if test (count $argv) -gt 0
         set lang $argv[1]
     else
-        set lang 'python'
+        set lang python
     end
     pygmentize -f rtf -l $lang
 end
