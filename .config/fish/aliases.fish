@@ -80,7 +80,7 @@ end
 alias drop-dependabot-branches "rm -rvf (git rev-parse --git-dir)/refs/remotes/origin/dependabot"
 
 function vf
-    f | fzf | xargs -o nvim
+    edit ( f | fzf )
 end
 
 function val
@@ -210,16 +210,38 @@ function fll -d 'Lists all files with Flow issues'
     flow | grep -Ee '^Error --' | rev | cut -d' ' -f1 | rev | cut -d: -f1 | sort -u
 end
 
+#
+# The following helper can be invoked like so:
+#
+#     $ edit ( produce | grep -Ee foo )
+#            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+#            Any Unix command producing a list of file
+#            paths on stdout.
+#
+# This is to replace usage of the following structure:
+#
+#     $ produce | grep -Ee foo | xargs -o $EDITOR
+#
+# Which unfortunately suffers from an annoying bug in Fish related to how
+# Ctrl+Z and `fg` then work. See also the bug report:
+# https://github.com/fish-shell/fish-shell/issues/8263
+#
+function edit -d 'Opens $EDITOR with the files given, but is a no-op if the list is empty'
+    if test ( count $argv ) -gt 0
+        $EDITOR $argv
+    end
+end
+
 function veslint -d 'Opens all files in Vim with ESLint issues'
-    eslint $argv | grep -Ee '^/' | xargs -o nvim
+    edit ( eslint $argv | grep -Ee '^/' )
 end
 
 function vflow -d 'Opens all files with Flow issues in Vim'
-    fll | xargs -o nvim
+    edit ( fll )
 end
 
 function vts -d 'Opens all files with TypeScript issues in Vim'
-    tsc | grep -vEe '^\s' | cut -d'(' -f1 | sort -u | xargs -o nvim
+    edit ( tsc | grep -vEe '^\s' | cut -d'(' -f1 | sort -u )
 end
 
 # alias git hub
