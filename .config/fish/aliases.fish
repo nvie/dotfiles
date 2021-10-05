@@ -46,8 +46,8 @@ alias vv 'command vim'
 alias v nvim
 alias vim nvim
 alias x 'tig HEAD'
-alias xx 'tig --exclude=production --exclude="*/production" --exclude=canary --exclude="*/canary" --branches'
-alias xxa 'tig --exclude=production --exclude="*/production" --exclude=canary --exclude="*/canary" --all'
+alias xx 'tig --exclude=production --exclude="*/production" --exclude=canary --exclude="*/canary" --exclude="*/dependabot/*" --branches'
+alias xxa 'tig --exclude=production --exclude="*/production" --exclude=canary --exclude="*/canary" --exclude="*/dependabot/*" --all'
 alias xxaa 'tig --all'
 alias notes 'rg "TODO|HACK|FIXME|OPTIMIZE"'
 
