@@ -207,7 +207,7 @@ function vconflicts -d 'Opens all files with merge conflict markers in Vim'
 end
 
 function fll -d 'Lists all files with Flow issues'
-    flow | grep -Ee '^Error --' | rev | cut -d' ' -f1 | rev | cut -d: -f1 | sort -u | grep -vEe -----
+    flow --show-all-errors | grep -Ee '^Error ' | rev | cut -d' ' -f1 | rev | cut -d: -f1 | sort -u | grep -vEe -----
 end
 
 #
