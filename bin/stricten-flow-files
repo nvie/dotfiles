@@ -1,0 +1,85 @@
+#!/bin/sh
+set -eu
+
+if ! flow --quiet >/dev/null 2>/dev/null; then
+  echo "There are Flow errors here, fix those first, please!" >&2
+  exit 2
+fi
+
+# Get a list of all files on Flow's radar
+paths="$(flow batch-coverage . --show-all | grep -Ee '^/' | cut -d: -f1 | sort)"
+
+# Prep some files by marking them all
+sr -s '@flow' -r '@flow xxx' $paths
+sr -s '@flow xxx strict' -r '@flow strict' $paths
+
+files_with_flow_errors () {
+  # TODO: Filter these down to the files known by git?
+  flow --show-all-errors --json | jq -r '.errors[].message[].path' | sort -u | xargs -n1 realpath --relative-to=.
+}
+
+# -----------------------------------------------------------------------------------
+# Pass 1
+# -----------------------------------------------------------------------------------
+
+# Now raise the level of all "normal" files to "strict-local"
+sr -s '@flow xxx' -r '@flow strict-local' $paths
+
+# Run flow, undo any files that come up as having errors
+echo "Running Flow now to check for issues"
+files_with_flow_errors | while read file; do
+  git restore "$file"
+done
+
+# Run eslint, undo any files that come up as having errors
+echo "Running ESLint now to check for issues"
+eslint $(git modified -i) | grep -Ee '^/' | xargs -n1 realpath --relative-to=. | while read file; do
+  git restore "$file"
+done
+
+if git is-dirty; then
+  echo "Done with first pass." >&2
+  echo "Please inspect these results, and commit them if you're happy with them." >&2
+  echo "" >&2
+  echo "Then, re-run this script again for the next pass." >&2
+  exit 0
+fi
+
+# -----------------------------------------------------------------------------------
+# Pass 2
+# -----------------------------------------------------------------------------------
+
+# Now raise the level of all "strict-local" files to "strict"
+sr -s '@flow strict-local' -r '@flow strict' $paths
+
+while true; do
+  # Save current state (to check if files have been modified)
+  git add --all $paths
+
+  # Run eslint, undo any files that come up as having errors
+  echo "Running ESLint now to check for issues"
+  eslint $(git modified -i) | grep -Ee '^/' | xargs -n1 realpath --relative-to=. | while read file; do
+    git restore -W --source=HEAD -- "$file"
+  done
+
+  # Run flow, undo any files that come up as having errors
+  echo "Running Flow now to check for issues"
+  files_with_flow_errors | while read file; do
+    git restore -W --source=HEAD -- "$file"
+  done
+
+  if git is-clean -w; then
+    # We're done reverting things
+    git reset HEAD
+    break
+  else
+    git reset HEAD
+    echo "Not a stable result yet... doing another pass!" >&2
+  fi
+done
+
+echo "Done with second pass." >&2
+echo "Please inspect these results, and commit them if you're happy with them." >&2
+#echo "" >&2
+#echo "Then, re-run this script again for the next pass." >&2
+exit 0
