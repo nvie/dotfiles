@@ -17,7 +17,7 @@ prepend-to-path /usr/local/bin
 append-to-path /usr/local/Cellar/mysql@5.7/5.7.36/bin
 
 # Old MongoDB version (3.0) for Sleutelzorg/Heroku
-append-to-path /usr/local/opt/mongodb@3.0/bin
+# append-to-path /usr/local/opt/mongodb@3.0/bin
 
 # Python: source pyenv config for fish
 set -gx PIP_DOWNLOAD_CACHE ~/Library/Caches/pip-downloads
