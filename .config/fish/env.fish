@@ -10,8 +10,6 @@ append-to-path ~/.local/bin
 append-to-path ~/Projects/syncfrom
 append-to-path ~/Projects/git-toolbelt
 prepend-to-path ~/Projects/code-gardener/bin
-prepend-to-path /usr/local/sbin
-prepend-to-path /usr/local/bin
 prepend-to-path /opt/homebrew/sbin
 prepend-to-path /opt/homebrew/bin
 

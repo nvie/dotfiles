@@ -11,7 +11,7 @@
     trustctime = false
     # Taken from (and adapted)
     # https://github.com/paulirish/dotfiles/commit/6743b907ff586c28cd36e08d1e1c634e2968893e#commitcomment-13349456
-    pager = sh -c '/usr/local/share/git-core/contrib/diff-highlight/diff-highlight | less -r' -
+    pager = sh -c '/opt/homebrew/share/git-core/contrib/diff-highlight/diff-highlight | less -r' -
 
 [merge]
     tool = splice
