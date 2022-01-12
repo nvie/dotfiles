@@ -48,6 +48,7 @@
 /.belastingdienst.nl
 /.bi_li3
 /.bower
+/.bundle
 /.bup
 /.bzr.log
 /.cache
@@ -121,9 +122,11 @@
 /.pythonhist
 /.pythonrc.py
 /.pythonz
+/.rbenv
 /.resty
 /.ri
 /.rnd
+/.rustup
 /.s3cfg
 /.srl
 /.ssh
