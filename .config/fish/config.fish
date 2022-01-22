@@ -60,11 +60,11 @@ function demo-mode
 end
 
 function git_current_branch -d 'Prints a human-readable representation of the current branch'
-  set -l ref (git symbolic-ref HEAD 2>/dev/null; or git rev-parse --short HEAD 2>/dev/null)
-  if test -n "$ref"
-    echo $ref | sed -e s,refs/heads/,,
-    return 0
-  end
+    set -l ref (git symbolic-ref HEAD 2>/dev/null; or git rev-parse --short HEAD 2>/dev/null)
+    if test -n "$ref"
+        echo $ref | sed -e s,refs/heads/,,
+        return 0
+    end
 end
 
 function git_prompt
@@ -124,7 +124,6 @@ end
 # }}}
 
 # Key bindings {{{
-
 function fish_user_key_bindings
     bind \ec append-copy
     bind \ep prepend-paste
@@ -134,11 +133,9 @@ function fish_user_key_bindings
     bind \e'>' 'commandline -a -- "| shiftr"'
     bind \e'<' 'commandline -a -- "| shiftl"'
 end
-
 # }}}
 
 # Interactive/login shells {{{
-
 if status is-login
     . ~/.config/fish/env.fish
 end
@@ -146,11 +143,20 @@ end
 if status is-interactive
     set CDPATH . ~/Projects/SimpleContacts/core ~/Projects/SimpleContacts ~/Projects
 end
+# }}}
 
+# Ruby env manager {{{
+if status is-interactive
+    rbenv init - fish | source
+end
+# }}}
+
+# Direnv {{{
+direnv hook fish | source
+# }}}
+
+# iTerm shell integration {{{
+test -e ~/.iterm2_shell_integration.fish; and source ~/.iterm2_shell_integration.fish
 # }}}
 
 set -gx __fish_initialized 1
-
-direnv hook fish | source
-
-test -e ~/.iterm2_shell_integration.fish ; and source ~/.iterm2_shell_integration.fish
