@@ -16,7 +16,7 @@ prepend-to-path /opt/homebrew/sbin
 prepend-to-path /opt/homebrew/bin
 
 # Old MySQL version (5.7)
-append-to-path /opt/homebrew/Cellar/mysql@5.7/5.7.36/bin
+# append-to-path /opt/homebrew/Cellar/mysql@5.7/5.7.37/bin
 
 # Old MongoDB version (3.0) for Sleutelzorg/Heroku
 # append-to-path /usr/local/opt/mongodb@3.0/bin
