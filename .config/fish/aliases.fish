@@ -377,7 +377,6 @@ alias ... 'cd ../..'
 alias .... 'cd ../../..'
 alias ..... 'cd ../../../..'
 
-alias md 'mkdir -p'
 function take
     set -l dir $argv[1]
     mkdir -p $dir; and cd $dir
@@ -406,11 +405,8 @@ function color-syntax
 end
 
 alias h=heroku
-alias gp='cd ~/Projects/SimpleContacts/core/api'
-alias ga='cd ~/Projects/SimpleContacts/core/app_admin'
-alias gbc='echo "Please use `gsh` instead!"'
-alias gsh='cd ~/Projects/SimpleContacts/core/app_simplehealth'
-alias cg='codegen'
+alias gp='cd ~/Projects/liveblocks/liveblocks'
+alias ga='cd ~/Projects/liveblocks/liveblocks.io'
 
 function wtf -d "Print which and --version output for the given command"
     for arg in $argv
