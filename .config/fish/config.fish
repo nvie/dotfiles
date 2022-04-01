@@ -23,7 +23,7 @@ function fish_prompt
 
     printf ' in '
     set_color $fish_color_cwd
-    printf '%s' (echo $PWD | sed -e "s|^$HOME|~|" -e 's|^/private||' -e 's|~/Projects/SimpleContacts/core/||')
+    printf '%s' (echo $PWD | sed -e "s|^$HOME|~|" -e 's|^/private||' -e 's|~/Projects/liveblocks/||')
     set_color normal
 
     git_prompt
@@ -141,7 +141,7 @@ if status is-login
 end
 
 if status is-interactive
-    set CDPATH . ~/Projects/SimpleContacts/core ~/Projects/SimpleContacts ~/Projects
+    set CDPATH . ~/Projects/liveblocks/liveblocks/packages ~/Projects/liveblocks ~/Projects
 end
 # }}}
 
