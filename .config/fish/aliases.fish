@@ -29,7 +29,7 @@ set LS_COLORS dxfxcxdxbxegedabagacad
 alias df 'df -m'
 alias j jobs
 alias l ls
-alias ll 'ls -la'
+# alias ll 'ls -la'
 alias ls 'ls -FG'
 alias su 'su -m'
 
@@ -407,6 +407,8 @@ end
 alias h=heroku
 alias gp='cd ~/Projects/liveblocks/liveblocks'
 alias ga='cd ~/Projects/liveblocks/liveblocks.io'
+alias cdc='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-client'
+alias cdr='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-react'
 
 function wtf -d "Print which and --version output for the given command"
     for arg in $argv
