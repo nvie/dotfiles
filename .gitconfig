@@ -11,8 +11,7 @@
     trustctime = false
     # Taken from (and adapted)
     # https://github.com/paulirish/dotfiles/commit/6743b907ff586c28cd36e08d1e1c634e2968893e#commitcomment-13349456
-    # pager = sh -c '/opt/homebrew/share/git-core/contrib/diff-highlight/diff-highlight | less -r' -
-    pager = delta
+    pager = sh -c '/opt/homebrew/share/git-core/contrib/diff-highlight/diff-highlight | less -r' -
 
 [merge]
     tool = splice
@@ -27,13 +26,6 @@
     cmd = "mvim -f $BASE $LOCAL $REMOTE $MERGED -c 'SpliceInit'"
     trustExitCode = true
     keepbackup = false
-
-[interactive]
-    diffFilter = delta --color-only
-
-[delta]
-    line-numbers = true
-    navigate = true  # unse n and N to move between diff sections
 
 [color]
     ui = auto
@@ -139,7 +131,6 @@
     algorithm = patience
     renameLimit = 3000
     noprefix = true
-    colorMoved = default
 
 [difftool "Kaleidoscope"]
     cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
