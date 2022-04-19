@@ -409,6 +409,8 @@ alias gp='cd ~/Projects/liveblocks/liveblocks'
 alias ga='cd ~/Projects/liveblocks/liveblocks.io'
 alias cdc='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-client'
 alias cdr='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-react'
+alias cdrr='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-redux'
+alias cdrrr='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-zustand'
 
 function wtf -d "Print which and --version output for the given command"
     for arg in $argv
