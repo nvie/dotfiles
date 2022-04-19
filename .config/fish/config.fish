@@ -141,7 +141,7 @@ if status is-login
 end
 
 if status is-interactive
-    set CDPATH . ~/Projects/liveblocks/liveblocks/packages ~/Projects/liveblocks ~/Projects
+    set CDPATH . ~/Projects/liveblocks/liveblocks/packages ~/Projects/liveblocks/liveblocks ~/Projects/liveblocks ~/Projects
 end
 # }}}
 
