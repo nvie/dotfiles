@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+
+if [ $# -ge 1 -a "$1" -eq "$1" ] 2>/dev/null; then
+#                ^^^^^^^^^^^^^ Checks if this is a valid number
+    max=$1
+    shift
+else
+    max=1
+fi
+
+tsc --pretty --noEmit "$@" | awk -v max=$max '
+    BEGIN { num = 0; }
+    /TS[0-9]+:/ { num++ }
+    num <= max { print $0 }
+'
