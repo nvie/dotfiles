@@ -10,32 +10,46 @@ if [ "$(pwd)" != "$ROOT" ]; then
     exit $?
 fi
 
-clear_all_builds () {
-    rm -rf "$ROOT/packages/liveblocks-"*"/lib"
-}
+CLOUDFLARE_ROOT="$HOME/Projects/liveblocks/liveblocks-cloudflare"
 
 test_client () {
-    clear_all_builds
-    npm install
-    tsc --noEmit
-    eslint src
-    jest
+    chronic npm install
+    chronic node_modules/.bin/tsc --noEmit
+    chronic node_modules/.bin/eslint src
+    chronic node_modules/.bin/jest
 }
 
 test_secondary_pkg () {
-    clear_all_builds
-    npm install
-    link-liveblocks.sh -f
-    tsc --noEmit
-    eslint src
-    jest
+    chronic link-liveblocks.sh
+    chronic node_modules/.bin/tsc --noEmit
+    chronic node_modules/.bin/eslint src
+    chronic node_modules/.bin/jest
     npm run build
+}
+
+test_cloudflare () {
+    rm -rf node_modules
+    chronic npm install
+    chronic "$ROOT/scripts/link-liveblocks.sh"
+    node_modules/.bin/tsc
+    npm run test
+}
+
+test_e2e () {
+    rm -rf node_modules .next
+    chronic npm install
+    chronic link-liveblocks.sh
+    npm run test
 }
 
 err_context () {
     echo "^^^ Errors happened in $1" >&2
     exit 2
 }
+
+# Clear all builds
+rm -rf "$ROOT/packages/liveblocks-"*"/{lib,node_modules}"
+rm -rf "$ROOT/e2e/next-sandbox/{lib,node_modules,.next}"
 
 echo ""
 echo "===== @liveblocks/client ====================================================="
@@ -52,3 +66,16 @@ echo "===== @liveblocks/redux ==================================================
 echo ""
 echo "===== @liveblocks/zustand ===================================================="
 ( cd packages/liveblocks-zustand && test_secondary_pkg ) || err_context "liveblocks-zustand"
+
+echo ""
+echo "===== liveblocks-cloudflare =================================================="
+( cd "$CLOUDFLARE_ROOT" && test_cloudflare ) || err_context "liveblocks-cloudflare"
+
+if [ "${1:-}" = "-s" ]; then
+    echo "Skipping E2E test"
+    exit 0
+fi
+
+echo ""
+echo "===== Liveblocks E2E test suite =============================================="
+( cd e2e/next-sandbox && test_e2e ) || err_context "next-sandbox"
