@@ -70,6 +70,7 @@
 /.eaglerc
 /.elm
 /.emacs.d
+/.eslint_d
 /.flow-typed/
 /.fontconfig
 /.ftcurlish.json
@@ -157,6 +158,3 @@ Powerline_*.cache
 
 # Postgres stuff
 /.pg*
-
-# SimpleContacts
-/bin/*-db
