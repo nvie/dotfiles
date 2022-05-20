@@ -32,6 +32,7 @@ alias l ls
 # alias ll 'ls -la'
 alias ls 'ls -FG'
 alias su 'su -m'
+alias t 'test -f yarn.lock && yarn run test || npm run test'
 
 function lsd -d 'List only directories (in the current dir)'
     ls -d */ | sed -Ee 's,/+$,,'
@@ -253,6 +254,8 @@ alias ggco 'git switchi'
 alias ggbd 'git branch -D (g local-branches | fzf)'
 alias fl 'clear; and flow-limit'
 alias fflow 'flow stop; and flow'
+alias tl 'clear; and tsc-limit'
+alias tll "tsc | grep -Ee 'TS\d+' | cut -d'(' -f1 | sort -u"
 
 function git-search
     git log -S"$argv" --pretty=format:%H | map git show
@@ -410,7 +413,9 @@ alias ga='cd ~/Projects/liveblocks/liveblocks.io'
 alias cdc='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-client'
 alias cdr='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-react'
 alias cdrr='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-redux'
-alias cdrrr='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-zustand'
+alias cdrrr='echo "Try to use cdz"'
+alias cdz='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-zustand'
+alias cdf='cd ~/Projects/liveblocks/liveblocks-cloudflare'
 
 function wtf -d "Print which and --version output for the given command"
     for arg in $argv

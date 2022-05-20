@@ -2,6 +2,7 @@
 # initial environment)
 
 set -gx PATH /bin
+
 append-to-path /sbin
 append-to-path /usr/bin
 append-to-path /usr/sbin
@@ -11,6 +12,9 @@ append-to-path ~/.cargo/bin
 append-to-path ~/Projects/syncfrom
 append-to-path ~/Projects/git-toolbelt
 append-to-path ~/Projects/linenos/bin
+append-to-path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+append-to-path ~/Projects/liveblocks/liveblocks/scripts
+
 prepend-to-path ~/Projects/code-gardener/bin
 prepend-to-path /opt/homebrew/sbin
 prepend-to-path /opt/homebrew/bin
@@ -34,7 +38,3 @@ set -gx LANG en_US.UTF-8
 
 # Configure fzf to use fd by default (fd respects .gitignore defaults)
 set -gx FZF_DEFAULT_COMMAND 'fd --type f'
-
-# Volta, for working with multiple node/yarn/npm environments simulatenously
-set -gx VOLTA_HOME "$HOME/.volta"
-prepend-to-path "$VOLTA_HOME/bin"
