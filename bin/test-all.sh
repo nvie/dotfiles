@@ -10,6 +10,40 @@ if [ "$(pwd)" != "$ROOT" ]; then
     exit $?
 fi
 
+err () {
+    echo "$@" >&2
+}
+
+usage () {
+    err "usage: test-all.sh [-hpec]"
+    err
+    err "Runs test suites."
+    err
+    err "Options:"
+    err "-h    Show this help"
+    err "-p    Run tests for all packages"
+    err "-e    Run E2E tests (slow)"
+    err "-c    Run Cloudflare tests (slow)"
+}
+
+run_packages=0
+run_e2e=0
+run_cloudflare=0
+while getopts hpec flag; do
+    case "$flag" in
+        p) run_packages=1 ;;
+        e) run_e2e=1 ;;
+        c) run_cloudflare=1 ;;
+        *) usage; exit 2;;
+    esac
+done
+shift $(($OPTIND - 1))
+
+if [ "$run_packages" -eq 0 -a "$run_e2e" -eq 0 -a "$run_cloudflare" -eq 0 ]; then
+    usage
+    exit 1
+fi
+
 CLOUDFLARE_ROOT="$HOME/Projects/liveblocks/liveblocks-cloudflare"
 
 test_client () {
@@ -43,7 +77,7 @@ test_e2e () {
 }
 
 err_context () {
-    echo "^^^ Errors happened in $1" >&2
+    err "^^^ Errors happened in $1"
     exit 2
 }
 
@@ -51,31 +85,38 @@ err_context () {
 rm -rf "$ROOT/packages/liveblocks-"*"/{lib,node_modules}"
 rm -rf "$ROOT/e2e/next-sandbox/{lib,node_modules,.next}"
 
-echo ""
-echo "===== @liveblocks/client ====================================================="
-( cd packages/liveblocks-client && test_client ) || err_context "liveblocks-client"
+if [ "$run_cloudflare" -eq 1 ]; then
+    err ""
+    err "===== @liveblocks/client ====================================================="
+    ( cd packages/liveblocks-client && test_client ) || err_context "liveblocks-client"
 
-echo ""
-echo "===== @liveblocks/react ======================================================"
-( cd packages/liveblocks-react && test_secondary_pkg ) || err_context "liveblocks-react"
+    err ""
+    err "===== @liveblocks/react ======================================================"
+    ( cd packages/liveblocks-react && test_secondary_pkg ) || err_context "liveblocks-react"
 
-echo ""
-echo "===== @liveblocks/redux ======================================================"
-( cd packages/liveblocks-redux && test_secondary_pkg ) || err_context "liveblocks-redux"
+    err ""
+    err "===== @liveblocks/redux ======================================================"
+    ( cd packages/liveblocks-redux && test_secondary_pkg ) || err_context "liveblocks-redux"
 
-echo ""
-echo "===== @liveblocks/zustand ===================================================="
-( cd packages/liveblocks-zustand && test_secondary_pkg ) || err_context "liveblocks-zustand"
-
-echo ""
-echo "===== liveblocks-cloudflare =================================================="
-( cd "$CLOUDFLARE_ROOT" && test_cloudflare ) || err_context "liveblocks-cloudflare"
-
-if [ "${1:-}" = "-s" ]; then
-    echo "Skipping E2E test"
-    exit 0
+    err ""
+    err "===== @liveblocks/zustand ===================================================="
+    ( cd packages/liveblocks-zustand && test_secondary_pkg ) || err_context "liveblocks-zustand"
+else
+    err "==> Skipping package tests"
 fi
 
-echo ""
-echo "===== Liveblocks E2E test suite =============================================="
-( cd e2e/next-sandbox && test_e2e ) || err_context "next-sandbox"
+if [ "$run_cloudflare" -eq 1 ]; then
+    err ""
+    err "===== liveblocks-cloudflare =================================================="
+    ( cd "$CLOUDFLARE_ROOT" && test_cloudflare ) || err_context "liveblocks-cloudflare"
+else
+    err "==> Skipping Cloudflare tests"
+fi
+
+if [ "$run_e2e" -eq 1 ]; then
+    err ""
+    err "===== Liveblocks E2E test suite =============================================="
+    ( cd e2e/next-sandbox && test_e2e ) || err_context "next-sandbox"
+else
+    err "==> Skipping E2E tests"
+fi
