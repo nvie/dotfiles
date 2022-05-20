@@ -1,0 +1,63 @@
+#!/bin/sh
+set -eu
+
+#
+# This makes comby pattern writing a lot easier!
+#
+
+boundary="§§"
+space="   "
+varstart="§@"
+varend="@§"
+
+mask_comby_vars () {
+    sed -Ee 's/:[[]([[:alnum:]]+)[]]/'"$varstart"'\1'"$varend"'/g'
+}
+
+# This will strip whitespace in the pattern itself, i.e. to make
+# the following all equivalent patterns:
+#
+# - foo(x,y)      
+# - foo(x , y)
+# - foo   (   x ,      y )      
+#
+strip_whitespace () {
+  sed -Ee 's/[[:space:]]+/'"$space"'/g'
+}
+
+# This will surround identifiers with word boundaries, so "if
+# ( ... )" will only match the keyword `if`, and not a function
+# call like `gif()`.
+surround_identifiers () {
+  sed -E \
+      -e 's/([[:<:]][[:alnum:]_]+[[:>:]])/'"$boundary"'\1'"$boundary"'/g' \
+      -e 's/'"$varstart$boundary"'([[:alnum:]_]+)'"$boundary$varend"'/'"$varstart"'\1'"$varend"'/g'
+}
+
+# This will translate a pattern like `foo(x, y)` into `foo<WS>(<WS>x<WS>, <WS>y<WS>)<WS>`
+surround_punctuation () {
+  sed -Ee 's/([][()<>,;:^&*!.])/'"$space"'\1'"$space"'/g'
+}
+
+replace_boundaries () {
+  sed -Ee 's/('"$boundary"')+/'":[~\\\\b]"'/g'
+}
+
+replace_whitespace () {
+  sed -Ee 's/('"$space"')+/'":[~\\\\s*]"'/g'
+}
+
+replace_vars () {
+  sed -E \
+      -e 's/('"$varstart"')/:[/g' \
+      -e 's/('"$varend"')/]/g'
+}
+
+echo "$1"                 \
+  | mask_comby_vars       \
+  | strip_whitespace      \
+  | surround_identifiers  \
+  | surround_punctuation  \
+  | replace_vars          \
+  | replace_boundaries    \
+  | replace_whitespace
