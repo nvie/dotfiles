@@ -66,7 +66,7 @@ test_cloudflare () {
     chronic npm install
     chronic "$ROOT/scripts/link-liveblocks.sh"
     node_modules/.bin/tsc
-    npm run test
+    npm run test-ci
 }
 
 test_e2e () {
