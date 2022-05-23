@@ -85,7 +85,7 @@ err_context () {
 rm -rf "$ROOT/packages/liveblocks-"*"/{lib,node_modules}"
 rm -rf "$ROOT/e2e/next-sandbox/{lib,node_modules,.next}"
 
-if [ "$run_cloudflare" -eq 1 ]; then
+if [ "$run_packages" -eq 1 ]; then
     err ""
     err "===== @liveblocks/client ====================================================="
     ( cd packages/liveblocks-client && test_client ) || err_context "liveblocks-client"
