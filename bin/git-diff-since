@@ -1,5 +1,0 @@
-#!/bin/sh
-set -e
-branch="${1:-master}"
-shift 1
-git diff "$branch"... "$@"
