@@ -158,3 +158,6 @@ Powerline_*.cache
 
 # Postgres stuff
 /.pg*
+
+# MongoDB
+/.mongodb
