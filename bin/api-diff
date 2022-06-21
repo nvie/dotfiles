@@ -1,0 +1,61 @@
+#!/bin/sh
+set -eu
+
+if [ "$(basename "$(pwd)")" != "liveblocks-client" ]; then
+    echo "Please run this script from the liveblocks-client directory"
+    exit 1
+fi
+
+# Changes rollup to produce a build without internal APIs. This way, we will
+# not generate a shared.d.ts, making the final diff easier to compare.
+hack_rollup () {
+    sr -s 'srcFiles = \["index.ts", "internal.ts"\]' \
+       -r 'srcFiles = ["index.ts"]'                  \
+       rollup.config.js
+}
+
+build_output () {
+    npm i
+    rm -rf lib
+    hack_rollup
+    npm run build
+    prettier --write lib/index.d.ts
+}
+
+# -----------------------------------------------------------------------------
+# Now first generate the index.d.ts file for the _current_ public API (the base
+# for the comparison)
+if [ $# -ne 1 ]; then
+    echo "usage: api-diff <tag>"
+    exit 1
+fi
+
+if [ ! -f "/tmp/liveblocks-client-$1.d.ts" ]; then
+    git is-clean -v
+    git checkout "$1"
+    build_output
+
+    # Store the results in /tmp
+    cp lib/index.d.ts "/tmp/liveblocks-client-$1.d.ts"
+
+    git drop-local-changes
+
+    # Switch back
+    git checkout -
+fi
+
+# -----------------------------------------------------------------------------
+# Next, generate the public index.d.ts for the current branch
+
+git is-clean -v
+build_output
+
+# Store the results in /tmp
+cp lib/index.d.ts /tmp/liveblocks-client-new.d.ts
+
+git drop-local-changes
+rm -rf lib
+
+# Show the diff
+colordiff -u "/tmp/liveblocks-client-$1.d.ts" "/tmp/liveblocks-client-new.d.ts" | less -R
+echo "colordiff -u \"/tmp/liveblocks-client-$1.d.ts\" \"/tmp/liveblocks-client-new.d.ts\" | less -R"
