@@ -416,6 +416,7 @@ alias cdrr='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-redux'
 alias cdrrr='echo "Try to use cdz"'
 alias cdz='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-zustand'
 alias cdf='cd ~/Projects/liveblocks/liveblocks-cloudflare'
+alias cdb='cd ~/Projects/liveblocks/block-text-editor'
 
 function wtf -d "Print which and --version output for the given command"
     for arg in $argv
