@@ -10,18 +10,29 @@ fi
 
 # Changes rollup to produce a build without internal APIs. This way, we will
 # not generate a shared.d.ts, making the final diff easier to compare.
-hack_rollup () {
-    sr -s 'srcFiles = \["index.ts", "internal.ts"\]' \
-       -r 'srcFiles = ["index.ts"]'                  \
-       rollup.config.js
+hack_the_build () {
+    if [ -f rollup.config.js ]; then
+        sr -s 'srcFiles = \["index.ts", "internal.ts"\]' \
+           -r 'srcFiles = ["index.ts"]'                  \
+           rollup.config.js
+    else
+        sr -s '\["src/index.ts", "src/internal.ts"\]' \
+           -r '["src/index.ts"]'                      \
+           tsup.config.js
+    fi
 }
 
 build_output () {
     npm i
-    rm -rf lib
-    hack_rollup
+    rm -rf lib dist
+    hack_the_build
     npm run build
-    prettier --write lib/index.d.ts
+
+    if [ -d dist ]; then
+        prettier --write dist/index.d.ts
+    else
+        prettier --write lib/index.d.ts
+    fi
 }
 
 # -----------------------------------------------------------------------------
@@ -38,7 +49,7 @@ if [ ! -f "/tmp/$base-$1.d.ts" ]; then
     build_output
 
     # Store the results in /tmp
-    cp lib/index.d.ts "/tmp/$base-$1.d.ts"
+    cp dist/index.d.ts "/tmp/$base-$1.d.ts"
 
     git drop-local-changes
 
@@ -53,10 +64,14 @@ git is-clean -v
 build_output
 
 # Store the results in /tmp
-cp lib/index.d.ts "/tmp/$base-new.d.ts"
+if [ -d dist ]; then
+    cp dist/index.d.ts "/tmp/$base-new.d.ts"
+else
+    cp lib/index.d.ts "/tmp/$base-new.d.ts"
+fi
 
 git drop-local-changes
-rm -rf lib
+rm -rf lib dist
 
 # Show the diff
 colordiff -u "/tmp/$base-$1.d.ts" "/tmp/$base-new.d.ts" | less -R
