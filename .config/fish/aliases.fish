@@ -237,8 +237,8 @@ function veslint -d 'Opens all files in Vim with ESLint issues'
     edit ( eslint $argv | grep -Ee '^/' )
 end
 
-function vflow -d 'Opens all files with Flow issues in Vim'
-    edit ( fll )
+function vjest -d 'Opens the first failing test case in Vim and jumps to the failing line'
+    edit ( jest $argv --bail --silent 2>&1 | grep -oEe '^\s+at .*\(([^:]+):(\d+)' | grep -vEe '(node_modules|dist|lib)/' | cut -d'(' -f2 | head -n1 | sed -Ee "s/:/\n+/" )
 end
 
 function vts -d 'Opens all files with TypeScript issues in Vim'
