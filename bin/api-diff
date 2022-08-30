@@ -16,9 +16,9 @@ hack_the_build () {
            -r 'srcFiles = ["index.ts"]'                  \
            rollup.config.js
     else
-        sr -s '\["src/index.ts", "src/internal.ts"\]' \
-           -r '["src/index.ts"]'                      \
-           tsup.config.js
+        sr -s 'entry: \[.*\]' \
+           -r 'entry: ["src/index.ts"]'                      \
+           tsup.config.ts
     fi
 }
 
@@ -29,9 +29,9 @@ build_output () {
     npm run build
 
     if [ -d dist ]; then
-        prettier --write dist/index.d.ts
+        prettier --write dist/index.*
     else
-        prettier --write lib/index.d.ts
+        prettier --write lib/index.*
     fi
 }
 
@@ -43,13 +43,23 @@ if [ $# -ne 1 ]; then
     exit 1
 fi
 
-if [ ! -f "/tmp/$base-$1.d.ts" ]; then
+PREV_OUTDIR="/tmp/$base/$1"
+mkdir -p "$PREV_OUTDIR"
+
+CURR_OUTDIR="/tmp/$base/currsha"
+mkdir -p "$CURR_OUTDIR"
+
+if [ ! -f "$PREV_OUTDIR/index.d.ts" ]; then
     git is-clean -v
     git checkout "$1"
     build_output
 
     # Store the results in /tmp
-    cp dist/index.d.ts "/tmp/$base-$1.d.ts"
+    if [ -d dist ]; then
+        cp dist/index.* "$PREV_OUTDIR"
+    else
+        cp lib/index.* "$PREV_OUTDIR"
+    fi
 
     git drop-local-changes
 
@@ -65,14 +75,14 @@ build_output
 
 # Store the results in /tmp
 if [ -d dist ]; then
-    cp dist/index.d.ts "/tmp/$base-new.d.ts"
+    cp dist/index.* "$CURR_OUTDIR"
 else
-    cp lib/index.d.ts "/tmp/$base-new.d.ts"
+    cp lib/index.* "$CURR_OUTDIR"
 fi
 
 git drop-local-changes
 rm -rf lib dist
 
 # Show the diff
-colordiff -u "/tmp/$base-$1.d.ts" "/tmp/$base-new.d.ts" | less -R
-echo "colordiff -u \"/tmp/$base-$1.d.ts\" \"/tmp/$base-new.d.ts\" | less -R"
+colordiff -u "$PREV_OUTDIR" "$CURR_OUTDIR" | less -R
+echo "colordiff -u \"$PREV_OUTDIR\" \"$CURR_OUTDIR\" | less -R"
