@@ -1,0 +1,7 @@
+# set reference-format = ❬branch❭ ⟪remote⟫ [tag]
+set reference-format = ⟪branch⟫ ⟪remote⟫ [tag]
+
+set main-view-date-display = custom
+set main-view-date-format = "%b %d %H:%M %Z"
+set main-view-author-display = abbreviated
+set main-view-author-width = 9
