@@ -412,13 +412,12 @@ function color-syntax
     pygmentize -f rtf -l $lang
 end
 
-alias h=heroku
 alias gp='cd ~/Projects/liveblocks/liveblocks'
 alias ga='cd ~/Projects/liveblocks/liveblocks.io'
+alias cdio='cd ~/Projects/liveblocks/liveblocks.io'
 alias cdc='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-client'
 alias cdr='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-react'
 alias cdrr='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-redux'
-alias cdrrr='echo "Try to use cdz"'
 alias cdz='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-zustand'
 alias cdf='cd ~/Projects/liveblocks/liveblocks-cloudflare'
 alias cdb='cd ~/Projects/liveblocks/block-text-editor'
