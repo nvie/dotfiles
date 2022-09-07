@@ -84,7 +84,6 @@
     sep = separator --no-verify
     shatter = shatter-by-file
     #mt = mergetool
-    mt = mergetool -t Kaleidoscope
     pr = pull --rebase=merges --autostash
     cdf = clean -df
 
@@ -131,13 +130,6 @@
     algorithm = patience
     renameLimit = 3000
     noprefix = true
-
-[difftool "Kaleidoscope"]
-    cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
-
-[mergetool "Kaleidoscope"]
-    cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-    trustExitCode = true
 
 [help]
     autocorrect = 1

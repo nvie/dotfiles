@@ -52,6 +52,11 @@ alias xxa 'tig --exclude=production --exclude="*/production" --exclude=canary --
 alias xxaa 'tig --all'
 alias notes 'rg "TODO|HACK|FIXME|OPTIMIZE"'
 
+# Common typos I make
+alias gaa 'git aa'
+alias gst 'git st'
+alias gpr 'git pr'
+
 alias m make
 alias mm 'make run'
 
