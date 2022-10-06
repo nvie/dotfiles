@@ -145,12 +145,6 @@ if status is-interactive
 end
 # }}}
 
-# Ruby env manager {{{
-if status is-interactive
-    rbenv init - fish | source
-end
-# }}}
-
 # Direnv {{{
 direnv hook fish | source
 # }}}
