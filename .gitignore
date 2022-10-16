@@ -107,6 +107,7 @@
 /.node-gyp/
 /.npm
 /.npmrc
+/.nuxtrc
 /.oh-my-zsh
 /.parallel
 /.pip
