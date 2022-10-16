@@ -259,7 +259,6 @@ alias ggco 'git switchi'
 alias ggbd 'git branch -D (g local-branches | fzf)'
 alias fl 'clear; and flow-limit'
 alias fflow 'flow stop; and flow'
-alias tl 'clear; and tsc-limit'
 alias tll "tsc | grep -Ee 'TS\d+' | cut -d'(' -f1 | sort -u"
 
 function git-search
@@ -415,10 +414,13 @@ end
 alias gp='cd ~/Projects/liveblocks/liveblocks'
 alias ga='cd ~/Projects/liveblocks/liveblocks.io'
 alias cdio='cd ~/Projects/liveblocks/liveblocks.io'
+alias cdcc='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-core'
 alias cdc='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-client'
 alias cdr='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-react'
 alias cdrr='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-redux'
 alias cdz='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-zustand'
+alias cdn='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-node'
+alias cdd='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-devtools'
 alias cdf='cd ~/Projects/liveblocks/liveblocks-cloudflare'
 alias cdb='cd ~/Projects/liveblocks/block-text-editor'
 
@@ -428,3 +430,22 @@ function wtf -d "Print which and --version output for the given command"
         echo $arg: (sh -c "$arg --version")
     end
 end
+
+function turbooo -d "Run a turbo command anywhere in Turbo repo"
+    # If we're at the root, just run "turbo run build"
+    if test -f "turbo.json"
+        turbo run $argv
+    else if test -f "package.json"
+        set scope (jq -r '.name' package.json)
+        pushd ~/Projects/liveblocks/liveblocks
+        turbo run $argv[1] --filter $scope $argv[2..-1]
+        popd
+    else
+        echo "Not in a Turbo repo?" >&2
+    end
+end
+
+alias tb 'turbooo build'
+alias tt 'turbooo test'
+alias tl 'turbooo lint'
+alias tf 'turbooo format'
