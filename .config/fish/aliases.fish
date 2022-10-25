@@ -251,7 +251,7 @@ function vjest -d 'Opens the first failing test case in Vim and jumps to the fai
 end
 
 function vts -d 'Opens all files with TypeScript issues in Vim'
-    edit ( tsc | grep -vEe '^\s' | cut -d'(' -f1 | sort -u )
+    edit ( tsc $argv | grep -vEe '^\s' | cut -d'(' -f1 | sort -u )
 end
 
 # alias git hub
