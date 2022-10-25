@@ -62,6 +62,10 @@ alias mm 'make run'
 
 alias reset-mailbox 'rm -v ~/Library/Caches/com.dropbox.mbd.external-beta/mailbox.db'
 
+function brew-outdated-leaves -d "List outdated packages, but only _leaf_ packages"
+    combine (brew outdated | cut -d'(' -f1 | cut -d'@' -f1 | psub) and (brew leaves | psub) | xargs brew outdated
+end
+
 function da -d "Allow or disallow .envrc after printing it."
     echo ------------------------------------------------
     cat .envrc
