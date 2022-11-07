@@ -438,11 +438,11 @@ end
 function turbooo -d "Run a turbo command anywhere in Turbo repo"
     # If we're at the root, just run "turbo run build"
     if test -f "turbo.json"
-        turbo run $argv
+        turbo run $argv[1] -- $argv[2..-1]
     else if test -f "package.json"
         set scope (jq -r '.name' package.json)
         pushd ~/Projects/liveblocks/liveblocks
-        turbo run $argv[1] --filter $scope $argv[2..-1]
+        turbo run $argv[1] --filter $scope -- $argv[2..-1]
         popd
     else
         echo "Not in a Turbo repo?" >&2
