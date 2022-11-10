@@ -451,6 +451,7 @@ end
 
 alias tb 'turbooo build'
 alias tt 'turbooo test'
+alias td 'turbooo dev'
 alias ttt 'turbooo test:types'
 alias tl 'turbooo lint'
 alias tf 'turbooo format'
