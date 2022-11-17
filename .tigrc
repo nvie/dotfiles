@@ -5,3 +5,17 @@ set main-view-date-display = custom
 set main-view-date-format = "%b %d %H:%M %Z"
 set main-view-author-display = abbreviated
 set main-view-author-width = 9
+
+# Custom colors
+# Format:
+# color  <area>     <fgcolor> <bgcolor> [attributes]
+color    main-head  yellow    default
+
+# 'unbind' the default quit key binding
+# bind main Q none
+
+# Cherry-pick selected commit onto current branch
+# bind generic C !git cherry-pick %(commit)
+
+# Revert the selected commit
+bind generic R !git revert --no-edit %(commit)
