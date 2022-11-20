@@ -9,7 +9,7 @@ set main-view-author-width = 9
 # Custom colors
 # Format:
 # color  <area>     <fgcolor> <bgcolor> [attributes]
-color    main-head  yellow    default
+color    main-head  white    default
 
 # 'unbind' the default quit key binding
 # bind main Q none
