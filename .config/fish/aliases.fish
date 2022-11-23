@@ -250,8 +250,12 @@ function vjest -d 'Opens the first failing test case in Vim and jumps to the fai
     edit ( jest $argv --bail --silent 2>&1 | grep -oEe '^\s+at .*\(([^:]+):(\d+)' | grep -vEe '(node_modules|dist|lib)/' | cut -d'(' -f2 | head -n1 | sed -Ee "s/:/\n+/" )
 end
 
+function tsf -d 'Lists all files with TypeScript issues'
+    tsc $argv | grep -vEe '^\s' | cut -d'(' -f1 | sort -u
+end
+
 function vts -d 'Opens all files with TypeScript issues in Vim'
-    edit ( tsc $argv | grep -vEe '^\s' | cut -d'(' -f1 | sort -u )
+    edit ( tsf $argv )
 end
 
 # alias git hub
