@@ -30,6 +30,10 @@ function fish_prompt
 
     set_color normal
     printf ' (%s)' (date +%H:%M)
+    # printf ' @ node '
+    # set_color blue
+    # printf '%s' (node --version | cut -d. -f1 | cut -dv -f2)
+    # set_color normal
     echo
 
     #if test $last_status -eq 0
