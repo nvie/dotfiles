@@ -17,11 +17,10 @@
 /.zcompdump*
 /.zsh-update
 
-# Python virtual envs
+# Virtual envs
 /.virtualenvs
-
-# Ruby virtual envs
 /.rvm
+/.nvm
 
 # History files
 /.*history
