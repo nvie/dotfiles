@@ -141,6 +141,7 @@
 /.volta/
 /.vscode/
 /.wget-hsts
+/.wrangler
 /.Xauthority
 /.XcodeDefaultPerspective.mode1v3
 /.yarn*
