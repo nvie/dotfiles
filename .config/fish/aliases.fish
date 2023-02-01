@@ -446,7 +446,7 @@ function turbooo -d "Run a turbo command anywhere in Turbo repo"
         turbo run $argv
     else if test -f "package.json"
         set scope (jq -r '.name' package.json)
-        pushd ~/Projects/liveblocks/liveblocks
+        pushd ../../
         turbo run $argv[1] --filter $scope $argv[2..-1]
         popd
     else
