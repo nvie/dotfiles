@@ -430,7 +430,8 @@ alias cdz='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-zustand'
 alias cdn='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-node'
 alias cdd='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-devtools'
 alias cdf='cd ~/Projects/liveblocks/liveblocks-cloudflare'
-alias cds='cd ~/Projects/liveblocks/liveblocks-schema'
+alias cds='cd ~/Projects/liveblocks/liveblocks-schema/packages/liveblocks-schema'
+alias cda='cd ~/Projects/liveblocks/liveblocks-schema/packages/ast-generator'
 alias cdb='cd ~/Projects/liveblocks/block-text-editor'
 
 function wtf -d "Print which and --version output for the given command"
