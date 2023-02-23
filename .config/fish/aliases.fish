@@ -60,6 +60,8 @@ alias gpr 'git pr'
 alias m make
 alias mm 'make run'
 
+alias xxx 'rg -l --null "\bXXX\b" -- 2>/dev/null | xargs -0 -o nvim -c "/\v<XXX>"'
+
 alias reset-mailbox 'rm -v ~/Library/Caches/com.dropbox.mbd.external-beta/mailbox.db'
 
 function brew-outdated-leaves -d "List outdated packages, but only _leaf_ packages"
