@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Required parameters:
+# @raycast.schemaVersion 1
+# @raycast.title Shift left
+# @raycast.mode silent
+
+# Optional parameters:
+# @raycast.icon 📋
+
+# Documentation:
+# @raycast.description Unindents clipboard contents (shift left)
+# @raycast.author Vincent Driessen
+# @raycast.authorURL https://twitter.com/nvie
+
+pbpaste | sed -Ee 's/^([ ]{4}|[\t])//' | pbcopy
