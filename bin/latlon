@@ -1,4 +1,0 @@
-#!/bin/sh
-curl "https://maps.googleapis.com/maps/api/geocode/json?address=$(echo "$@" | sed -Ee 's/ /+/g')" \
-    | jq '.results[0].geometry.location | .lat, .lng' \
-    | xargs echo

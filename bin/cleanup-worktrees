@@ -1,5 +1,0 @@
-#!/bin/sh
-set -e
-
-cd ~/Projects/SimpleContacts/core
-git worktree remove ~/Desktop/SimpleContacts

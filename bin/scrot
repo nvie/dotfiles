@@ -1,7 +1,0 @@
-#!/bin/sh
-set -e
-(ls -Ur ~/Desktop/Screen\ Shot* 2>/dev/null || echo) \
-    | head -n1 \
-    | while read f; do
-        reattach-to-user-namespace open -a Annotate "$f"
-    done
