@@ -60,7 +60,8 @@ alias gpr 'git pr'
 alias m make
 alias mm 'make run'
 
-alias xxx 'rg -l --null "\bXXX\b" -- 2>/dev/null | xargs -0 -o nvim -c "/\v<XXX>"'
+alias xxx 'sr -s "\bXXX\b"'
+alias vx 'rg -l --null "\bXXX\b" -- 2>/dev/null | xargs -0 -o nvim -c "/\v<XXX>"'
 
 alias reset-mailbox 'rm -v ~/Library/Caches/com.dropbox.mbd.external-beta/mailbox.db'
 
@@ -434,6 +435,7 @@ alias cdd='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-devtools'
 alias cdf='cd ~/Projects/liveblocks/liveblocks-cloudflare'
 alias cds='cd ~/Projects/liveblocks/liveblocks-schema/packages/liveblocks-schema'
 alias cda='cd ~/Projects/liveblocks/liveblocks-schema/packages/ast-generator'
+alias cdi='cd ~/Projects/liveblocks/liveblocks-schema/packages/infer-schema'
 alias cdb='cd ~/Projects/liveblocks/block-text-editor'
 
 function wtf -d "Print which and --version output for the given command"
