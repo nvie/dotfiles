@@ -451,9 +451,12 @@ function turbooo -d "Run a turbo command anywhere in Turbo repo"
         turbo run $argv
     else if test -f "package.json"
         set scope (jq -r '.name' package.json)
-        pushd ../../
-        turbo run $argv[1] --filter $scope $argv[2..-1]
-        popd
+
+        # Until fish gets proper subshell-with-local-cd support, I'm using fish -c here :(
+        # Ideally, we could perform a local CD. I used
+        # pushd/popd before, but it completely breaks when
+        # aborting test runs with Ctrl+C :(
+        fish -c "cd ../../ && turbo run $argv[1] --filter $scope $argv[2..-1]"
     else
         echo "Not in a Turbo repo?" >&2
     end
