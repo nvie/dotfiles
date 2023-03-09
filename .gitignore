@@ -47,6 +47,7 @@
 /.belastingdienst.nl
 /.bi_li3
 /.bower
+/.bun
 /.bundle
 /.bup
 /.bzr.log
@@ -59,6 +60,7 @@
 /.cookiecutters
 /.cups
 /.dbshell
+/.degit
 /.devpi
 /.direnvrc
 /.docker/
