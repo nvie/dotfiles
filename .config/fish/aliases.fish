@@ -7,6 +7,8 @@ alias evv 'vim ~/.vimrc'
 alias es 'nvim ~/bin/autosort'
 alias et 'nvim ~/.tmux.conf'
 
+alias zz 'open -a Zed .'
+
 alias vim-norc 'vim -u NORC'
 alias vim-none 'vim -u NONE'
 alias nvim-norc 'nvim -u NORC'
