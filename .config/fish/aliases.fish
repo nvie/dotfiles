@@ -452,26 +452,9 @@ function wtf -d "Print which and --version output for the given command"
     end
 end
 
-function turbooo -d "Run a turbo command anywhere in Turbo repo"
-    # If we're at the root, just run "turbo run build"
-    if test -f "turbo.json"
-        turbo run $argv
-    else if test -f "package.json"
-        set scope (jq -r '.name' package.json)
-
-        # Until fish gets proper subshell-with-local-cd support, I'm using fish -c here :(
-        # Ideally, we could perform a local CD. I used
-        # pushd/popd before, but it completely breaks when
-        # aborting test runs with Ctrl+C :(
-        fish -c "cd ../../ && turbo run $argv[1] --filter $scope $argv[2..-1]"
-    else
-        echo "Not in a Turbo repo?" >&2
-    end
-end
-
-alias tb 'turbooo build'
-alias tt 'turbooo test'
-alias td 'turbooo dev'
-alias ttt 'turbooo test:types'
-alias tl 'turbooo lint'
-alias tf 'turbooo format'
+alias tb 'turbo build'
+alias tt 'turbo test'
+alias td 'turbo dev'
+alias ttt 'turbo test:types'
+alias tl 'turbo lint'
+alias tf 'turbo format'
