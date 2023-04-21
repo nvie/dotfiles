@@ -424,6 +424,10 @@ function color-syntax
     pygmentize -f rtf -l $lang
 end
 
+function st -d "Set a terminal badge for the current tab, based on the current project/directory"
+    npx iterm2-tab-set (string replace -r '^liveblocks-' '' (basename (git root)))
+end
+
 alias gp='cd ~/Projects/liveblocks/liveblocks'
 alias ga='cd ~/Projects/liveblocks/liveblocks.io'
 alias cdio='cd ~/Projects/liveblocks/liveblocks.io'
