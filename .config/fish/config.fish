@@ -145,7 +145,7 @@ if status is-login
 end
 
 if status is-interactive
-    set CDPATH . ~/Projects/liveblocks/liveblocks/packages ~/Projects/tsdiff/apps ~/Projects/tsdiff/packages ~/Projects/liveblocks/liveblocks ~/Projects/liveblocks ~/Projects
+    set CDPATH . ~/Projects/liveblocks/liveblocks/packages ~/Projects/liveblocks/liveblocks/schema-lang ~/Projects/tsdiff/apps ~/Projects/tsdiff/packages ~/Projects/liveblocks/liveblocks ~/Projects/liveblocks ~/Projects
 end
 # }}}
 
