@@ -95,7 +95,6 @@ else
 fi
 
 git drop-local-changes
-rm -rf lib dist
 
 # Show the diff
 if [ "$types_only" -eq 1 ]; then
@@ -104,4 +103,4 @@ else
     colordiff -u "$PREV_OUTDIR" "$CURR_OUTDIR" | less -R
 fi
 
-rm -rf "$PREV_OUTDIR" "$CURR_OUTDIR"
+# rm -rf "$PREV_OUTDIR" "$CURR_OUTDIR"
