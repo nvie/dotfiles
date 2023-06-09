@@ -199,11 +199,15 @@ function vci
     end
 end
 
-alias vch 'vc head'
-alias vch1 'vc head~1'
-alias vch2 'vc head~2'
-alias vch3 'vc head~3'
-alias vch4 'vc head~4'
+# Open all files from the last commit that changes any files in the current directory
+alias vch 'vc (git log -1 --pretty=%H .)'
+
+# Open all files from the nth-last commit
+alias vch0 'vc HEAD'
+alias vch1 'vc HEAD~1'
+alias vch2 'vc HEAD~2'
+alias vch3 'vc HEAD~3'
+alias vch4 'vc HEAD~4'
 
 function vu
     if git modified -u $argv
