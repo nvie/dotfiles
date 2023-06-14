@@ -457,6 +457,7 @@ function wtf -d "Print which and --version output for the given command"
 end
 
 alias tb 'turbo build'
+alias tbf 'turbo build:firefox'
 alias tt 'turbo test'
 alias td 'turbo dev'
 alias ttt 'turbo test:types'
