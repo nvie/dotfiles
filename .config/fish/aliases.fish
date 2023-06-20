@@ -449,6 +449,7 @@ alias cda='cd ~/Projects/liveblocks/liveblocks/schema-lang/ast-generator'
 alias cdi='cd ~/Projects/liveblocks/liveblocks/schema-lang/infer-schema'
 alias cdb='cd ~/Projects/liveblocks/block-text-editor'
 alias cddocs='cd ~/Projects/liveblocks/liveblocks/docs'
+alias liveblocks-dependencies="jq -r '((.dependencies,.peerDependencies,.devDependencies) // []) | keys[]' package.json | sort -u | grep --color=never -Ee @liveblocks/"
 
 function wtf -d "Print which and --version output for the given command"
     for arg in $argv
