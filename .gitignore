@@ -116,6 +116,7 @@
 /.pip-tools
 /.pkg-cache
 /.pm2/
+/.pnpm-state/
 /.pre-commit/
 /.profile
 /.pyenv/
