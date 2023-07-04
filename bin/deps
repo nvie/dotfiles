@@ -1,0 +1,47 @@
+#!/bin/sh
+set -eu
+
+usage () {
+    echo "usage: deps [-pdPh]" >&2
+    echo >&2
+    echo "Options:" >&2
+    echo "-p    List production dependencies" >&2
+    echo "-d    List dev dependencies" >&2
+    echo "-P    List peer dependencies" >&2
+    echo "-h    Print this help" >&2
+    echo >&2
+    echo "List dependencies from package.json" >&2
+    echo "" >&2
+}
+
+prod=0
+dev=0
+peer=0
+while getopts pdPh flag; do
+    case "$flag" in
+        p) prod=1;;
+        d) dev=1;;
+        P) peer=1;;
+        h) usage; exit 2;;
+        *) usage; exit 2;;
+    esac
+done
+shift $(($OPTIND - 1))
+
+if [ "$prod" -eq 0 -a "$dev" -eq 0 -a "$peer" -eq 0 ]; then
+    prod=1
+    dev=1
+    peer=1
+fi
+
+if [ "$prod" -eq 1 ]; then
+    jq -r "(.dependencies // []) | keys[]" package.json
+fi
+
+if [ "$dev" -eq 1 ]; then
+    jq -r "(.devDependencies // []) | keys[]" package.json
+fi
+
+if [ "$peer" -eq 1 ]; then
+    jq -r "(.peerDependencies // []) | keys[]" package.json
+fi
