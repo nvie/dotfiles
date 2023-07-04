@@ -458,12 +458,20 @@ function wtf -d "Print which and --version output for the given command"
     end
 end
 
-alias tb 'turbo build'
-alias tbf 'turbo build:firefox'
-alias tt 'turbo test'
-alias td 'turbo dev'
-alias ttt 'turbo test:types'
-alias tte 'turbo test:e2e'
-alias tl 'turbo lint'
-alias tlp 'turbo lint:package'
-alias tf 'turbo format'
+function turbo_or_npm
+    if which -s turbo
+        turbo $argv
+    else
+        npm run $argv
+    end
+end
+
+alias tb 'turbo_or_npm build'
+alias tbf 'turbo_or_npm build:firefox'
+alias tt 'turbo_or_npm test'
+alias td 'turbo_or_npm dev'
+alias ttt 'turbo_or_npm test:types'
+alias tte 'turbo_or_npm test:e2e'
+alias tl 'turbo_or_npm lint'
+alias tlp 'turbo_or_npm lint:package'
+alias tf 'turbo_or_npm format'
