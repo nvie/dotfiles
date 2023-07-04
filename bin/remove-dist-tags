@@ -1,0 +1,23 @@
+#!/bin/sh
+set -eu
+
+if [ "$1" = "beta" -o "$1" = "latest" -o -z "$1" ]; then
+    echo "Specify a valid tag name." >&2
+    echo "" >&2
+    echo "Usage:" >&2
+    echo "  remove-dist-tags <tag>" >&2
+    echo "" >&2
+    exit 2
+fi
+
+echo "OTP?"
+read otp
+
+set +e
+npm dist-tag rm --otp "$otp" "@liveblocks/yjs" "$1" || false
+npm dist-tag rm --otp "$otp" "@liveblocks/zustand" "$1" || false
+npm dist-tag rm --otp "$otp" "@liveblocks/redux" "$1" || false
+npm dist-tag rm --otp "$otp" "@liveblocks/react" "$1" || false
+npm dist-tag rm --otp "$otp" "@liveblocks/client" "$1" || false
+npm dist-tag rm --otp "$otp" "@liveblocks/core" "$1" || false
+set -e
