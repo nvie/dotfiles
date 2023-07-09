@@ -8,6 +8,8 @@ usage () {
     echo "-p    List production dependencies" >&2
     echo "-d    List dev dependencies" >&2
     echo "-P    List peer dependencies" >&2
+    echo "-v    Also list versions" >&2
+    echo "-l    Print \"@latest\" as versions" >&2
     echo "-h    Print this help" >&2
     echo >&2
     echo "List dependencies from package.json" >&2
@@ -17,11 +19,15 @@ usage () {
 prod=0
 dev=0
 peer=0
-while getopts pdPh flag; do
+show_versions=0
+show_latest=0
+while getopts pdPvlh flag; do
     case "$flag" in
         p) prod=1;;
         d) dev=1;;
         P) peer=1;;
+        v) show_versions=1; show_latest=0;;
+        l) show_latest=1; show_versions=0;;
         h) usage; exit 2;;
         *) usage; exit 2;;
     esac
@@ -34,14 +40,28 @@ if [ "$prod" -eq 0 -a "$dev" -eq 0 -a "$peer" -eq 0 ]; then
     peer=1
 fi
 
+latest_query=' as $k | "\($k)@latest"'
+versions_query=' as $k | "\($k)@\(.[$k])"'
+
+query () {
+    key="$1"
+    query="(.$key // []) | keys[]"
+    if [ $show_versions -eq 1 ]; then
+        query="$query$versions_query"
+    elif [ $show_latest -eq 1 ]; then
+        query="$query$latest_query"
+    fi
+    jq -r "$query" package.json
+}
+
 if [ "$prod" -eq 1 ]; then
-    jq -r "(.dependencies // []) | keys[]" package.json
+    query dependencies
 fi
 
 if [ "$dev" -eq 1 ]; then
-    jq -r "(.devDependencies // []) | keys[]" package.json
+    query devDependencies
 fi
 
 if [ "$peer" -eq 1 ]; then
-    jq -r "(.peerDependencies // []) | keys[]" package.json
+    query peerDependencies
 fi
