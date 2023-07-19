@@ -1,4 +1,10 @@
 #!/bin/sh
 set -e
 
+#
+# This script uses "sr", which is a search & replace tool.
+# To install it, run:
+#
+#     $ brew install nvie/tap/sr
+#
 sr -s '  (console.error..Yjs was already imported)' -r ' // $1' node_modules/yjs/dist/*.{cjs,mjs}
