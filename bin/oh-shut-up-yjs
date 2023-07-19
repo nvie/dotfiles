@@ -1,0 +1,4 @@
+#!/bin/sh
+set -e
+
+sr -s '  (console.error..Yjs was already imported)' -r ' // $1' node_modules/yjs/dist/*.{cjs,mjs}
