@@ -444,10 +444,10 @@ alias cdz='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-zustand'
 alias cdn='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-node'
 alias cdd='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-devtools'
 alias cdf='cd ~/Projects/liveblocks/liveblocks-cloudflare'
+alias cdb='cd ~/Projects/liveblocks/liveblocks-backend'
 alias cds='cd ~/Projects/liveblocks/liveblocks/schema-lang/liveblocks-schema'
 alias cda='cd ~/Projects/liveblocks/liveblocks/schema-lang/ast-generator'
 alias cdi='cd ~/Projects/liveblocks/liveblocks/schema-lang/infer-schema'
-alias cdb='cd ~/Projects/liveblocks/block-text-editor'
 alias cddocs='cd ~/Projects/liveblocks/liveblocks/docs'
 alias liveblocks-dependencies="jq -r '((.dependencies,.peerDependencies,.devDependencies) // []) | keys[]' package.json | sort -u | grep --color=never -Ee @liveblocks/"
 
