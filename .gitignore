@@ -54,6 +54,7 @@
 /.cache
 /.cargo
 /.cassandra
+/.cdk
 /.CFUserTextEncoding
 /.chef
 /.config
@@ -132,6 +133,8 @@
 /.rnd
 /.rustup
 /.s3cfg
+/.serverless
+/.serverlessrc
 /.srl
 /.ssh
 /.subversion
