@@ -17,7 +17,7 @@ append-to-path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 append-to-path "/Applications/Docker.app/Contents/Resources/bin"
 append-to-path ~/Projects/liveblocks/liveblocks/scripts
 
-prepend-to-path ~/Projects/code-gardener/bin
+prepend-to-path /opt/homebrew/opt/node@18/bin
 prepend-to-path /opt/homebrew/sbin
 prepend-to-path /opt/homebrew/bin
 
