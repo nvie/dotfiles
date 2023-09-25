@@ -43,9 +43,9 @@ build_output () {
     turbo build
 
     if [ -d dist ]; then
-        prettier --write dist/index.*
+        prettier --write dist/index.*s
     else
-        prettier --write lib/index.*
+        prettier --write lib/index.*s
     fi
 }
 
