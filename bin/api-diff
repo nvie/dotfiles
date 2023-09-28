@@ -29,7 +29,7 @@ if [ "$base" != "liveblocks-core" -a "$base" != "liveblocks-client" -a "$base" !
 fi
 
 # Changes rollup to produce a build without internal APIs. This way, we will
-# not generate a shared.d.ts, making the final diff easier to compare.
+# not generate a shared.d.mts, making the final diff easier to compare.
 hack_the_build () {
   sr -s 'entry: \[.*\]' -r 'entry: ["src/index.ts"]' tsup.config.ts
   sr -s 'target: ".*"' -r 'target: "esnext"' tsup.config.ts
@@ -50,7 +50,7 @@ build_output () {
 }
 
 # -----------------------------------------------------------------------------
-# Now first generate the index.d.ts file for the _current_ public API (the base
+# Now first generate the index.d.mts file for the _current_ public API (the base
 # for the comparison)
 if [ $# -ne 1 ]; then
     echo "usage: api-diff <tag>"
@@ -63,7 +63,7 @@ mkdir -p "$PREV_OUTDIR"
 CURR_OUTDIR="/tmp/$base/currsha"
 mkdir -p "$CURR_OUTDIR"
 
-if [ ! -f "$PREV_OUTDIR/index.d.ts" ]; then
+if [ ! -f "$PREV_OUTDIR/index.d.mts" ]; then
     git is-clean -v
     git checkout "$1"
     build_output
@@ -82,7 +82,7 @@ if [ ! -f "$PREV_OUTDIR/index.d.ts" ]; then
 fi
 
 # -----------------------------------------------------------------------------
-# Next, generate the public index.d.ts for the current branch
+# Next, generate the public index.d.mts for the current branch
 
 git is-clean -v
 build_output
@@ -98,7 +98,7 @@ git drop-local-changes
 
 # Show the diff
 if [ "$types_only" -eq 1 ]; then
-    colordiff -u "$PREV_OUTDIR/index.d.ts" "$CURR_OUTDIR/index.d.ts" | less -R
+    colordiff -u "$PREV_OUTDIR/index.d.mts" "$CURR_OUTDIR/index.d.mts" | less -R
 else
     colordiff -u "$PREV_OUTDIR" "$CURR_OUTDIR" | less -R
 fi
