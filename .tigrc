@@ -20,3 +20,4 @@ color    main-head  white    default
 # Revert the selected commit
 bind generic R !git revert --no-edit %(commit)
 bind generic Y !sh -c "echo %(commit) | tr -d '\\n' | pbcopy; echo 'SHA \"%(commit)\" copied to clipboard'"
+bind generic M !git merge --ff-only %(commit)
