@@ -62,8 +62,8 @@ alias gpr 'git pr'
 alias m make
 alias mm 'make run'
 
-alias xxx 'sr -s "\bXXX\b"'
-alias vx 'rg -l --null "\bXXX\b" -- 2>/dev/null | xargs -0 -o nvim -c "/\v<XXX>"'
+alias xxx 'sr -s "\b(XXX|YYY)\b"'
+alias vx 'rg -l --null "\b(XXX|YYY)\b" -- 2>/dev/null | xargs -0 -o nvim -c "/\v<(XXX|YYY)>"'
 
 alias reset-mailbox 'rm -v ~/Library/Caches/com.dropbox.mbd.external-beta/mailbox.db'
 
