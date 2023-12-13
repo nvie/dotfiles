@@ -122,6 +122,8 @@
     ua = update-all
     b = !hub browse
 
+    graft = "!f() { git rebase --onto ${1:-@} $(git merge-base HEAD ${1:-@}); }; f"
+
 [url "https://github.com/"]
     insteadOf = gh
 
