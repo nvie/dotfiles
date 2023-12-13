@@ -70,7 +70,7 @@
     expand = rev-list -1
     ap = add -p
     cc = reset HEAD
-    rhh = reset --hard HEAD~1
+    rhh = !"echo $(git reset --hard HEAD~1)' (was' $(git rev-parse --short HEAD@{1})')'"
     ra = rebase --abort
     rc = rebase --continue
     ri = rebase --interactive --autosquash --autostash
