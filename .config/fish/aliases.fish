@@ -470,6 +470,14 @@ function turbo_or_npm
     end
 end
 
+function turboshhhh_or_npm
+    if which -s turbo
+        turbo --log-prefix none $argv
+    else
+        npm run $argv
+    end
+end
+
 alias tb 'turbo_or_npm build'
 alias tbf 'turbo_or_npm build:firefox'
 alias tt 'turbo_or_npm test'
@@ -477,7 +485,7 @@ alias td 'turbo_or_npm dev'
 alias ttt 'turbo_or_npm test:types'
 alias ttu 'turbo_or_npm test:ui'
 alias tte 'turbo_or_npm test:e2e'
-alias tl 'turbo_or_npm lint'
+alias tl 'turboshhhh_or_npm lint'
 alias tlp 'turbo_or_npm lint:package'
 alias tf 'turbo_or_npm format'
 alias tp 'turbo_or_npm package'
