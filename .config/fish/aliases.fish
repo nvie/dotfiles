@@ -266,7 +266,11 @@ function tsf -d 'Lists all files with TypeScript issues'
 end
 
 function vts -d 'Opens all files with TypeScript issues in Vim'
-    edit ( tsf $argv )
+    if test "$argv[1]" = --incremental
+        echo "No longer needed to specify --incremental here 😇" >&2
+    else
+        edit ( tsf --incremental $argv )
+    end
 end
 
 # alias git hub
