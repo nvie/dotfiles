@@ -16,7 +16,7 @@
 
 [merge]
     tool = splice
-    conflictstyle = diff3
+    conflictstyle = zdiff3
 
 [mergetool "mvimdiff"]
     cmd = "mvim -f -d $MERGED $LOCAL $BASE $REMOTE -c 'wincmd J'"
