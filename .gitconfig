@@ -47,6 +47,7 @@
     ci = commit --no-verify
     civ = commit --no-verify -v
     co = checkout
+    sw = switch
     cp = cherry-pick
     dc = diff --cached
     di = diff
@@ -114,7 +115,7 @@
     bc = !"git browse-commit $(git sha ${1:-@})"
     snap = !"git aa && git ci -m CHECKPOINT"
     sw = switch
-    switchi = !"git recent-branches | fzf | ifne xargs git checkout"
+    switchi = !"git recent-branches | fzf | ifne xargs git switch"
 
     pc = push-current
     pt = push --tags
