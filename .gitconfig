@@ -115,7 +115,9 @@
     bc = !"git browse-commit $(git sha ${1:-@})"
     snap = !"git aa && git ci -m CHECKPOINT"
     sw = switch
-    switchi = !"git recent-branches | fzf | ifne xargs git switch"
+
+    # Interactive switch
+    iswitch = !"git recent-branches | fzf | ifne xargs git switch"
 
     pc = push-current
     pt = push --tags
