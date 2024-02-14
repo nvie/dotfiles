@@ -262,7 +262,7 @@ function vjest -d 'Opens the first failing test case in Vim and jumps to the fai
 end
 
 function tsf -d 'Lists all files with TypeScript issues'
-    tsc $argv | grep -vEe '^\s' | cut -d'(' -f1 | sort -u
+    tsc $argv | grep -vEe '^\s' | cut -d: -f1 | rev | cut -d'(' -f2- | rev | sort -u
 end
 
 function vts -d 'Opens all files with TypeScript issues in Vim'
