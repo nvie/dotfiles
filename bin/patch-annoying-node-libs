@@ -7,8 +7,11 @@ set -e
 #
 #     $ brew install nvie/tap/sr
 #
-sr -s '  (console.error..Yjs was already imported)' -r ' // $1' node_modules/yjs/dist/*.{cjs,mjs}
+sr -s '  (console.error..Yjs was already imported)' \
+   -r ' // $1' \
+   node_modules/yjs/dist/*.{cjs,mjs}
 
 # Also hide deprecated messages
 sr -s "@deprecated (Use .buf.toString..base64|Use .Buffer.from.data. .base64)" \
-   -r 'deprecated $1' node_modules/@types/node/buffer.d.ts
+   -r 'deprecated $1' \
+   node_modules/@types/node/buffer.d.ts
