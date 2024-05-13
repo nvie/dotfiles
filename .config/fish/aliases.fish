@@ -459,6 +459,7 @@ alias cds='cd ~/Projects/liveblocks/liveblocks-cloudflare/packages/liveblocks-se
 alias cdsc='cd ~/Projects/liveblocks/liveblocks/schema-lang/liveblocks-schema'
 alias cdi='cd ~/Projects/liveblocks/liveblocks/schema-lang/infer-schema'
 alias cdq='cd ~/Projects/liveblocks/liveblocks-cloudflare/packages/liveblocks-query-parser'
+alias cdR='cd ~/Projects/liveblocks/liveblocks-cloudflare/packages/serv'
 alias cddocs='cd ~/Projects/liveblocks/liveblocks/docs'
 alias liveblocks-dependencies="jq -r '((.dependencies,.peerDependencies,.devDependencies) // []) | keys[]' package.json | sort -u | grep --color=never -Ee @liveblocks/"
 
