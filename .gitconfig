@@ -113,7 +113,7 @@
     wiki = !hub browse -- wiki
     browse-commit = !"hub browse -- commit/\"$1\""
     bc = !"git browse-commit $(git sha ${1:-@})"
-    snap = !"git aa && git ci -m CHECKPOINT"
+    # snap = !"git aa && git ci -m CHECKPOINT"
     sw = switch
 
     # Interactive switch
