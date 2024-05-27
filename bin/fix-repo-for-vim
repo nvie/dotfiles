@@ -1,0 +1,23 @@
+#!/bin/sh
+set -eu
+
+# Fail if we're not in a Git repo
+git is-clean -v
+
+GIT_ROOT="$(git root)"
+COC_FILE="${GIT_ROOT}/.vim/coc-settings.json"
+GIT_IGNORE="${GIT_ROOT}/.gitignore"
+
+if [ ! -f "$COC_FILE" ]; then
+  mkdir -p "$(dirname "$COC_FILE")"
+  echo "{" > "$COC_FILE"
+  echo '  // "tsserver.useLocalTdsk": true,' >> "$COC_FILE"
+  echo "  \"tsserver.tsdk\": \"${GIT_ROOT}/node_modules/typescript/lib\"" >> "$COC_FILE"
+  echo "}" >> "$COC_FILE"
+fi
+
+if ! grep -qx '.vim/' "${GIT_IGNORE}"; then
+  echo ".vim/" >> "${GIT_IGNORE}"
+fi
+
+echo "Repo fixed"
