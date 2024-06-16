@@ -71,6 +71,7 @@
     expand = rev-list -1
     ap = add -p
     cc = reset HEAD
+    rh = reset --hard
     rhh = !"echo $(git reset --hard HEAD~1)' (was' $(git rev-parse --short HEAD@{1})')'"
     ra = rebase --abort
     rc = rebase --continue
@@ -94,7 +95,8 @@
     rrrsp = stash pop
 
     # fetch, for fuck's sake
-    ff = !"git fetch origin '+refs/heads/*:refs/remotes/origin/*' \"+$(git main-branch):$(git main-branch)\" \"+release-2.0:release-2.0\""
+    # ff = !"git fetch origin '+refs/heads/*:refs/remotes/origin/*' \"+$(git main-branch):$(git main-branch)\" \"+release-2.0:release-2.0\""
+    ff = !"git fetch origin '+refs/heads/*:refs/remotes/origin/*' \"+$(git main-branch):$(git main-branch)\""
     ffb = !"git fetch origin '+refs/heads/*:refs/remotes/origin/*' \"+$(git main-branch):$(git main-branch)\" \"+beta:beta\""
     ffn = !"git fetch origin '+refs/heads/*:refs/remotes/origin/*' \"+$(git main-branch):$(git main-branch)\" \"+next:next\""
 
