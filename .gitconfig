@@ -65,7 +65,8 @@
     wtf = what-the-hell-just-happened
     wth = what-the-hell-just-happened
     x = !"f () { if [ $# -ge 1 ]; then gitx \"$@\"; else gitx HEAD; fi }; f"
-    aa = add --all
+    aa = add -u
+    aaa = add --all
     pullff = pull --ff-only
     hd = log -1 \"--pretty=format:%C(yellow bold)%h%Creset by %C(red)%an%Creset (%ar)%C(cyan bold)%d%Creset%n%s%n%b\"
     expand = rev-list -1
