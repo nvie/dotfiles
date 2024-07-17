@@ -147,6 +147,9 @@ end
 if status is-interactive
     set CDPATH . \
         ~/Projects/liveblocks/liveblocks/packages \
+        ~/Projects/liveblocks/liveblocks-backend/apps \
+        ~/Projects/liveblocks/liveblocks-backend/shared \
+        ~/Projects/liveblocks/liveblocks-backend/tools \
         ~/Projects/liveblocks/liveblocks/schema-lang \
         ~/Projects/tsdiff/apps \
         ~/Projects/tsdiff/packages \

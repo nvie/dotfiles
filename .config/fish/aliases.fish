@@ -403,10 +403,11 @@ function ff
 end
 
 alias cd.. 'cd ..'
+alias cd... 'cd ../..'
 alias .. 'cd ..'
 alias ... 'cd ../..'
-alias .... 'cd ../../..'
-alias ..... 'cd ../../../..'
+#alias .... 'cd ../../..'
+#alias ..... 'cd ../../../..'
 
 function take
     set -l dir $argv[1]
@@ -455,14 +456,17 @@ alias cdz='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-zustand && se
 alias cdn='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-node && set-bg-color 9 34 9'
 alias cdd='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-devtools && set-bg-color 47 26 6'
 alias cda='cd ~/Projects/liveblocks/admin'
-alias cdf='begin; test -d ~/Projects/liveblocks/liveblocks-cloudflare/packages/liveblocks-cloudflare && cd ~/Projects/liveblocks/liveblocks-cloudflare/packages/liveblocks-cloudflare || cd ~/Projects/liveblocks/liveblocks-cloudflare; end && set-bg-color 8 0 38'
+alias cdf='cd ~/Projects/liveblocks/liveblocks-backend/apps/cloudflare && set-bg-color 8 0 38'
 alias cdbb='cd ~/Projects/liveblocks/liveblocks-backend && set-bg-color 27 22 0'
-alias cdb='cd ~/Projects/liveblocks/liveblocks-cloudflare/examples/bun-server && set-bg-color 38 28 7'
-alias cds='cd ~/Projects/liveblocks/liveblocks-cloudflare/packages/liveblocks-server && set-bg-color 0 29 32'
+alias cdbj='cd ~/Projects/liveblocks/liveblocks-backend/apps/aws-jobs && set-bg-color 27 22 0'
+alias cdbr='cd ~/Projects/liveblocks/liveblocks-backend/apps/lambda-rest-api && set-bg-color 27 22 0'
+alias cdbm='cd ~/Projects/liveblocks/liveblocks-backend/tools/mongodb-migration && set-bg-color 27 22 0'
+alias cdb='cd ~/Projects/liveblocks/liveblocks-backend/apps/bun-server && set-bg-color 38 28 7'
+alias cds='cd ~/Projects/liveblocks/liveblocks-backend/shared/liveblocks-server && set-bg-color 0 29 32'
 alias cdsc='cd ~/Projects/liveblocks/liveblocks/schema-lang/liveblocks-schema'
 alias cdi='cd ~/Projects/liveblocks/liveblocks/schema-lang/infer-schema'
-alias cdq='cd ~/Projects/liveblocks/liveblocks-cloudflare/packages/liveblocks-query-parser'
-alias cdR='cd ~/Projects/liveblocks/liveblocks-cloudflare/packages/serv'
+alias cdq='cd ~/Projects/liveblocks/liveblocks-backend/shared/liveblocks-query-parser'
+alias cdR='cd ~/Projects/liveblocks/liveblocks-backend/shared/serv'
 alias cddocs='cd ~/Projects/liveblocks/liveblocks/docs'
 alias liveblocks-dependencies="jq -r '((.dependencies,.peerDependencies,.devDependencies) // []) | keys[]' package.json | sort -u | grep --color=never -Ee @liveblocks/"
 
