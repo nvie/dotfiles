@@ -504,6 +504,8 @@ alias tl 'turboshhhh_or_npm lint'
 alias tlp 'turbo_or_npm lint:package'
 alias tf 'turbo_or_npm format'
 alias tp 'turbo_or_npm package'
+alias ncu 'npx npm-check-updates --interactive'
+alias ncuw 'npx npm-check-updates --interactive --root --workspaces'
 
 # Quick bisecting
 alias gbr 'git bisect reset'
