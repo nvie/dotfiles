@@ -504,3 +504,9 @@ alias tl 'turboshhhh_or_npm lint'
 alias tlp 'turbo_or_npm lint:package'
 alias tf 'turbo_or_npm format'
 alias tp 'turbo_or_npm package'
+
+# Quick bisecting
+alias gbr 'git bisect reset'
+alias gbs 'cd (git root) && git bisect start (git current-branch) (git merge-base (git current-branch) main)'
+alias good 'git bisect good'
+alias bad 'git bisect bad'
