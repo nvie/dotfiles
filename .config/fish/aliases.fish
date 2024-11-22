@@ -203,6 +203,9 @@ end
 # Open all files from the last commit that changes any files in the current directory
 alias vch 'vc (git log -1 --pretty=%H .)'
 
+# Run test and open the first failing test in Vim, jumping straight to the assertion that failed
+alias vt 'vitest --bail 1 --run --no-color 2>&1 | grep -oEe \'❯.*:[[:digit:]]+\' | head -n1 | cut -d" " -f2 | cut -d: -f1,2 | rev | sed -Ee "s/:/\+ /" | rev | xargs -o nvim'
+
 # Open all files from the nth-last commit
 alias vch0 'vc HEAD'
 alias vch1 'vc HEAD~1'
