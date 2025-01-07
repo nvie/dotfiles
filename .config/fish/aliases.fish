@@ -50,7 +50,7 @@ alias x 'tig HEAD'
 alias xx 'tig --exclude=production --exclude="*/production" --exclude=canary --exclude="*/canary" --exclude="*/dependabot/*" --branches'
 alias xxa 'tig --exclude=production --exclude="*/production" --exclude=canary --exclude="*/canary" --exclude="*/dependabot/*" --all'
 alias xxaa 'tig --all'
-alias notes 'rg "TODO|HACK|FIXME|OPTIMIZE"'
+alias notes 'rg --hidden "TODO|HACK|FIXME|OPTIMIZE"'
 
 # Common typos I make
 alias gaa 'git aa'
@@ -120,7 +120,7 @@ function val
 
     set rg_pattern (echo $pattern | to_safe | sed -E -e 's/[<>]/\\\\b/g' | to_unsafe_rg)
     set vim_pattern (echo $pattern | to_safe | sed -E -e 's,([/=]),\\\\\1,g' -e 's,.*,/\\\\v&,' | to_unsafe_vim)
-    rg -l --smart-case $rg_pattern -- $argv 2>/dev/null
+    rg --hidden -l --smart-case $rg_pattern -- $argv 2>/dev/null
 end
 
 function va
@@ -145,7 +145,7 @@ function va
 
     set rg_pattern (echo $pattern | to_safe | sed -E -e 's/[<>]/\\\\b/g' | to_unsafe_rg)
     set vim_pattern (echo $pattern | to_safe | sed -E -e 's,([/=]),\\\\\1,g' -e 's,.*,/\\\\v&,' | to_unsafe_vim)
-    rg -l --smart-case --null $rg_pattern -- $argv 2>/dev/null | xargs -0 -o nvim -c $vim_pattern
+    rg --hidden -l --smart-case --null $rg_pattern -- $argv 2>/dev/null | xargs -0 -o nvim -c $vim_pattern
 end
 
 # "va", but case-sensitive (it's a copy of the above, but without the
@@ -172,7 +172,7 @@ function vacs
 
     set rg_pattern (echo $pattern | to_safe | sed -E -e 's/[<>]/\\\\b/g' | to_unsafe_rg)
     set vim_pattern (echo $pattern | to_safe | sed -E -e 's,([/=]),\\\\\1,g' -e 's,.*,/\\\\v&,' | to_unsafe_vim)
-    rg -l --null $rg_pattern -- $argv 2>/dev/null | xargs -0 -o nvim -c $vim_pattern
+    rg --hidden -l --null $rg_pattern -- $argv 2>/dev/null | xargs -0 -o nvim -c $vim_pattern
 end
 
 function vc
