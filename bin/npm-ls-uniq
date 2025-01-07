@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+
+npm ls "$1" | grep -vEe deduped | tr '─└│├┬' ' ' | sed -Ee 's/[[:space:]]+//' | grep -Ee "^$1@"  | sort -u
