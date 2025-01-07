@@ -5,7 +5,6 @@ alias eg 'nvim ~/.gitconfig'
 alias ev 'nvim ~/.config/nvim/init.vim'
 alias evv 'vim ~/.vimrc'
 alias es 'nvim ~/bin/autosort'
-alias et 'nvim ~/.tmux.conf'
 
 alias zz 'open -a Zed .'
 
