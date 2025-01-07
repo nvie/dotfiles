@@ -60,10 +60,10 @@ alias gpr 'git pr'
 alias m make
 alias mm 'make run'
 
-alias xxx 'sr -s "\b(XXX|YYY)\b"'
-alias xxxx 'sr -s "\b(XXX)\b"'
-alias vx 'rg -l --null "\b(XXX|YYY)\b" -- 2>/dev/null | xargs -0 -o nvim -c "/\v<(XXX|YYY)>"'
-alias vxx 'rg -l --null "\b(XXX)\b" -- 2>/dev/null | xargs -0 -o nvim -c "/\v<(XXX)>"'
+alias xxx 'sr -s "\b(XXX|YYY)(_vincent)?\b"'
+alias xxxx 'sr -s "\b(XXX)(_vincent)?\b"'
+alias vx 'rg --hidden -l --null "\b(XXX|YYY)(_vincent)?\b" -- 2>/dev/null | xargs -0 -o nvim -c "/\v<(XXX|YYY)(_vincent)?>"'
+alias vxx 'rg --hidden -l --null "\b(XXX(_vincent)?)\b" -- 2>/dev/null | xargs -0 -o nvim -c "/\v<(XXX(_vincent)?)>"'
 
 alias reset-mailbox 'rm -v ~/Library/Caches/com.dropbox.mbd.external-beta/mailbox.db'
 
@@ -203,7 +203,7 @@ end
 alias vch 'vc (git log -1 --pretty=%H .)'
 
 # Run test and open the first failing test in Vim, jumping straight to the assertion that failed
-alias vt 'vitest --bail 1 --run --no-color 2>&1 | grep -oEe \'❯.*:[[:digit:]]+\' | head -n1 | cut -d" " -f2 | cut -d: -f1,2 | rev | sed -Ee "s/:/\+ /" | rev | xargs -o nvim'
+alias vt 'vitest --bail 1 --run --no-color 2>&1 | grep -oEe \'❯ test.*:[[:digit:]]+\' | head -n1 | cut -d" " -f2 | cut -d: -f1,2 | rev | sed -Ee "s/:/\+ /" | rev | xargs -o nvim'
 
 # Open all files from the nth-last commit
 alias vch0 'vc HEAD'
@@ -279,10 +279,8 @@ alias gti git
 alias a 'git amend --allow-empty --no-verify'
 alias gs 'git status -s'
 alias gb 'git recent-branches 2.days.ago'
-# alias ggco 'osascript -e beep; echo Please use ggsw now, and try to unlearn this! 😇'
 alias ggco 'git iswitch'
-alias ggsw 'git iswitch'
-alias ggbd 'git branch -D (g local-branches | fzf)'
+alias ggbd 'git branch -D (git local-branches | grep -vEe "$(git current-branch)" | fzf)'
 alias fl 'clear; and flow-limit'
 alias fflow 'flow stop; and flow'
 alias tll "tsc | grep -Ee 'TS\d+' | cut -d'(' -f1 | sort -u"
@@ -448,13 +446,16 @@ alias cdio='cd ~/Projects/liveblocks/liveblocks.io && set-bg-color 0 0 0'
 alias cdcc='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-core && set-bg-color'
 alias cdc='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-client && set-bg-color'
 alias cdr='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-react && set-bg-color 13 21 52'
+alias cde='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-emails && set-bg-color 13 21 52'
 alias cdru='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-react-ui && set-bg-color 10 21 52'
 alias cdrc=cdru
 alias cdrr='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-redux && set-bg-color 38 8 45'
 alias cdrl='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-react-lexical && set-bg-color 38 8 45'
+alias cdrt='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-react-tiptap && set-bg-color 38 8 45'
 alias cdnl='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-node-lexical && set-bg-color 38 8 45'
 alias cdy='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-yjs'
 alias cdz='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-zustand && set-bg-color 35 8 35'
+alias cdzz='cd ~/Projects/liveblocks/liveblocks-backend/shared/zenrouter && set-bg-color 35 8 35'
 alias cdn='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-node && set-bg-color 9 34 9'
 alias cdd='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-devtools && set-bg-color 47 26 6'
 alias cda='cd ~/Projects/liveblocks/admin'
@@ -468,7 +469,7 @@ alias cds='cd ~/Projects/liveblocks/liveblocks-backend/shared/liveblocks-server 
 alias cdsc='cd ~/Projects/liveblocks/liveblocks/schema-lang/liveblocks-schema'
 alias cdi='cd ~/Projects/liveblocks/liveblocks/schema-lang/infer-schema'
 alias cdq='cd ~/Projects/liveblocks/liveblocks-backend/shared/liveblocks-query-parser'
-alias cdR='cd ~/Projects/liveblocks/liveblocks-backend/shared/serv'
+alias cdR=cdbr
 alias cddocs='cd ~/Projects/liveblocks/liveblocks/docs'
 alias liveblocks-dependencies="jq -r '((.dependencies,.peerDependencies,.devDependencies) // []) | keys[]' package.json | sort -u | grep --color=never -Ee @liveblocks/"
 
@@ -500,6 +501,7 @@ alias tbf 'turbo_or_npm build:firefox'
 alias tt 'turbo_or_npm test'
 alias td 'turbo_or_npm dev'
 alias ttt 'turbo_or_npm test:types'
+alias ttd 'turbo_or_npm test:deps'
 alias ttu 'turbo_or_npm test:ui'
 alias tte 'turbo_or_npm test:e2e'
 alias tl 'turboshhhh_or_npm lint'

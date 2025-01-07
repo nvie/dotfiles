@@ -65,8 +65,8 @@
     wtf = what-the-hell-just-happened
     wth = what-the-hell-just-happened
     x = !"f () { if [ $# -ge 1 ]; then gitx \"$@\"; else gitx HEAD; fi }; f"
-    aa = add -u
-    aaa = add --all
+    aa = add --all
+    au = add -u
     pullff = pull --ff-only
     hd = log -1 \"--pretty=format:%C(yellow bold)%h%Creset by %C(red)%an%Creset (%ar)%C(cyan bold)%d%Creset%n%s%n%b\"
     expand = rev-list -1
@@ -76,15 +76,15 @@
     rhh = !"echo $(git reset --hard HEAD~1)' (was' $(git rev-parse --short HEAD@{1})')'"
     ra = rebase --abort
     rc = rebase --continue
-    ri = rebase --interactive --autosquash --autostash
-    r2 = rebase --interactive --autosquash --autostash HEAD~2
-    r3 = rebase --interactive --autosquash --autostash HEAD~3
-    r4 = rebase --interactive --autosquash --autostash HEAD~4
-    r5 = rebase --interactive --autosquash --autostash HEAD~5
-    r6 = rebase --interactive --autosquash --autostash HEAD~6
-    r7 = rebase --interactive --autosquash --autostash HEAD~7
-    r8 = rebase --interactive --autosquash --autostash HEAD~8
-    r9 = rebase --interactive --autosquash --autostash HEAD~9
+    ri = rebase --interactive --autosquash --autostash --update-refs
+    r2 = rebase --interactive --autosquash --autostash --update-refs HEAD~2
+    r3 = rebase --interactive --autosquash --autostash --update-refs HEAD~3
+    r4 = rebase --interactive --autosquash --autostash --update-refs HEAD~4
+    r5 = rebase --interactive --autosquash --autostash --update-refs HEAD~5
+    r6 = rebase --interactive --autosquash --autostash --update-refs HEAD~6
+    r7 = rebase --interactive --autosquash --autostash --update-refs HEAD~7
+    r8 = rebase --interactive --autosquash --autostash --update-refs HEAD~8
+    r9 = rebase --interactive --autosquash --autostash --update-refs HEAD~9
     sep = separator --no-verify
     shatter = shatter-by-file
     #mt = mergetool
@@ -120,7 +120,7 @@
     sw = switch
 
     # Interactive switch
-    iswitch = !"git recent-branches | fzf | ifne xargs git switch"
+    iswitch = !"git recent-branches | grep -vEe \"^$(git current-branch)$\" | fzf | ifne xargs git switch"
 
     pc = push-current
     pt = push --tags
