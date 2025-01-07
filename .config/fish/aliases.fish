@@ -280,7 +280,7 @@ alias a 'git amend --allow-empty --no-verify'
 alias gs 'git status -s'
 alias gb 'git recent-branches 2.days.ago'
 alias ggco 'git iswitch'
-alias ggbd 'git branch -D (git local-branches | grep -vEe "$(git current-branch)" | fzf)'
+alias ggbd 'git branch -D (git local-branches | grep -vxEe "$(git current-branch)" | fzf)'
 alias fl 'clear; and flow-limit'
 alias fflow 'flow stop; and flow'
 alias tll "tsc | grep -Ee 'TS\d+' | cut -d'(' -f1 | sort -u"
