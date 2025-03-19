@@ -63,7 +63,7 @@ alias mm 'make run'
 alias xxx 'sr -s "\b(XXX|YYY)(_vincent)?\b"'
 alias xxxx 'sr -s "\b(XXX)(_vincent)?\b"'
 alias vx 'rg --hidden -l --null "\b(XXX|YYY)(_vincent)?\b" -- 2>/dev/null | xargs -0 -o nvim -c "/\v<(XXX|YYY)(_vincent)?>"'
-alias vxx 'rg --hidden -l --null "\b(XXX(_vincent)?)\b" -- 2>/dev/null | xargs -0 -o nvim -c "/\v<(XXX(_vincent)?)>"'
+alias vxx 'rg --hidden -l "\b(XXX(_vincent)?)\b" -- 2>/dev/null | grep -vFEe .git/ | xargs -o nvim -c "/\v<(XXX(_vincent)?)>"'
 
 alias reset-mailbox 'rm -v ~/Library/Caches/com.dropbox.mbd.external-beta/mailbox.db'
 
@@ -451,6 +451,7 @@ alias cdru='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-react-ui && 
 alias cdrc=cdru
 alias cdrr='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-redux && set-bg-color 38 8 45'
 alias cdrl='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-react-lexical && set-bg-color 38 8 45'
+alias cdrb='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-react-blocknote && set-bg-color 38 8 45'
 alias cdrt='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-react-tiptap && set-bg-color 38 8 45'
 alias cdnl='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-node-lexical && set-bg-color 38 8 45'
 alias cdy='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-yjs'
