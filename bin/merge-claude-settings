@@ -1,0 +1,201 @@
+#!/usr/bin/env python3
+"""
+Merge Claude settings from nested .claude directories into the top-level one.
+
+This script finds all .claude/settings.local.json files in the current directory
+and subdirectories, merges their allow/deny rules into the top-level
+.claude/settings.local.json file, and deduplicates entries.
+"""
+
+import json
+import os
+import sys
+from pathlib import Path
+from typing import Dict, List, Set
+
+
+def find_git_root() -> Path:
+    """Find the git repository root directory."""
+    current = Path.cwd()
+    while current != current.parent:
+        if (current / '.git').exists():
+            return current
+        current = current.parent
+    raise RuntimeError("Not in a git repository")
+
+
+def find_claude_settings(root_dir: Path) -> List[Path]:
+    """Find all .claude/settings.local.json files in the directory tree."""
+    settings_files = []
+    seen_files = set()
+
+    for claude_dir in root_dir.rglob('.claude'):
+        if claude_dir.is_dir():
+            settings_file = claude_dir / 'settings.local.json'
+            if settings_file.exists():
+                # Resolve to absolute path to avoid duplicates
+                resolved_path = settings_file.resolve()
+                if resolved_path not in seen_files:
+                    settings_files.append(settings_file)
+                    seen_files.add(resolved_path)
+
+    return sorted(settings_files)
+
+
+def load_settings(file_path: Path) -> Dict:
+    """Load settings from a JSON file."""
+    try:
+        with open(file_path, 'r') as f:
+            return json.load(f)
+    except (json.JSONDecodeError, FileNotFoundError) as e:
+        print(f"Warning: Could not load {file_path}: {e}", file=sys.stderr)
+        return {}
+
+
+def merge_rules(target_rules: List[str], source_rules: List[str]) -> List[str]:
+    """Merge and deduplicate rules from source into target."""
+    # Use a set to track unique rules, preserving order
+    seen = set(target_rules)
+    result = list(target_rules)
+
+    for rule in source_rules:
+        if rule not in seen:
+            result.append(rule)
+            seen.add(rule)
+
+    return result
+
+
+def main():
+    try:
+        # Find git root
+        git_root = find_git_root()
+        print(f"Git root: {git_root}")
+
+        # Find top-level .claude directory
+        top_claude_dir = git_root / '.claude'
+        top_settings_file = top_claude_dir / 'settings.local.json'
+
+        # Find all .claude/settings.local.json files
+        settings_files = find_claude_settings(git_root)
+
+        if not settings_files:
+            print("No .claude/settings.local.json files found.")
+            return
+
+        print(f"Found {len(settings_files)} settings files:")
+        for f in settings_files:
+            rel_path = f.relative_to(git_root)
+            if f == top_settings_file:
+                print(f"  {rel_path} (target - will be merged into)")
+            else:
+                print(f"  {rel_path} (will be merged from)")
+
+        # Load top-level settings (create empty if doesn't exist)
+        if top_settings_file.exists():
+            top_settings = load_settings(top_settings_file)
+        else:
+            top_settings = {}
+            # Create .claude directory if it doesn't exist
+            top_claude_dir.mkdir(exist_ok=True)
+
+        # Initialize permissions structure if it doesn't exist
+        if 'permissions' not in top_settings:
+            top_settings['permissions'] = {}
+        if 'allow' not in top_settings['permissions']:
+            top_settings['permissions']['allow'] = []
+        if 'deny' not in top_settings['permissions']:
+            top_settings['permissions']['deny'] = []
+
+        # Track which files we're merging from (excluding top-level)
+        files_to_merge = [f for f in settings_files if f != top_settings_file]
+
+        if not files_to_merge:
+            print("Only top-level settings file exists. Nothing to merge.")
+            return
+
+        # Merge settings from all files
+        original_allow_count = len(top_settings['permissions']['allow'])
+        original_deny_count = len(top_settings['permissions']['deny'])
+
+        for settings_file in files_to_merge:
+            settings = load_settings(settings_file)
+
+            # Merge permissions.allow rules
+            if 'permissions' in settings and 'allow' in settings['permissions']:
+                top_settings['permissions']['allow'] = merge_rules(
+                    top_settings['permissions']['allow'],
+                    settings['permissions']['allow']
+                )
+
+            # Merge permissions.deny rules
+            if 'permissions' in settings and 'deny' in settings['permissions']:
+                top_settings['permissions']['deny'] = merge_rules(
+                    top_settings['permissions']['deny'],
+                    settings['permissions']['deny']
+                )
+
+        # Write merged settings back to top-level file
+        with open(top_settings_file, 'w') as f:
+            json.dump(top_settings, f, indent=2)
+
+        new_allow_count = len(top_settings['permissions']['allow'])
+        new_deny_count = len(top_settings['permissions']['deny'])
+
+        print(f"\nMerged settings into {top_settings_file.relative_to(git_root)}:")
+        print(f"  Allow rules: {original_allow_count} → {new_allow_count} (+{new_allow_count - original_allow_count})")
+        print(f"  Deny rules: {original_deny_count} → {new_deny_count} (+{new_deny_count - original_deny_count})")
+
+        # Ask if user wants to remove the merged files
+        if files_to_merge:
+            print(f"\nRemove {len(files_to_merge)} merged settings files? (y/N): ", end='')
+            response = input().strip().lower()
+            if response == 'y':
+                removed_count = 0
+                for settings_file in files_to_merge:
+                    # Check if the file only contains permissions (i.e., safe to remove)
+                    settings = load_settings(settings_file)
+                    safe_to_remove = True
+
+                    # Check if there are any keys other than permissions
+                    expected_keys = {'permissions'}
+                    if set(settings.keys()) - expected_keys:
+                        print(f"  Skipping {settings_file.relative_to(git_root)} - contains other settings")
+                        safe_to_remove = False
+
+                    # Check if permissions contains anything other than allow/deny
+                    if safe_to_remove and 'permissions' in settings:
+                        expected_perm_keys = {'allow', 'deny'}
+                        if set(settings['permissions'].keys()) - expected_perm_keys:
+                            print(f"  Skipping {settings_file.relative_to(git_root)} - contains other permission settings")
+                            safe_to_remove = False
+
+                    if safe_to_remove:
+                        settings_file.unlink()
+                        removed_count += 1
+                        print(f"  Removed {settings_file.relative_to(git_root)}")
+
+                        # Remove .claude directory if it's now empty
+                        claude_dir = settings_file.parent
+                        try:
+                            claude_dir.rmdir()
+                            print(f"  Removed empty directory {claude_dir.relative_to(git_root)}/")
+                        except OSError:
+                            # Directory not empty, leave it
+                            pass
+
+                if removed_count > 0:
+                    print(f"Successfully removed {removed_count} settings files.")
+                else:
+                    print("No files were removed.")
+
+    except KeyboardInterrupt:
+        print("\nAborted.")
+        sys.exit(1)
+    except Exception as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
+
+
+if __name__ == '__main__':
+    main()
