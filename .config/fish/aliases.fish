@@ -2,6 +2,7 @@
 alias ea 'nvim ~/.config/fish/aliases.fish'
 alias ef 'nvim ~/.config/fish/config.fish'
 alias eg 'nvim ~/.gitconfig'
+alias egg 'nvim ~/.config/ghostty/config'
 alias ev 'nvim ~/.config/nvim/init.vim'
 alias evv 'vim ~/.vimrc'
 alias es 'nvim ~/bin/autosort'

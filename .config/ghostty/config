@@ -1,0 +1,29 @@
+# All options:
+# - ghostty +show-config --default --docs
+# - https://ghostty.org/docs/config
+# - https://ghostty.org/docs/config/reference
+
+# See: ghostty +list-fonts
+font-family = Operator Mono
+font-style = Medium
+
+font-size = 20
+adjust-cell-width = -5%
+adjust-cell-height = 10%
+
+# See: ghostty +list-themes
+theme = SpaceGray Eighties
+split-divider-color = #544E47
+
+window-padding-balance = true
+window-padding-x = 8,8
+window-padding-y = 6,6
+window-step-resize = true
+
+macos-titlebar-style = hidden
+focus-follows-mouse = true
+
+# Send alt+a as '\ea' (escape sequence) instead of the unicode char 'å'
+macos-option-as-alt = true
+background-opacity = 0.96
+background-blur = true
