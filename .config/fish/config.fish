@@ -133,6 +133,7 @@ function fish_user_key_bindings
     bind \ep prepend-paste
     bind \ev prepend-vim
     bind \ea search-for-pboard
+    bind \ew 'commandline -i -- "Σ"'
     bind \ey 'commandline -b | pbcopy'
     bind \e'>' 'commandline -a -- "| shiftr"'
     bind \e'<' 'commandline -a -- "| shiftl"'
@@ -186,3 +187,10 @@ set -gx PNPM_HOME "$HOME/Library/pnpm"
 if not string match -q -- $PNPM_HOME $PATH
     set -gx PATH "$PNPM_HOME" $PATH
 end
+
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH /Users/nvie/.lmstudio/bin
+# End of LM Studio CLI section
+
+# Claude Code
+set -gx PATH $PATH /Users/nvie/.claude/local

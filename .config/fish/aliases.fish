@@ -51,7 +51,7 @@ alias x 'tig HEAD'
 alias xx 'tig --exclude=production --exclude="*/production" --exclude=canary --exclude="*/canary" --exclude="*/dependabot/*" --branches'
 alias xxa 'tig --exclude=production --exclude="*/production" --exclude=canary --exclude="*/canary" --exclude="*/dependabot/*" --all'
 alias xxaa 'tig --all'
-alias notes 'rg --hidden "TODO|HACK|FIXME|OPTIMIZE"'
+alias notes 'rg --hidden --glob=!.git/ "TODO|HACK|FIXME|OPTIMIZE"'
 
 # Common typos I make
 alias gaa 'git aa'
@@ -63,8 +63,8 @@ alias mm 'make run'
 
 alias xxx 'sr -s "\b(XXX|YYY)(_vincent)?\b"'
 alias xxxx 'sr -s "\b(XXX)(_vincent)?\b"'
-alias vx 'rg --hidden -l --null "\b(XXX|YYY)(_vincent)?\b" -- 2>/dev/null | xargs -0 -o nvim -c "/\v<(XXX|YYY)(_vincent)?>"'
-alias vxx 'rg --hidden -l "\b(XXX(_vincent)?)\b" -- 2>/dev/null | grep -vFEe .git/ | xargs -o nvim -c "/\v<(XXX(_vincent)?)>"'
+alias vx 'rg --hidden --glob=!.git/ -l --null "\b(XXX|YYY)(_vincent)?\b" -- 2>/dev/null | xargs -0 -o nvim -c "/\v<(XXX|YYY)(_vincent)?>"'
+alias vxx 'rg --hidden --glob=!.git/ -l "\b(XXX(_vincent)?)\b" -- 2>/dev/null | grep -vFEe .git/ | xargs -o nvim -c "/\v<(XXX(_vincent)?)>"'
 
 alias reset-mailbox 'rm -v ~/Library/Caches/com.dropbox.mbd.external-beta/mailbox.db'
 
@@ -121,7 +121,7 @@ function val
 
     set rg_pattern (echo $pattern | to_safe | sed -E -e 's/[<>]/\\\\b/g' | to_unsafe_rg)
     set vim_pattern (echo $pattern | to_safe | sed -E -e 's,([/=]),\\\\\1,g' -e 's,.*,/\\\\v&,' | to_unsafe_vim)
-    rg --hidden -l --smart-case $rg_pattern -- $argv 2>/dev/null
+    rg --hidden --glob=!.git/ -l --smart-case $rg_pattern -- $argv 2>/dev/null
 end
 
 function va
@@ -146,7 +146,7 @@ function va
 
     set rg_pattern (echo $pattern | to_safe | sed -E -e 's/[<>]/\\\\b/g' | to_unsafe_rg)
     set vim_pattern (echo $pattern | to_safe | sed -E -e 's,([/=]),\\\\\1,g' -e 's,.*,/\\\\v&,' | to_unsafe_vim)
-    rg --hidden -l --smart-case --null $rg_pattern -- $argv 2>/dev/null | xargs -0 -o nvim -c $vim_pattern
+    rg --hidden --glob=!.git/ -l --smart-case --null $rg_pattern -- $argv 2>/dev/null | xargs -0 -o nvim -c $vim_pattern
 end
 
 # "va", but case-sensitive (it's a copy of the above, but without the
@@ -173,7 +173,7 @@ function vacs
 
     set rg_pattern (echo $pattern | to_safe | sed -E -e 's/[<>]/\\\\b/g' | to_unsafe_rg)
     set vim_pattern (echo $pattern | to_safe | sed -E -e 's,([/=]),\\\\\1,g' -e 's,.*,/\\\\v&,' | to_unsafe_vim)
-    rg --hidden -l --null $rg_pattern -- $argv 2>/dev/null | xargs -0 -o nvim -c $vim_pattern
+    rg --hidden --glob=!.git/ -l --null $rg_pattern -- $argv 2>/dev/null | xargs -0 -o nvim -c $vim_pattern
 end
 
 function vc
@@ -437,10 +437,6 @@ function color-syntax
     pygmentize -f rtf -l $lang
 end
 
-function st -d "Set a terminal badge for the current tab, based on the current project/directory"
-    npx iterm2-tab-set (string replace -r '^liveblocks-' '' (basename (git root)))
-end
-
 alias gp='cd ~/Projects/liveblocks/liveblocks'
 alias ga='cd ~/Projects/liveblocks/liveblocks.io'
 alias cdio='cd ~/Projects/liveblocks/liveblocks.io && set-bg-color 0 0 0'
@@ -473,6 +469,7 @@ alias cdi='cd ~/Projects/liveblocks/liveblocks/schema-lang/infer-schema'
 alias cdq='cd ~/Projects/liveblocks/liveblocks-backend/shared/liveblocks-query-parser'
 alias cdR=cdbr
 alias cddocs='cd ~/Projects/liveblocks/liveblocks/docs'
+alias cdsink='cd ~/Projects/liveblocks/liveblocks/e2e/next-ai-kitchen-sink && set-bg-color 8 0 38'
 alias liveblocks-dependencies="jq -r '((.dependencies,.peerDependencies,.devDependencies) // []) | keys[]' package.json | sort -u | grep --color=never -Ee @liveblocks/"
 
 function wtf -d "Print which and --version output for the given command"
@@ -499,6 +496,7 @@ function turboshhhh_or_npm
 end
 
 alias tb 'turbo_or_npm build'
+alias tbd 'turbo_or_npm build:deps'
 alias tbf 'turbo_or_npm build:firefox'
 alias tt 'turbo_or_npm test'
 alias td 'turbo_or_npm dev'

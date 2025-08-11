@@ -57,7 +57,6 @@
 /.cdk
 /.CFUserTextEncoding
 /.chef
-/.config
 /.cookiecutters
 /.cups
 /.dbshell
@@ -170,3 +169,8 @@ Powerline_*.cache
 
 # MongoDB
 /.mongodb
+
+# Include some config files under version control
+/.config/*
+! /.config/fish
+! /.config/ghostty

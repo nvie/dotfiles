@@ -15,6 +15,7 @@ append-to-path ~/Projects/git-toolbelt
 append-to-path ~/Projects/linenos/bin
 append-to-path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 append-to-path "/Applications/Docker.app/Contents/Resources/bin"
+append-to-path "/Applications/Ghostty.app/Contents/MacOS"
 append-to-path ~/Projects/liveblocks/liveblocks/scripts
 
 prepend-to-path /opt/homebrew/opt/node@18/bin
