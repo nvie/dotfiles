@@ -44,6 +44,7 @@ alias ccat 'pygmentize -g'
 
 alias g git
 alias c clear
+alias ccc 'cd ~/Projects/liveblocks/liveblocks && claude --dangerously-skip-permissions'
 alias vv 'command vim'
 alias v nvim
 alias vim nvim
