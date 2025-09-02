@@ -1,0 +1,69 @@
+#!/bin/sh
+set -eu
+
+FORCE_KILL=0
+
+while [ $# -gt 0 ]; do
+    case $1 in
+        -9)
+            FORCE_KILL=1
+            shift
+            ;;
+        *)
+            PORT="$1"
+            shift
+            ;;
+    esac
+done
+
+if [ -z "${PORT:-}" ]; then
+    echo "Usage: $0 [-9] <port>" >&2
+    exit 1
+fi
+
+find_proc_by_port () {
+    lsof -i :"$1" | grep LISTEN | sed -Ee 's/^[^0-9]+([0-9]+).*$/\1/' | head -1
+}
+
+find_proc_name_by_port () {
+    lsof -i :"$1" | grep LISTEN | head -1
+}
+
+if [ "$(find_proc_by_port "$PORT" | wc -l)" -ge 1 ]; then
+    THEPID="$(find_proc_by_port "$PORT")"
+    PROCNAME="$(find_proc_name_by_port "$PORT")"
+    PROCNAME="$(echo "$PROCNAME" | awk '{print $1}')"
+    
+    echo "🔍 Port $PORT is held by \033[1m$PROCNAME\033[0m ($THEPID)"
+    
+    if [ $FORCE_KILL -eq 1 ]; then
+        kill -9 "$THEPID"
+    else
+        kill "$THEPID"
+    fi
+    
+    # Check if process is killed, retry for up to 3 seconds
+    ATTEMPTS=0
+    MAX_ATTEMPTS=6  # 6 * 0.5 = 3 seconds
+    
+    while [ $ATTEMPTS -lt $MAX_ATTEMPTS ]; do
+        sleep 0.5
+        ATTEMPTS=$((ATTEMPTS + 1))
+        
+        if [ "$(find_proc_by_port "$PORT" | wc -l)" -eq 0 ]; then
+            echo "✅ Process $THEPID successfully killed."
+            exit 0
+        fi
+    done
+    
+    if [ "$(find_proc_by_port "$PORT" | wc -l)" -ge 1 ]; then
+        echo "Process $THEPID ($PROCNAME) is still running on port $PORT"
+        if [ $FORCE_KILL -eq 0 ]; then
+            echo "Try running: $0 -9 $PORT"
+        fi
+        exit 1
+    fi
+else
+    echo "🤷‍♂️ No processes owning port $PORT" >&2
+    exit 0
+fi
