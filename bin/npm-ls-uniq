@@ -1,4 +1,25 @@
 #!/bin/sh
 set -eu
 
+usage () {
+  echo "Usage: $(basename $0) <package-name>" >&2
+  echo "Lists unique package versions installed in this repo." >&2
+}
+
+while getopts "h" opt; do
+  case $opt in
+    h) usage; exit 0 ;;
+    *) usage; exit 1 ;;
+  esac
+done
+shift $((OPTIND - 1))
+
+if [ "$#" -lt 1 ]; then
+  usage
+  exit 1
+elif [ "$#" -gt 1 ]; then
+  echo "Too many arguments: $@" >&2
+  exit 1
+fi
+
 npm ls "$1" | grep -vEe deduped | tr '─└│├┬' ' ' | sed -Ee 's/[[:space:]]+//' | grep -Ee "^$1@"  | sort -u
