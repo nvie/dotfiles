@@ -1,0 +1,34 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+/* Toolbar container with Arc-style appearance */
+#navigator-toolbox {
+  border: 8px solid rgba(0, 0, 0, 0.3);
+  padding: 0;
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
+  margin: 0;
+}
+
+#navigator-toolbox * {
+  /* Buttons in the toolbar */
+  border-radius: 6px;
+}
+
+/* Content area with matching border */
+#browser {
+  border: 8px solid rgba(0, 0, 0, 0.3);
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  margin: 0;
+  opacity: 1;
+}
+
+/* Sidebar border (for vertical tabs) */
+#sidebar-box {
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+#tabbrowser-tabpanels {
+  border-radius: 0 0 12px 12px;
+}
