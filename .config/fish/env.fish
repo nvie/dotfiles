@@ -18,9 +18,17 @@ append-to-path "/Applications/Docker.app/Contents/Resources/bin"
 append-to-path "/Applications/Ghostty.app/Contents/MacOS"
 append-to-path ~/Projects/liveblocks/liveblocks/scripts
 
+# Add global scripts from every Node instance
+for dir in ~/.nvm/versions/node/v*/bin
+    if test -d $dir
+        append-to-path $dir
+    end
+end
+
 prepend-to-path /opt/homebrew/opt/node@18/bin
 prepend-to-path /opt/homebrew/sbin
 prepend-to-path /opt/homebrew/bin
+prepend-to-path /Users/nvie/.claude/local
 
 # Old MySQL version (5.7)
 # append-to-path /opt/homebrew/Cellar/mysql@5.7/5.7.37/bin
@@ -40,4 +48,4 @@ set -gx LC_ALL en_US.UTF-8
 set -gx LANG en_US.UTF-8
 
 # Configure fzf to use fd by default (fd respects .gitignore defaults)
-set -gx FZF_DEFAULT_COMMAND 'fd --type f'
+set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --exclude .git'

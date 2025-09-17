@@ -194,3 +194,10 @@ set -gx PATH $PATH /Users/nvie/.lmstudio/bin
 
 # Claude Code
 set -gx PATH $PATH /Users/nvie/.claude/local
+
+# pnpm
+# set -gx PNPM_HOME "/Users/nvie/Library/pnpm"
+# if not string match -q -- $PNPM_HOME $PATH
+#   set -gx PATH "$PNPM_HOME" $PATH
+# end
+# pnpm end

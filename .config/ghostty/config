@@ -20,10 +20,11 @@ window-padding-x = 8,8
 window-padding-y = 6,6
 window-step-resize = true
 
-macos-titlebar-style = hidden
+# macos-titlebar-style = hidden
 focus-follows-mouse = true
 
 # Send alt+a as '\ea' (escape sequence) instead of the unicode char 'å'
 macos-option-as-alt = true
-background-opacity = 0.96
+background-opacity = 0.95
 background-blur = true
+keybind = shift+enter=text:\n

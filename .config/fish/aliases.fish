@@ -44,7 +44,7 @@ alias ccat 'pygmentize -g'
 
 alias g git
 alias c clear
-alias ccc 'cd ~/Projects/liveblocks/liveblocks && claude --dangerously-skip-permissions'
+alias ccc 'cd (git root) && happy --dangerously-skip-permissions'
 alias vv 'command vim'
 alias v nvim
 alias vim nvim
@@ -503,6 +503,7 @@ alias tt 'turbo_or_npm test'
 alias td 'turbo_or_npm dev'
 alias ttt 'turbo_or_npm test:types'
 alias ttd 'turbo_or_npm test:deps'
+alias tth 'turbo_or_npm test:headed'
 alias ttu 'turbo_or_npm test:ui'
 alias tte 'turbo_or_npm test:e2e'
 alias tl 'turboshhhh_or_npm lint'
