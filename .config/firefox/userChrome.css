@@ -2,7 +2,7 @@
 
 /* Toolbar container with Arc-style appearance */
 #navigator-toolbox {
-  border: 8px solid rgba(0, 0, 0, 0.3);
+  border: 8px solid #5b5ebe;
   padding: 0;
   border-bottom: none;
   border-radius: 12px 12px 0 0;
@@ -16,7 +16,7 @@
 
 /* Content area with matching border */
 #browser {
-  border: 8px solid rgba(0, 0, 0, 0.3);
+  border: 8px solid #5b5ebe;
   border-top: none;
   border-radius: 0 0 12px 12px;
   margin: 0;
