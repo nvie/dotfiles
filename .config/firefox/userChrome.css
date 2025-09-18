@@ -29,6 +29,17 @@
   background: rgba(255, 255, 255, 0.02);
 }
 
+#tabbrowser-tabs .tab-label {
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: -0.075rem;
+}
+
+.urlbar-input-box {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
 #tabbrowser-tabpanels {
   border-radius: 0 0 12px 12px;
 }
