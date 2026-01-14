@@ -96,9 +96,7 @@
     rrrsp = stash pop
 
     # fetch, for fuck's sake
-    ff  = !"git fetch origin '+refs/heads/*:refs/remotes/origin/*' \"+$(git main-branch):$(git main-branch)\" \"+release-*:release-*\""
-    ffb = !"git fetch origin '+refs/heads/*:refs/remotes/origin/*' \"+$(git main-branch):$(git main-branch)\" \"+release-*:release-*\" \"+beta:beta\""
-    ffn = !"git fetch origin '+refs/heads/*:refs/remotes/origin/*' \"+$(git main-branch):$(git main-branch)\" \"+release-*:release-*\" \"+next:next\""
+    ff = !"git fetch origin '+refs/heads/*:refs/remotes/origin/*' \"+refs/heads/$(git main-branch):refs/heads/$(git main-branch)\" '+refs/heads/release-*:refs/heads/release-*' '+refs/heads/beta*:refs/heads/beta*' '+refs/heads/next*:refs/heads/next*'"
 
     # Restore some of my favorite Hub subcommands as Git aliases.
     # Previously I could simply alias hub => git entirely, but this didn't work
