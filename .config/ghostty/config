@@ -28,3 +28,4 @@ macos-option-as-alt = true
 background-opacity = 0.95
 background-blur = true
 keybind = shift+enter=text:\n
+# keybind = super+f=write_scrollback_file:open
