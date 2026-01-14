@@ -149,7 +149,7 @@ function va
     end
 
     set rg_pattern (echo $pattern | to_safe | sed -E -e 's/[<>]/\\\\b/g' | to_unsafe_rg)
-    set vim_pattern (echo $pattern | to_safe | sed -E -e 's,([/=]),\\\\\1,g' -e 's,.*,/\\\\v&,' | to_unsafe_vim)
+    set vim_pattern (echo $pattern | to_safe | sed -E -e 's,([/=~]),\\\\\1,g' -e 's,.*,/\\\\v&,' | to_unsafe_vim)
     rg --hidden --glob=!.git/ -l --smart-case --null $rg_pattern -- $argv 2>/dev/null | xargs -0 -o nvim -c $vim_pattern
 end
 
