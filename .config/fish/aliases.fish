@@ -260,7 +260,11 @@ function edit -d 'Opens $EDITOR with the files given, but is a no-op if the list
 end
 
 function veslint -d 'Opens all files in Vim with ESLint issues'
-    edit ( eslint $argv | grep -Ee '^/' )
+    if test ./turbo.json
+        edit ( npx turbo run --log-prefix=none lint | grep -Ee '^/' )
+    else
+        edit ( eslint $argv | grep -Ee '^/' )
+    end
 end
 
 function vjest -d 'Opens the first failing test case in Vim and jumps to the failing line'
