@@ -44,7 +44,6 @@ alias ccat 'pygmentize -g'
 
 alias g git
 alias c clear
-alias ccc 'cd (git root) && happy --dangerously-skip-permissions'
 alias vv 'command vim'
 alias v nvim
 alias vim nvim
@@ -68,6 +67,10 @@ alias vx 'rg --hidden --glob=!.git/ -l --null "\b(XXX|YYY)(_vincent)?\b" -- 2>/d
 alias vxx 'rg --hidden --glob=!.git/ -l "\b(XXX(_vincent)?)\b" -- 2>/dev/null | grep -vFEe .git/ | xargs -o nvim -c "/\v<(XXX(_vincent)?)>"'
 
 alias reset-mailbox 'rm -v ~/Library/Caches/com.dropbox.mbd.external-beta/mailbox.db'
+
+function ccc -d 'Run claude in high permission mode'
+    cd (git root) && claude --dangerously-skip-permissions $argv
+end
 
 function brew-outdated-leaves -d "List outdated packages, but only _leaf_ packages"
     combine (brew outdated | cut -d'(' -f1 | cut -d'@' -f1 | psub) and (brew leaves | psub) | xargs brew outdated
