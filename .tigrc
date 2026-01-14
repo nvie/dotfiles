@@ -1,3 +1,6 @@
+set commit-order = author-date
+set main-view-date = default,use-author=yes
+
 # set reference-format = ❬branch❭ ⟪remote⟫ [tag]
 set reference-format = ⟪branch⟫ ⟪remote⟫ [tag]
 
