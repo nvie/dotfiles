@@ -177,27 +177,3 @@ set -gx __fish_initialized 1
 load_nvm >/dev/stderr
 
 # }}}
-
-# bun
-set --export BUN_INSTALL "$HOME/.bun"
-set --export PATH $BUN_INSTALL/bin $PATH
-
-# pnpm
-set -gx PNPM_HOME "$HOME/Library/pnpm"
-if not string match -q -- $PNPM_HOME $PATH
-    set -gx PATH "$PNPM_HOME" $PATH
-end
-
-# Added by LM Studio CLI (lms)
-set -gx PATH $PATH /Users/nvie/.lmstudio/bin
-# End of LM Studio CLI section
-
-# Claude Code
-set -gx PATH $PATH /Users/nvie/.claude/local
-
-# pnpm
-# set -gx PNPM_HOME "/Users/nvie/Library/pnpm"
-# if not string match -q -- $PNPM_HOME $PATH
-#   set -gx PATH "$PNPM_HOME" $PATH
-# end
-# pnpm end

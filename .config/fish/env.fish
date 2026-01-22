@@ -9,7 +9,6 @@ append-to-path /usr/sbin
 append-to-path ~/bin
 append-to-path ~/.local/bin
 append-to-path ~/.cargo/bin
-append-to-path ~/.bun/bin
 append-to-path ~/Projects/syncfrom
 append-to-path ~/Projects/git-toolbelt
 append-to-path ~/Projects/linenos/bin
@@ -17,6 +16,14 @@ append-to-path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 append-to-path "/Applications/Docker.app/Contents/Resources/bin"
 append-to-path "/Applications/Ghostty.app/Contents/MacOS"
 append-to-path ~/Projects/liveblocks/liveblocks/scripts
+
+# Bun
+set --export BUN_INSTALL "$HOME/.bun"
+append-to-path "$BUN_INSTALL/bin"
+
+# pnpm
+set -gx PNPM_HOME "$HOME/Library/pnpm"
+append-to-path "$PNPM_HOME"
 
 # Add global scripts from every Node instance
 for dir in ~/.nvm/versions/node/v*/bin
@@ -28,7 +35,6 @@ end
 prepend-to-path /opt/homebrew/opt/node@18/bin
 prepend-to-path /opt/homebrew/sbin
 prepend-to-path /opt/homebrew/bin
-prepend-to-path /Users/nvie/.claude/local
 
 # Old MySQL version (5.7)
 # append-to-path /opt/homebrew/Cellar/mysql@5.7/5.7.37/bin
