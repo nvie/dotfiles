@@ -32,14 +32,8 @@ background-blur = true
 keybind = shift+enter=text:\n
 # keybind = super+f=write_scrollback_file:open
 
-# Allow scrolling terminal output with Page Up/Down, Home/End
-keybind = page_up=scroll_page_fractional:-0.3
-keybind = page_down=scroll_page_fractional:0.3
-keybind = home=scroll_to_top
-keybind = end=scroll_to_bottom
-
-# When in Vim, allow scrolling terminal output with Shift+Page Up/Down, Shift+Home/End
-keybind = unconsumed:shift+page_up=scroll_page_fractional:-0.3
-keybind = unconsumed:shift+page_down=scroll_page_fractional:0.3
-keybind = unconsumed:shift+home=scroll_to_top
-keybind = unconsumed:shift+end=scroll_to_bottom
+# Allow scrolling terminal output with Shift+{PageUp/Down/Home/End}
+keybind = shift+page_up=scroll_page_fractional:-0.3
+keybind = shift+page_down=scroll_page_fractional:0.3
+keybind = shift+home=scroll_to_top
+keybind = shift+end=scroll_to_bottom
