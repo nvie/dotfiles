@@ -463,7 +463,7 @@ alias cdy='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-yjs'
 alias cdz='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-zustand'
 alias cdzz='cd ~/Projects/liveblocks/liveblocks-backend/shared/zenrouter'
 alias cdn='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-node'
-alias cdd='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-devtools'
+alias cdd='cd ~/Projects/liveblocks/liveblocks-backend/tools/liveblocks-cli'
 alias cda='cd ~/Projects/liveblocks/admin'
 alias cdf='cd ~/Projects/liveblocks/liveblocks-backend/apps/cloudflare'
 alias cdbb='cd ~/Projects/liveblocks/liveblocks-backend'
@@ -479,6 +479,10 @@ alias cdR=cdbr
 alias cddocs='cd ~/Projects/liveblocks/liveblocks/docs'
 alias cdsink='cd ~/Projects/liveblocks/liveblocks/e2e/next-ai-kitchen-sink'
 alias liveblocks-dependencies="jq -r '((.dependencies,.peerDependencies,.devDependencies) // []) | keys[]' package.json | sort -u | grep --color=never -Ee @liveblocks/"
+
+function liveblocks
+    sh -c 'output=$(cd ~/Projects/liveblocks/liveblocks-backend/tools/liveblocks-cli && npx turbo run build 2>&1) && { echo "$output" | grep -q "FULL TURBO" || echo "$output"; } && node ~/Projects/liveblocks/liveblocks-backend/tools/liveblocks-cli/dist/index.js "$@"' -- $argv
+end
 
 function wtf -d "Print which and --version output for the given command"
     for arg in $argv
