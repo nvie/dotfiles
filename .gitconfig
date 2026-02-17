@@ -127,6 +127,9 @@
 
     graft = "!f() { git rebase --onto ${1:-@} $(git merge-base HEAD ${1:-@}); }; f"
 
+    # Never forget
+    morge = merge
+
 [url "https://github.com/"]
     insteadOf = gh
 
