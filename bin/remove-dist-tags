@@ -1,23 +1,311 @@
-#!/bin/sh
-set -eu
+#!/usr/bin/env node
 
-if [ "$1" = "beta" -o "$1" = "latest" -o -z "$1" ]; then
-    echo "Specify a valid tag name." >&2
-    echo "" >&2
-    echo "Usage:" >&2
-    echo "  remove-dist-tags <tag>" >&2
-    echo "" >&2
-    exit 2
-fi
+// ============================================================
+// Packages to clean up dist-tags for
+// ============================================================
+const PACKAGES = [
+  "@liveblocks/core",
+  "@liveblocks/client",
+  "@liveblocks/react",
+  "@liveblocks/react-ui",
+  "@liveblocks/react-tiptap",
+  "@liveblocks/react-blocknote",
+  "@liveblocks/react-lexical",
+  "@liveblocks/node",
+  "@liveblocks/node-prosemirror",
+  "@liveblocks/node-lexical",
+  "@liveblocks/yjs",
+  "@liveblocks/zustand",
+  "@liveblocks/redux",
+  "@liveblocks/emails",
+  "@liveblocks/server",
+  "@liveblocks/query-parser",
+  "@liveblocks/schema",
+  "create-liveblocks-app",
+  "liveblocks",
+];
 
-echo "OTP?"
-read otp
+// Tags that should never be removed
+const PROTECTED_TAGS = new Set(["latest", "beta", "rc", "next"]);
 
-set +e
-npm dist-tag rm --otp "$otp" "@liveblocks/yjs" "$1" || false
-npm dist-tag rm --otp "$otp" "@liveblocks/zustand" "$1" || false
-npm dist-tag rm --otp "$otp" "@liveblocks/redux" "$1" || false
-npm dist-tag rm --otp "$otp" "@liveblocks/react" "$1" || false
-npm dist-tag rm --otp "$otp" "@liveblocks/client" "$1" || false
-npm dist-tag rm --otp "$otp" "@liveblocks/core" "$1" || false
-set -e
+const CONCURRENCY = 12;
+
+// ============================================================
+
+const { execSync, exec } = require("child_process");
+const readline = require("readline");
+
+function usage() {
+  console.log(`Usage: remove-dist-tags [-h]
+
+Interactively remove npm dist-tags from all Liveblocks packages.
+
+  1. Fetches dist-tags for all packages
+  2. Shows a unified list of tags to pick from
+  3. Prompts for an OTP token
+  4. Removes the selected tags from all packages that have them
+
+Options:
+  -h, --help    Show this help message`);
+}
+
+if (process.argv.includes("-h") || process.argv.includes("--help")) {
+  usage();
+  process.exit(0);
+}
+
+// ============================================================
+// Collect dist-tags from all packages
+// ============================================================
+
+function fetchDistTags(pkg) {
+  try {
+    const res = execSync(`npm view ${pkg} dist-tags --json 2>/dev/null`, {
+      encoding: "utf8",
+    });
+    return JSON.parse(res);
+  } catch {
+    return {};
+  }
+}
+
+function collectAllTags() {
+  console.log("Fetching dist-tags for all packages...\n");
+
+  // tag -> list of packages that have it
+  const tagMap = new Map();
+
+  for (const pkg of PACKAGES) {
+    process.stdout.write(`  ${pkg}...`);
+    const tags = fetchDistTags(pkg);
+    const tagNames = Object.keys(tags);
+    process.stdout.write(` ${tagNames.length} tags\n`);
+
+    for (const tag of tagNames) {
+      if (!tagMap.has(tag)) {
+        tagMap.set(tag, []);
+      }
+      tagMap.get(tag).push({ pkg, version: tags[tag] });
+    }
+  }
+
+  return tagMap;
+}
+
+// ============================================================
+// Interactive multi-select with scrolling
+// ============================================================
+
+function interactiveMultiSelect(items) {
+  return new Promise((resolve) => {
+    let cursor = 0;
+    const selected = new Set();
+    const maxVisible = Math.min(items.length, (process.stdout.rows || 24) - 4);
+    let scrollOffset = 0;
+
+    const render = () => {
+      // Move cursor up to redraw
+      process.stdout.write(`\x1b[${maxVisible}A`);
+      for (let i = 0; i < maxVisible; i++) {
+        const idx = scrollOffset + i;
+        const item = items[idx];
+        const isCursor = idx === cursor;
+        const isSelected = selected.has(idx);
+        const marker = isSelected ? "\x1b[32m●\x1b[0m" : "○";
+        const highlight = isCursor ? "\x1b[36m> " : "  ";
+        const reset = "\x1b[0m";
+        process.stdout.write(
+          `\x1b[2K${highlight}${marker} ${item.display}${reset}\n`
+        );
+      }
+    };
+
+    // Initial render
+    for (let i = 0; i < maxVisible; i++) {
+      process.stdout.write("\n");
+    }
+    render();
+
+    process.stdin.setRawMode(true);
+    process.stdin.resume();
+    process.stdin.setEncoding("utf8");
+
+    const onKey = (key) => {
+      if (key === "\x1b[A" || key === "k") {
+        if (cursor > 0) {
+          cursor--;
+          if (cursor < scrollOffset) scrollOffset = cursor;
+        }
+        render();
+      } else if (key === "\x1b[B" || key === "j") {
+        if (cursor < items.length - 1) {
+          cursor++;
+          if (cursor >= scrollOffset + maxVisible)
+            scrollOffset = cursor - maxVisible + 1;
+        }
+        render();
+      } else if (key === " ") {
+        if (!items[cursor].isProtected) {
+          if (selected.has(cursor)) {
+            selected.delete(cursor);
+          } else {
+            selected.add(cursor);
+          }
+        }
+        render();
+      } else if (key === "\r" || key === "\n") {
+        process.stdin.setRawMode(false);
+        process.stdin.pause();
+        process.stdin.removeListener("data", onKey);
+        resolve([...selected].map((i) => items[i]));
+      } else if (key === "\x03" || key === "q") {
+        process.stdin.setRawMode(false);
+        process.stdout.write("\n");
+        process.exit(1);
+      }
+    };
+
+    process.stdin.on("data", onKey);
+  });
+}
+
+// ============================================================
+// OTP prompt
+// ============================================================
+
+function promptOtp() {
+  return new Promise((resolve) => {
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+    rl.question("\nOTP token: ", (answer) => {
+      rl.close();
+      resolve(answer.trim());
+    });
+  });
+}
+
+// ============================================================
+// Parallel execution with concurrency limit
+// ============================================================
+
+async function runPool(tasks, concurrency) {
+  const results = [];
+  let index = 0;
+
+  async function worker() {
+    while (index < tasks.length) {
+      const i = index++;
+      results[i] = await tasks[i]();
+    }
+  }
+
+  await Promise.all(Array.from({ length: Math.min(concurrency, tasks.length) }, worker));
+  return results;
+}
+
+function removeDistTag(pkg, tag, otp) {
+  return new Promise((resolve) => {
+    exec(`npm dist-tag rm ${pkg} ${tag} --otp=${otp} 2>&1`, (err, output) => {
+      const ok = !err;
+      if (ok) {
+        console.log(`  \x1b[32m✓\x1b[0m ${pkg} @ ${tag}`);
+      } else {
+        const lines = output.trim().split("\n")
+          .filter((l) => l.trim())
+          .filter((l) => !l.includes("complete log") && !/npm error code/.test(l));
+        // Find an npm error line, or fall back to first line
+        let reason = lines.find((l) => /npm (error|ERR!)/.test(l)) || lines[0] || "";
+        reason = reason.replace(/^npm (error|ERR!) /, "").trim();
+        reason = reason.replace(/ - (DELETE|GET|PUT|POST) https?:\/\/\S+/, "");
+        console.log(`  \x1b[31m✗\x1b[0m ${pkg} @ ${tag}${reason ? ` — ${reason}` : ""}`);
+      }
+      resolve({ pkg, tag, ok });
+    });
+  });
+}
+
+// ============================================================
+// Main
+// ============================================================
+
+async function main() {
+  const tagMap = collectAllTags();
+
+  // Sort tags: unprotected first, then protected
+  const sortedTags = [...tagMap.keys()].sort((a, b) => {
+    const ap = PROTECTED_TAGS.has(a.toLowerCase());
+    const bp = PROTECTED_TAGS.has(b.toLowerCase());
+    if (ap !== bp) return ap ? 1 : -1;
+    return a.localeCompare(b);
+  });
+
+  if (sortedTags.length === 0) {
+    console.log("\nNo dist-tags found.");
+    process.exit(0);
+  }
+
+  // Build display items
+  const items = sortedTags.map((tag) => {
+    const pkgs = tagMap.get(tag);
+    const isProtected = PROTECTED_TAGS.has(tag.toLowerCase());
+    const lock = isProtected ? " \x1b[33m(protected)\x1b[0m" : "";
+    const count = `\x1b[90m(${pkgs.length} pkg${pkgs.length !== 1 ? "s" : ""})\x1b[0m`;
+    return {
+      tag,
+      isProtected,
+      packages: pkgs,
+      display: `${tag} ${count}${lock}`,
+    };
+  });
+
+  console.log(
+    "\nSelect tags to remove (arrows/jk to move, space to toggle, enter to confirm, q to quit):\n"
+  );
+  const choices = await interactiveMultiSelect(items);
+
+  if (choices.length === 0) {
+    console.log("\nNothing selected.");
+    process.exit(0);
+  }
+
+  const protectedChoices = choices.filter((c) => c.isProtected);
+  if (protectedChoices.length > 0) {
+    const names = protectedChoices.map((c) => c.tag).join(", ");
+    console.log(`\n\x1b[31mRefusing to remove protected tag(s): ${names}\x1b[0m`);
+    process.exit(1);
+  }
+
+  // Show what will be removed
+  console.log(`\nWill remove ${choices.length} tag(s):`);
+  for (const choice of choices) {
+    console.log(`  \x1b[1m${choice.tag}\x1b[0m (${choice.packages.length} packages)`);
+  }
+
+  const otp = await promptOtp();
+  if (!otp) {
+    console.log("No OTP provided, aborting.");
+    process.exit(1);
+  }
+
+  // Build all removal tasks
+  const tasks = [];
+  for (const choice of choices) {
+    for (const { pkg } of choice.packages) {
+      tasks.push(() => removeDistTag(pkg, choice.tag, otp));
+    }
+  }
+
+  console.log(`\nRemoving ${tasks.length} dist-tags (concurrency: ${CONCURRENCY})...\n`);
+  const results = await runPool(tasks, CONCURRENCY);
+
+  const ok = results.filter((r) => r.ok).length;
+  const failCount = results.filter((r) => !r.ok).length;
+
+  console.log(
+    `\nDone! ${ok} succeeded${failCount > 0 ? `, \x1b[31m${failCount} failed\x1b[0m` : ""}.`
+  );
+}
+
+main();
