@@ -52,6 +52,7 @@
 /.bup
 /.bzr.log
 /.cache
+/.cagent
 /.cargo
 /.cassandra
 /.cdk
