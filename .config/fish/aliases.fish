@@ -478,6 +478,7 @@ alias cdq='cd ~/Projects/liveblocks/liveblocks-backend/shared/liveblocks-query-p
 alias cdR=cdbr
 alias cddocs='cd ~/Projects/liveblocks/liveblocks/docs'
 alias cdsink='cd ~/Projects/liveblocks/liveblocks/e2e/next-ai-kitchen-sink'
+alias cdpy='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-python'
 alias liveblocks-dependencies="jq -r '((.dependencies,.peerDependencies,.devDependencies) // []) | keys[]' package.json | sort -u | grep --color=never -Ee @liveblocks/"
 
 function liveblocks
