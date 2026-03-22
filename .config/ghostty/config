@@ -39,3 +39,22 @@ keybind = shift+page_up=scroll_page_fractional:-0.3
 keybind = shift+page_down=scroll_page_fractional:0.3
 keybind = shift+home=scroll_to_top
 keybind = shift+end=scroll_to_bottom
+
+# Notifications for long-running commands
+notify-on-command-finish = unfocused
+notify-on-command-finish-action = no-bell,notify
+# notify-on-command-finish-after = 5s
+
+# Key table for resizing splits
+keybind = resize/arrow_up=resize_split:up,10
+keybind = resize/arrow_down=resize_split:down,10
+keybind = resize/arrow_left=resize_split:left,10
+keybind = resize/arrow_right=resize_split:right,10
+keybind = resize/escape=deactivate_key_table
+keybind = resize/catch_all=ignore
+keybind = ctrl+shift+a=activate_key_table:resize
+
+# Directory inheritance
+window-inherit-working-directory = false
+tab-inherit-working-directory = false
+split-inherit-working-directory = true
