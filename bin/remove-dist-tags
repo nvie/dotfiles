@@ -26,7 +26,7 @@ const PACKAGES = [
 ];
 
 // Tags that should never be removed
-const PROTECTED_TAGS = new Set(["latest", "beta", "rc", "next"]);
+const PROTECTED_TAGS = new Set(["latest"]);
 
 const CONCURRENCY = 12;
 
@@ -201,7 +201,9 @@ async function runPool(tasks, concurrency) {
     }
   }
 
-  await Promise.all(Array.from({ length: Math.min(concurrency, tasks.length) }, worker));
+  await Promise.all(
+    Array.from({ length: Math.min(concurrency, tasks.length) }, worker)
+  );
   return results;
 }
 
@@ -212,14 +214,21 @@ function removeDistTag(pkg, tag, otp) {
       if (ok) {
         console.log(`  \x1b[32m✓\x1b[0m ${pkg} @ ${tag}`);
       } else {
-        const lines = output.trim().split("\n")
+        const lines = output
+          .trim()
+          .split("\n")
           .filter((l) => l.trim())
-          .filter((l) => !l.includes("complete log") && !/npm error code/.test(l));
+          .filter(
+            (l) => !l.includes("complete log") && !/npm error code/.test(l)
+          );
         // Find an npm error line, or fall back to first line
-        let reason = lines.find((l) => /npm (error|ERR!)/.test(l)) || lines[0] || "";
+        let reason =
+          lines.find((l) => /npm (error|ERR!)/.test(l)) || lines[0] || "";
         reason = reason.replace(/^npm (error|ERR!) /, "").trim();
         reason = reason.replace(/ - (DELETE|GET|PUT|POST) https?:\/\/\S+/, "");
-        console.log(`  \x1b[31m✗\x1b[0m ${pkg} @ ${tag}${reason ? ` — ${reason}` : ""}`);
+        console.log(
+          `  \x1b[31m✗\x1b[0m ${pkg} @ ${tag}${reason ? ` — ${reason}` : ""}`
+        );
       }
       resolve({ pkg, tag, ok });
     });
@@ -251,7 +260,9 @@ async function main() {
     const pkgs = tagMap.get(tag);
     const isProtected = PROTECTED_TAGS.has(tag.toLowerCase());
     const lock = isProtected ? " \x1b[33m(protected)\x1b[0m" : "";
-    const count = `\x1b[90m(${pkgs.length} pkg${pkgs.length !== 1 ? "s" : ""})\x1b[0m`;
+    const count = `\x1b[90m(${pkgs.length} pkg${
+      pkgs.length !== 1 ? "s" : ""
+    })\x1b[0m`;
     return {
       tag,
       isProtected,
@@ -273,14 +284,18 @@ async function main() {
   const protectedChoices = choices.filter((c) => c.isProtected);
   if (protectedChoices.length > 0) {
     const names = protectedChoices.map((c) => c.tag).join(", ");
-    console.log(`\n\x1b[31mRefusing to remove protected tag(s): ${names}\x1b[0m`);
+    console.log(
+      `\n\x1b[31mRefusing to remove protected tag(s): ${names}\x1b[0m`
+    );
     process.exit(1);
   }
 
   // Show what will be removed
   console.log(`\nWill remove ${choices.length} tag(s):`);
   for (const choice of choices) {
-    console.log(`  \x1b[1m${choice.tag}\x1b[0m (${choice.packages.length} packages)`);
+    console.log(
+      `  \x1b[1m${choice.tag}\x1b[0m (${choice.packages.length} packages)`
+    );
   }
 
   const otp = await promptOtp();
@@ -297,14 +312,18 @@ async function main() {
     }
   }
 
-  console.log(`\nRemoving ${tasks.length} dist-tags (concurrency: ${CONCURRENCY})...\n`);
+  console.log(
+    `\nRemoving ${tasks.length} dist-tags (concurrency: ${CONCURRENCY})...\n`
+  );
   const results = await runPool(tasks, CONCURRENCY);
 
   const ok = results.filter((r) => r.ok).length;
   const failCount = results.filter((r) => !r.ok).length;
 
   console.log(
-    `\nDone! ${ok} succeeded${failCount > 0 ? `, \x1b[31m${failCount} failed\x1b[0m` : ""}.`
+    `\nDone! ${ok} succeeded${
+      failCount > 0 ? `, \x1b[31m${failCount} failed\x1b[0m` : ""
+    }.`
   );
 }
 
