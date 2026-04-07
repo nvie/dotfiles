@@ -455,6 +455,7 @@ alias cdru='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-react-ui'
 alias cdrc=cdru
 alias cdrr='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-redux'
 alias cdrl='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-react-lexical'
+alias cdrf='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-react-flow'
 alias cdrb='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-react-blocknote'
 alias cdrt='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-react-tiptap'
 alias cdnl='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-node-lexical'
@@ -476,7 +477,7 @@ alias cdi='cd ~/Projects/liveblocks/liveblocks/schema-lang/infer-schema'
 alias cdq='cd ~/Projects/liveblocks/liveblocks-backend/shared/liveblocks-query-parser'
 alias cdR=cdbr
 alias cddocs='cd ~/Projects/liveblocks/liveblocks/docs'
-alias cdsink='cd ~/Projects/liveblocks/liveblocks/e2e/next-ai-kitchen-sink'
+alias cdsink='cd ~/Projects/liveblocks/liveblocks/e2e/next-react-flow-kitchen-sink'
 alias cdpy='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-python'
 alias liveblocks-dependencies="jq -r '((.dependencies,.peerDependencies,.devDependencies) // []) | keys[]' package.json | sort -u | grep --color=never -Ee @liveblocks/"
 
