@@ -108,8 +108,8 @@
 /.ngrok/
 /.ngrok2/
 /.njxnqxgn
-/.node/
 /.node-gyp/
+/.node/
 /.npm
 /.npmrc
 /.nuxtrc
@@ -156,6 +156,9 @@
 /.yarn*
 /.yesgraph-*
 /.z*
+
+# Fujutsu ScanSnap dependencies
+/.OmniPage-*
 
 # Directories
 Projects
