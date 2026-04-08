@@ -416,6 +416,7 @@ alias .. 'cd ..'
 alias ... 'cd ../..'
 #alias .... 'cd ../../..'
 #alias ..... 'cd ../../../..'
+alias pwdc 'pwd | tr -d "\n" | pbcopy; and echo "Current directory path copied to clipboard."'
 
 function take
     set -l dir $argv[1]
