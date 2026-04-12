@@ -158,6 +158,7 @@ if status is-interactive
         ~/Projects/liveblocks/liveblocks \
         ~/Projects/liveblocks/liveblocks-backend \
         ~/Projects/liveblocks \
+        ~/Projects/tools.nvie.com/apps \
         ~/Projects
 end
 # }}}
