@@ -28,3 +28,9 @@ CRITICAL - NEVER VIOLATE THESE RULES:
 - NEVER try to "fix" git state - I'm a Git power user
 - Detached HEAD, ongoing rebases, etc. are always intentional
 - Don't run `git rebase --continue/--abort` or similar commands
+
+# General workflow
+
+- Never start dev servers yourself -- I run them manually
+- When committing multiple changes, commit each atomic change separately
+- Reuse existing components/utilities -- never duplicate or reinvent
