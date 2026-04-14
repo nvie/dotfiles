@@ -34,3 +34,8 @@ CRITICAL - NEVER VIOLATE THESE RULES:
 - Never start dev servers yourself -- I run them manually
 - When committing multiple changes, commit each atomic change separately
 - Reuse existing components/utilities -- never duplicate or reinvent
+
+# Code quality
+
+- Never use `as` casts blindly -- explain the type issue and let me decide. If
+  it would interrupt flow, leave an `// XXX` comment above it instead.
