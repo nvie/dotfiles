@@ -20,8 +20,9 @@ I have some personal aliases:
 
 CRITICAL - NEVER VIOLATE THESE RULES:
 
-- NEVER use `git commit --amend` - always create a new commit
-- NEVER use `git rebase`, `git reset --hard`, or any history-rewriting command
+- NEVER `git push` - unless I explicitly ask you
+- NEVER `git commit --amend` - always create a new commit
+- NEVER `git rebase`, `git reset --hard`, or any history-rewriting command
 - Only commit or amend when explicitly asked
 - If a fix is needed after a commit, create a NEW commit
 - NEVER try to "fix" git state - I'm a Git power user
