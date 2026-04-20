@@ -494,7 +494,7 @@ function wtf -d "Print which and --version output for the given command"
 end
 
 function turbo_or_npm
-    if which -s turbo
+    if [ -f ./turbo.json ] && which -s turbo
         turbo $argv
     else
         npm run $argv
