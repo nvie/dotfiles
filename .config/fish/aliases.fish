@@ -68,8 +68,8 @@ alias vxx 'rg --hidden --glob=!.git/ -l "\b(XXX(_vincent)?)\b" -- 2>/dev/null | 
 
 alias reset-mailbox 'rm -v ~/Library/Caches/com.dropbox.mbd.external-beta/mailbox.db'
 
-function ccc -d 'Run claude in high permission mode'
-    cd (git root) && claude --dangerously-skip-permissions $argv
+function ccc -d 'Run claude in auto mode'
+    cd (git root) && claude $argv
 end
 
 function brew-outdated-leaves -d "List outdated packages, but only _leaf_ packages"
