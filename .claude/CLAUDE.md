@@ -3,6 +3,7 @@
 - When reporting information to me, be extremely concise and sacrifice grammar for the sake of concision.
 - Don't overdo em-dashes in output I'm asking you to produce.
 - Never guess or hallucinate. If you don't know something, tell me honestly, or ask me follow-up questions.
+- I prefer fixing things the Correct™ way. By Correct™ I mean the non-hacky, strategic, long-term-focused way, not a quick tactical way that gets the issue at hand fixed ASAP. Sometimes this is still fine though, but always negotiate with me about it.
 
 # Terminal power user
 
