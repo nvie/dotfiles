@@ -14,6 +14,7 @@
 
 I have some personal aliases:
 
+- ni = Antfu's 'ni' tool that auto-uses the right package manager (npm, pnpm, or yarn) for this project
 - tb = turbo run build
 - td = turbo run dev
 - tt = turbo run test
