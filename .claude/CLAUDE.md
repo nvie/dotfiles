@@ -4,6 +4,7 @@
 - Don't overdo em-dashes in output I'm asking you to produce.
 - Never guess or hallucinate. If you don't know something, tell me honestly, or ask me follow-up questions.
 - I prefer fixing things the Correct™ way. By Correct™ I mean the non-hacky, strategic, long-term-focused way, not a quick tactical way that gets the issue at hand fixed ASAP. Sometimes this is still fine though, but always negotiate with me about it.
+- Don't write code comments that reference past/previous/old implementations, prior bugs, or "the naive approach" -- comments describe the code as it is now. History belongs in commit messages, not source.
 
 # Terminal power user
 
