@@ -51,3 +51,28 @@ CRITICAL - NEVER VIOLATE THESE RULES:
 # Code quality
 
 - Never use `as` casts blindly -- explain the type issue and let me decide. If it would interrupt flow, leave an `// XXX` comment above it instead.
+
+# Writing commit messages
+
+Most commits are just a **single-line subject, no body**. A body is only added when the _why_ isn't self-evident, and even then it's 1-2 short paragraphs of prose explaining the reasoning or context. Match that style.
+
+Do NOT pad the body with enumerations of changed files, moved symbols, renamed methods, or bullet-lists of mechanical edits -- the diff already shows that. The only exception is when the mechanical listing **is** the point of the commit (e.g. a pure file rename, a batch rename across the codebase), in which case the list _is_ the explanation.
+
+- Imperative, capitalized, no trailing period
+- No Conventional Commit prefixes (no `feat:`, `fix:`, `chore:`, etc.) – I really dislike these!
+- Use a Unicode arrow surrounded by spaces for renames: 'Rename `foo` → `bar`'
+- Don't append `(#1234)` — GitHub does that on squash-merge
+- Only write a body when the _why_ isn't obvious from the diff. When you do, 1-3 short sentences, no bullet lists, no file summaries, no "this commit..." prefix
+- Never add AI trailers ("Generated with Claude Code", "Co-Authored-By: Claude")
+- Dry wit / `™` is fine when it fits ("The Big Inline™"); don't force it
+
+Representative examples of my style:
+
+- 'Log full error details upon failing connection'
+- 'Convert TS enums to objects + add new future AckOp type'
+- 'Replace Jest by Vitest'
+- 'Rename `toolName` → `name` everywhere'
+- 'Fix a bug in LiveLists where two clients would not reach eventual consistency'
+- 'Guarantee at-most-once execution for multi-tab tool calls'
+- 'Add `additionalProperties` everywhere: it's required if you use OpenAI'
+- 'SQLite refactoring: The Big Inline™'
