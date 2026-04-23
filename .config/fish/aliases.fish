@@ -516,7 +516,17 @@ end
 alias tb 'turbo_or_npm build'
 alias tbd 'turbo_or_npm build:deps'
 alias tbf 'turbo_or_npm build:firefox'
-alias tt 'turbo_or_npm test'
+function tt
+    if test (count $argv) -eq 0
+        turbo_or_npm test
+    else if test -f ./turbo.json; and which -s turbo
+        # Passthrough args would fold into turbo's global hash and invalidate
+        # every upstream build. Warm build (cache-hit) then run test directly.
+        turbo run build; and nr test $argv
+    else
+        npm run test $argv
+    end
+end
 alias tq 'kill-port 37897; kill-port 37898; killall workerd; scripts/run-unit-tests-locally.sh test/plugins test/storage test/yjs test/websockets test/api/v2/rooms/\{roomId\}/storage.test.ts'
 alias tqq 'kill-port 37897; kill-port 37898; killall workerd; scripts/run-unit-tests-locally.sh test/plugins'
 alias tfq 'kill-port 37897; kill-port 37898; killall workerd; scripts/run-unit-tests-locally.sh'
