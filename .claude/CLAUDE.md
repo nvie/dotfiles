@@ -51,6 +51,7 @@ CRITICAL - NEVER VIOLATE THESE RULES:
 # Code quality
 
 - Never use `as` casts blindly -- explain the type issue and let me decide. If it would interrupt flow, leave an `// XXX` comment above it instead.
+- Split type-only imports from value imports: prefer `import type { Bar, Qux } from "xyz"; import { foo, baz } from "xyz"` over inline `import { foo, type Bar, type Qux, baz } from "xyz"`.
 
 # Writing commit messages
 
