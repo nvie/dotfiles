@@ -451,39 +451,101 @@ end
 
 alias gp='cd ~/Projects/liveblocks/liveblocks'
 alias ga='cd ~/Projects/liveblocks/liveblocks.io'
-alias cdio='cd ~/Projects/liveblocks/liveblocks.io'
-alias cdcc='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-core'
-alias cdc='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-client'
-alias cdr='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-react'
-alias cde='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-emails'
-alias cdru='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-react-ui'
+function cdio
+    wt_cd 'liveblocks.io'
+end
+function cdcc
+    wt_cd liveblocks/packages/liveblocks-core
+end
+function cdc
+    wt_cd liveblocks/packages/liveblocks-client
+end
+function cdr
+    wt_cd liveblocks/packages/liveblocks-react
+end
+function cde
+    wt_cd liveblocks/packages/liveblocks-emails
+end
+function cdru
+    wt_cd liveblocks/packages/liveblocks-react-ui
+end
 alias cdrc=cdru
-alias cdrr='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-redux'
-alias cdrl='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-react-lexical'
-alias cdrf='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-react-flow'
-alias cdrb='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-react-blocknote'
-alias cdrt='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-react-tiptap'
-alias cdnl='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-node-lexical'
-alias cdy='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-yjs'
-alias cdz='cd ~/Projects/liveblocks/zenrouter'
-alias cdzz='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-zustand'
-alias cdn='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-node'
-alias cdd='cd ~/Projects/liveblocks/liveblocks-backend/tools/liveblocks-cli'
-alias cda='cd ~/Projects/liveblocks/admin'
-alias cdf='cd ~/Projects/liveblocks/liveblocks-backend/apps/cloudflare'
-alias cdbb='cd ~/Projects/liveblocks/liveblocks-backend'
-alias cdbj='cd ~/Projects/liveblocks/liveblocks-backend/apps/aws-jobs'
-alias cdbr='cd ~/Projects/liveblocks/liveblocks-backend/apps/lambda-rest-api'
-alias cdbm='cd ~/Projects/liveblocks/liveblocks-backend/tools/mongodb-migration'
-alias cdb='cd ~/Projects/liveblocks/liveblocks-backend/apps/bun-server'
-alias cds='cd ~/Projects/liveblocks/liveblocks-backend/shared/liveblocks-server'
-alias cdsc='cd ~/Projects/liveblocks/liveblocks/schema-lang/liveblocks-schema'
-alias cdi='cd ~/Projects/liveblocks/liveblocks/schema-lang/infer-schema'
-alias cdq='cd ~/Projects/liveblocks/liveblocks-backend/shared/liveblocks-query-parser'
+function cdrr
+    wt_cd liveblocks/packages/liveblocks-redux
+end
+function cdrl
+    wt_cd liveblocks/packages/liveblocks-react-lexical
+end
+function cdrf
+    wt_cd liveblocks/packages/liveblocks-react-flow
+end
+function cdrb
+    wt_cd liveblocks/packages/liveblocks-react-blocknote
+end
+function cdrt
+    wt_cd liveblocks/packages/liveblocks-react-tiptap
+end
+function cdnl
+    wt_cd liveblocks/packages/liveblocks-node-lexical
+end
+function cdy
+    wt_cd liveblocks/packages/liveblocks-yjs
+end
+function cdz
+    wt_cd zenrouter
+end
+function cdzz
+    wt_cd liveblocks/packages/liveblocks-zustand
+end
+function cdn
+    wt_cd liveblocks/packages/liveblocks-node
+end
+function cdd
+    wt_cd liveblocks-backend/tools/liveblocks-cli
+end
+function cda
+    wt_cd admin
+end
+function cdf
+    wt_cd liveblocks-backend/apps/cloudflare
+end
+function cdbb
+    wt_cd liveblocks-backend
+end
+function cdbj
+    wt_cd liveblocks-backend/apps/aws-jobs
+end
+function cdbr
+    wt_cd liveblocks-backend/apps/lambda-rest-api
+end
+function cdbm
+    wt_cd liveblocks-backend/tools/mongodb-migration
+end
+function cdb
+    wt_cd liveblocks-backend/apps/bun-server
+end
+function cds
+    wt_cd liveblocks-backend/shared/liveblocks-server
+end
+function cdsc
+    wt_cd liveblocks/schema-lang/liveblocks-schema
+end
+function cdi
+    wt_cd liveblocks/schema-lang/infer-schema
+end
+function cdq
+    wt_cd liveblocks-backend/shared/liveblocks-query-parser
+end
 alias cdR=cdbr
-alias cddocs='cd ~/Projects/liveblocks/liveblocks/docs'
-alias cdsink='cd ~/Projects/liveblocks/liveblocks/e2e/next-react-flow-kitchen-sink'
-alias cdpy='cd ~/Projects/liveblocks/liveblocks/packages/liveblocks-python'
+function cddocs
+    wt_cd liveblocks/docs
+end
+function cdsink
+    wt_cd liveblocks/e2e/next-react-flow-kitchen-sink
+end
+function cdpy
+    wt_cd liveblocks/packages/liveblocks-python
+end
 alias liveblocks-dependencies="jq -r '((.dependencies,.peerDependencies,.devDependencies) // []) | keys[]' package.json | sort -u | grep --color=never -Ee @liveblocks/"
 
 function liveblocks

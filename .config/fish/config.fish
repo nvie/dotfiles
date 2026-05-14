@@ -22,11 +22,49 @@ function fish_prompt
     # set_color normal
 
     printf ' in '
-    set_color $fish_color_cwd
-    printf '%s' (echo $PWD | sed -e "s|^$HOME|~|" -e 's|^/private||' -e 's|~/Projects/liveblocks/||')
-    set_color normal
 
-    git_prompt
+    if set -q WORKTREE_GROUP
+        # Inside a worktree group — show [worktree:NAME] plus a path:
+        #   - at group root           → no path
+        #   - at a worktree repo root → "<repo>"
+        #   - deeper inside a repo    → "<rest-after-repo>"
+        set -l display ""
+        set -l rel (string replace -- "$WORKTREE_ROOT" '' "$PWD")
+        if test -n "$rel"
+            set rel (string sub -s 2 -- "$rel")   # strip leading "/"
+            if string match -q '*/*' "$rel"
+                set display (string replace -r '^[^/]+/' '' "$rel")
+            else
+                set display "$rel"
+            end
+        end
+
+        set_color bryellow
+        printf '[worktree:%s]' "$WORKTREE_GROUP"
+        set_color normal
+        if test -n "$display"
+            set_color $fish_color_cwd
+            printf ' %s' "$display"
+            set_color normal
+        end
+
+        # Drift indicator: ` on <branch>` when the worktree's branch differs
+        # from the group name (you `git checkout`ed something else inside).
+        set -l branch (git_current_branch 2>/dev/null)
+        if test -n "$branch"; and test "$branch" != "$WORKTREE_GROUP"
+            set_color normal
+            printf ' on '
+            set_color yellow
+            printf '%s' "$branch"
+            set_color normal
+        end
+    else
+        set_color $fish_color_cwd
+        printf '%s' (echo $PWD | sed -e "s|^$HOME|~|" -e 's|^/private||' -e 's|~/Projects/liveblocks/||')
+        set_color normal
+
+        git_prompt
+    end
 
     set_color normal
     printf ' (%s)' (date +%H:%M)
