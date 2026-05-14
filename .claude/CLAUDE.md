@@ -5,6 +5,8 @@
 - Never guess or hallucinate. If you don't know something, tell me honestly, or ask me follow-up questions.
 - I prefer fixing things the Correct™ way. By Correct™ I mean the non-hacky, strategic, long-term-focused way, not a quick tactical way that gets the issue at hand fixed ASAP. Sometimes this is still fine though, but always negotiate with me about it.
 - Don't write code comments that reference past/previous/old implementations, prior bugs, or "the naive approach" -- comments describe the code as it is now. History belongs in commit messages, not source.
+- When I ask you to explain, investigate, summarize, or "help me understand", answer the question first -- don't preemptively edit code unless I asked you to. If a fix becomes obvious during explanation, propose it and wait.
+- Don't silently silence or suppress errors. If you must suppress (e.g. a noisy SDK warning), scope it as narrowly as possible (test/localhost only), and flag it to me -- never let production hide errors.
 
 # Terminal power user
 
@@ -51,6 +53,7 @@ CRITICAL - NEVER VIOLATE THESE RULES:
 # Code quality
 
 - Never use `as` casts blindly -- explain the type issue and let me decide. If it would interrupt flow, leave an `// XXX` comment above it instead.
+- Mark any temporary, throwaway, or revisit-later code with `// XXX` comments -- most projects have a lint rule that fails CI on XXX, so nothing slips through.
 - Split type-only imports from value imports: prefer `import type { Bar, Qux } from "xyz"; import { foo, baz } from "xyz"` over inline `import { foo, type Bar, type Qux, baz } from "xyz"`.
 
 # Writing commit messages
