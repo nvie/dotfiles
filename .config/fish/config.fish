@@ -29,7 +29,7 @@ function fish_prompt
         set -l display ""
         set -l rel (string replace -- "$WORKTREE_ROOT" '' "$PWD")
         if test -n "$rel"
-            set rel (string sub -s 2 -- "$rel")   # strip leading "/"
+            set rel (string sub -s 2 -- "$rel") # strip leading "/"
             if string match -q '*/*' "$rel"
                 set display (string replace -r '^[^/]+/' '' "$rel")
             else
@@ -56,7 +56,7 @@ function fish_prompt
                 set_color normal
                 printf ' '
                 set_color brred
-                printf '[⚠️  worktree: %s]' "$WORKTREE_GROUP"
+                printf '[⚠️ worktree: %s]' "$WORKTREE_GROUP"
                 set_color normal
             end
         else
