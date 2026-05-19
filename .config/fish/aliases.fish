@@ -549,7 +549,13 @@ end
 alias liveblocks-dependencies="jq -r '((.dependencies,.peerDependencies,.devDependencies) // []) | keys[]' package.json | sort -u | grep --color=never -Ee @liveblocks/"
 
 function liveblocks
-    sh -c 'output=$(cd ~/Projects/liveblocks/liveblocks-backend/tools/liveblocks-cli && npx turbo run build 2>&1) || { echo "$output" >&2; exit 1; }; { echo "$output" | grep -q "FULL TURBO" || echo "$output"; } && node ~/Projects/liveblocks/liveblocks-backend/tools/liveblocks-cli/dist/index.js "$@"' -- $argv
+    sh -c '
+        ROOT="${WORKTREE_ROOT:-$HOME/Projects/liveblocks}"
+        CLI_DIR="$ROOT/liveblocks-backend/tools/liveblocks-cli"
+        output=$(cd "$CLI_DIR" && npx turbo run build 2>&1) || { echo "$output" >&2; exit 1; }
+        { echo "$output" | grep -q "FULL TURBO" || echo "$output"; } &&
+            node "$CLI_DIR/dist/index.js" "$@"
+    ' -- $argv
 end
 
 function wtf -d "Print which and --version output for the given command"
