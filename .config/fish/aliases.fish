@@ -611,3 +611,8 @@ alias gbr 'git bisect reset'
 alias gbs 'cd (git root) && git bisect start (git current-branch) (git merge-base (git current-branch) main)'
 alias good 'git bisect good'
 alias bad 'git bisect bad'
+
+# Worktrees
+alias wg 'worktrees go'
+alias wl 'worktrees list'
+alias ws 'worktrees status'
