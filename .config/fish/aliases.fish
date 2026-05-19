@@ -613,6 +613,14 @@ alias good 'git bisect good'
 alias bad 'git bisect bad'
 
 # Worktrees
-alias wg 'worktrees go'
+function wg --description 'Switch to a worktree group (interactive fzf picker if no arg)'
+    if test (count $argv) -gt 0
+        worktrees go $argv
+        return
+    end
+    set -l choice (worktrees list | fzf --height=40% --reverse --prompt='worktree> ')
+    or return
+    worktrees go $choice
+end
 alias wl 'worktrees list'
 alias ws 'worktrees status'
