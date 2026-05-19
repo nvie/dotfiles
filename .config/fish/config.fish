@@ -21,11 +21,12 @@ function fish_prompt
     # printf '%s' (hostname -s)
     # set_color normal
 
-    if set -q WORKTREE_GROUP
+    if set -q WORKTREE_GROUP; and test "$PWD" != "$WORKTREE_ROOT"
         # Inside a worktree group. Path resolution:
-        #   - at group root           → no path
         #   - at a worktree repo root → "<repo>"
         #   - deeper inside a repo    → "<rest-after-repo>"
+        # At the group root itself we fall through to the regular prompt: the
+        # worktree root is not a worktree, just a directory inside the home repo.
         set -l display ""
         set -l rel (string replace -- "$WORKTREE_ROOT" '' "$PWD")
         if test -n "$rel"
@@ -37,6 +38,8 @@ function fish_prompt
             end
         end
 
+        set -l branch (git_current_branch 2>/dev/null)
+
         if test -n "$display"
             printf ' in '
             set_color $fish_color_cwd
@@ -44,21 +47,24 @@ function fish_prompt
             set_color normal
         end
 
-        set -l branch (git_current_branch 2>/dev/null)
-        if test -n "$branch"
-            printf ' on '
+        if test -n "$branch"; and test "$branch" != "$WORKTREE_GROUP"
+            printf ' in '
+            set_color yellow
+            printf '%s [worktree]' "$WORKTREE_GROUP"
+            set_color normal
+            printf ' '
+            set_color brred
+            printf '(⚠️ but on branch '
             set_color yellow
             printf '%s' "$branch"
-            if test "$branch" = "$WORKTREE_GROUP"
-                printf ' [worktree]'
-                set_color normal
-            else
-                set_color normal
-                printf ' '
-                set_color brred
-                printf '[⚠️ worktree: %s]' "$WORKTREE_GROUP"
-                set_color normal
-            end
+            set_color brred
+            printf '!)'
+            set_color normal
+        else if test -n "$branch"
+            printf ' on '
+            set_color yellow
+            printf '%s [worktree]' "$branch"
+            set_color normal
         else
             printf ' '
             set_color yellow
