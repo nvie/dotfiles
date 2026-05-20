@@ -552,7 +552,7 @@ function liveblocks
     sh -c '
         ROOT="${WORKTREE_ROOT:-$HOME/Projects/liveblocks}"
         CLI_DIR="$ROOT/liveblocks-backend/tools/liveblocks-cli"
-        output=$(cd "$CLI_DIR" && npx turbo run build 2>&1) || { echo "$output" >&2; exit 1; }
+        output=$(cd "$CLI_DIR" && npx turbo run build --output-logs errors-only 2>&1) || { echo "$output" >&2; exit 1; }
         { echo "$output" | grep -q "FULL TURBO" || echo "$output"; } &&
             node "$CLI_DIR/dist/index.js" "$@"
     ' -- $argv
@@ -630,3 +630,4 @@ function wg --description 'Switch to a worktree group (interactive fzf picker if
 end
 alias wl 'worktrees list'
 alias ws 'worktrees status'
+alias wi 'worktrees init'
