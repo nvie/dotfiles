@@ -628,6 +628,30 @@ function wg --description 'Switch to a worktree group (interactive fzf picker if
     or return
     worktrees go $choice
 end
+function wr --description 'Remove a worktree group (interactive fzf picker if no arg) — DESTRUCTIVE'
+    set -l name $argv[1]
+    if test -z "$name"
+        set name (worktrees list | fzf --height=40% --reverse \
+            --prompt='⚠  REMOVE worktree> ' \
+            --color='prompt:red:bold,pointer:red:bold,marker:red:bold,header:red')
+        or return
+    end
+    set_color red --bold
+    echo -n "⚠  About to PERMANENTLY remove worktree group '"
+    set_color yellow --bold
+    echo -n "$name"
+    set_color red --bold
+    echo "' (worktree dirs + branches)."
+    set_color normal
+    read -l -P 'Remove? [y/N] ' confirm
+    if not string match -qi 'y' -- $confirm; and not string match -qi 'yes' -- $confirm
+        set_color yellow
+        echo "Aborted."
+        set_color normal
+        return 1
+    end
+    worktrees rm $name
+end
 alias wl 'worktrees list'
 alias ws 'worktrees status'
 alias wi 'worktrees init'
