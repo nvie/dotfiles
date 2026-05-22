@@ -223,6 +223,10 @@ direnv hook fish | source
 test -e ~/.iterm2_shell_integration.fish; and source ~/.iterm2_shell_integration.fish
 # }}}
 
+# Local secrets — gitignored, not in the public repo {{{
+test -f ~/.config/fish/secrets.fish; and source ~/.config/fish/secrets.fish
+# }}}
+
 set -gx __fish_initialized 1
 
 # Nvm {{{

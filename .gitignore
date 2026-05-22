@@ -5,6 +5,21 @@
 # Don't include files with sensitive data
 /.zshrc-secrets
 
+# Include some config files under version control
+/.config/*
+!/.config/fish
+!/.config/fish/**
+!/.config/ghostty
+!/.config/ghostty/**
+
+# Local secrets — never tracked
+/.config/fish/secrets.fish
+
+# Fish logs and history — never tracked
+/.config/fish/fish_history
+/.config/fish/fish_read_history
+/.config/fish/fish_variables
+
 # iJunk
 .DS_Store
 .MacOSX
@@ -174,11 +189,6 @@ Powerline_*.cache
 
 # MongoDB
 /.mongodb
-
-# Include some config files under version control
-/.config/*
-! /.config/fish
-! /.config/ghostty
 
 # Claude files
 .claude/
