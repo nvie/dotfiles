@@ -48,6 +48,7 @@ CRITICAL - NEVER VIOLATE THESE RULES:
 
 - Never start dev servers yourself -- I run them manually
 - When committing multiple changes, commit each atomic change separately
+- When asked to commit, do not attempt to write the commit message yourself -- I prefer to defer to the cheaper/faster `gcm --yolo [<context>]` script to do this
 - Reuse existing components/utilities -- never duplicate or reinvent
 
 # Code quality
