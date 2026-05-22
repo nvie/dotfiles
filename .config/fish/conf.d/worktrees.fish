@@ -1,0 +1,1 @@
+/Users/nvie/Projects/worktrees/share/worktrees.fish
