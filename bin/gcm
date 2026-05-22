@@ -1,20 +1,29 @@
-function gcm --description "Draft a commit message with Sonnet, then open editor"
-    argparse y/yolo -- $argv
-    or return
+#!/bin/sh
+# Draft a commit message with Sonnet, then open editor (or commit straight away with --yolo)
 
-    if git diff --staged --quiet
-        echo "No staged changes." >&2
-        return 1
-    end
+set -u
 
-    if test -z "$ANTHROPIC_API_KEY"
-        echo "ANTHROPIC_API_KEY not set." >&2
-        return 1
-    end
+yolo=0
+context=""
 
-    set -l context (string join " " $argv)
+for arg in "$@"; do
+    case "$arg" in
+        -y|--yolo) yolo=1 ;;
+        *) context="${context:+$context }$arg" ;;
+    esac
+done
 
-    set -l system_prompt "You write git commit messages for nvie.
+if git diff --staged --quiet; then
+    echo "No staged changes." >&2
+    exit 1
+fi
+
+if [ -z "${ANTHROPIC_API_KEY:-}" ]; then
+    echo "ANTHROPIC_API_KEY not set." >&2
+    exit 1
+fi
+
+system_prompt="You write git commit messages for nvie.
 
 OUTPUT FORMAT — STRICT:
 - Plain text only. NO markdown, NO code fences, NO surrounding quotes.
@@ -41,40 +50,36 @@ Guarantee at-most-once execution for multi-tab tool calls
 Add additionalProperties everywhere: it's required if you use OpenAI
 SQLite refactoring: The Big Inline™"
 
-    set -l respfile (mktemp)
-    set -l msgfile (mktemp)
+respfile=$(mktemp)
+msgfile=$(mktemp)
+trap 'rm -f "$respfile" "$msgfile"' EXIT
 
-    echo "Generating commit message with Sonnet..." >&2
-    git diff --staged | jq -Rs --arg sys "$system_prompt" --arg ctx "$context" '{
-        model: "claude-sonnet-4-6",
-        max_tokens: 400,
-        system: $sys,
-        messages: [{role: "user", content: (
-            (if $ctx == "" then "" else "Extra context from the author (use this for the WHY in the body if it adds information not visible in the diff):\n" + $ctx + "\n\n" end)
-            + "Write a commit message for this staged diff:\n\n" + .
-        )}]
-    }' | curl -s https://api.anthropic.com/v1/messages \
-        -H "x-api-key: $ANTHROPIC_API_KEY" \
-        -H "anthropic-version: 2023-06-01" \
-        -H "content-type: application/json" \
-        -d @- >$respfile
+echo "Generating commit message with Sonnet..." >&2
+git diff --staged | jq -Rs --arg sys "$system_prompt" --arg ctx "$context" '{
+    model: "claude-sonnet-4-6",
+    max_tokens: 400,
+    system: $sys,
+    messages: [{role: "user", content: (
+        (if $ctx == "" then "" else "Extra context from the author (use this for the WHY in the body if it adds information not visible in the diff):\n" + $ctx + "\n\n" end)
+        + "Write a commit message for this staged diff:\n\n" + .
+    )}]
+}' | curl -s https://api.anthropic.com/v1/messages \
+    -H "x-api-key: $ANTHROPIC_API_KEY" \
+    -H "anthropic-version: 2023-06-01" \
+    -H "content-type: application/json" \
+    -d @- > "$respfile"
 
-    jq -r '.content[0].text // ""' <$respfile >$msgfile
+jq -r '.content[0].text // ""' < "$respfile" > "$msgfile"
 
-    if not test -s $msgfile
-        echo "Failed to generate commit message. Raw API response:" >&2
-        cat $respfile >&2
-        echo >&2
-        rm $respfile $msgfile
-        return 1
-    end
+if [ ! -s "$msgfile" ]; then
+    echo "Failed to generate commit message. Raw API response:" >&2
+    cat "$respfile" >&2
+    echo >&2
+    exit 1
+fi
 
-    if set -q _flag_yolo
-        git commit -F $msgfile
-    else
-        git commit -e -F $msgfile
-    end
-    set -l rc $status
-    rm $respfile $msgfile
-    return $rc
-end
+if [ "$yolo" -eq 1 ]; then
+    git commit -F "$msgfile"
+else
+    git commit -e -F "$msgfile"
+fi
