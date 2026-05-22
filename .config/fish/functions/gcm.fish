@@ -1,4 +1,7 @@
 function gcm --description "Draft a commit message with Sonnet, then open editor"
+    argparse y/yolo -- $argv
+    or return
+
     if git diff --staged --quiet
         echo "No staged changes." >&2
         return 1
@@ -66,7 +69,11 @@ SQLite refactoring: The Big Inline™"
         return 1
     end
 
-    git commit -e -F $msgfile
+    if set -q _flag_yolo
+        git commit -F $msgfile
+    else
+        git commit -e -F $msgfile
+    end
     set -l rc $status
     rm $respfile $msgfile
     return $rc
