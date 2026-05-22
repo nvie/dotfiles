@@ -78,6 +78,15 @@ if [ ! -s "$msgfile" ]; then
     exit 1
 fi
 
+# Keep subject (line 1) verbatim; wrap body paragraphs at 72 cols.
+wrapfile=$(mktemp)
+trap 'rm -f "$respfile" "$msgfile" "$wrapfile"' EXIT
+{
+    head -n 1 "$msgfile"
+    tail -n +2 "$msgfile" | fmt -w 72
+} > "$wrapfile"
+mv "$wrapfile" "$msgfile"
+
 if [ "$yolo" -eq 1 ]; then
     git commit -F "$msgfile"
 else
