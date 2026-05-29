@@ -198,7 +198,7 @@ if status is-login
 end
 
 if status is-interactive
-    set CDPATH . \
+    set -x CDPATH . \
         ~/Projects/liveblocks/liveblocks/packages \
         ~/Projects/liveblocks/liveblocks/tools \
         ~/Projects/liveblocks/liveblocks-backend/apps \
