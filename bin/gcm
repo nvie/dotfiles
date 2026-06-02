@@ -80,10 +80,20 @@ git diff --staged | jq -Rs --arg sys "$system_prompt" --arg ctx "$context" '{
     -H "content-type: application/json" \
     -d @- > "$respfile"
 
+red() { printf '\033[31m%s\033[0m\n' "$1" >&2; }
+
+# Bail loudly on an API error response (overloaded, rate limit, bad key, ...)
+# instead of feeding an empty message to git commit.
+if [ "$(jq -r '.type // ""' < "$respfile")" = "error" ]; then
+    red "API error: $(jq -r '.error.message // "unknown error"' < "$respfile")"
+    exit 1
+fi
+
 jq -r '.content[0].text // ""' < "$respfile" > "$msgfile"
 
-if [ ! -s "$msgfile" ]; then
-    echo "Failed to generate commit message. Raw API response:" >&2
+# A blank line (1 byte) slips past a plain -s test, so strip whitespace first.
+if [ -z "$(tr -d '[:space:]' < "$msgfile")" ]; then
+    red "Failed to generate commit message. Raw API response:"
     cat "$respfile" >&2
     echo >&2
     exit 1
