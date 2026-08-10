@@ -599,6 +599,7 @@ alias tq 'kill-port 37897; kill-port 37898; killall workerd; scripts/run-unit-te
 alias tqq 'kill-port 37897; kill-port 37898; killall workerd; scripts/run-unit-tests-locally.sh test/plugins'
 alias tfq 'kill-port 37897; kill-port 37898; killall workerd; scripts/run-unit-tests-locally.sh'
 alias td 'turbo_or_npm dev'
+alias tdl 'turbo_or_npm dev:local'
 alias ttt 'turbo_or_npm test:types'
 alias ttd 'turbo_or_npm test:deps'
 alias tth 'turbo_or_npm test:headed'
