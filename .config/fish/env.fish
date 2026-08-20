@@ -32,9 +32,9 @@ for dir in ~/.nvm/versions/node/v*/bin
     end
 end
 
-prepend-to-path /opt/homebrew/opt/node@18/bin
 prepend-to-path /opt/homebrew/sbin
 prepend-to-path /opt/homebrew/bin
+prepend-to-path /opt/homebrew/opt/postgresql@17/bin
 
 # Old MySQL version (5.7)
 # append-to-path /opt/homebrew/Cellar/mysql@5.7/5.7.37/bin
