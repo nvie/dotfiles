@@ -4,9 +4,11 @@
 - Don't overdo em-dashes in output I'm asking you to produce.
 - Never guess or hallucinate. If you don't know something, tell me honestly, or ask me follow-up questions.
 - I prefer fixing things the Correct™ way. By Correct™ I mean the non-hacky, strategic, long-term-focused way, not a quick tactical way that gets the issue at hand fixed ASAP. Sometimes this is still fine though, but always negotiate with me about it.
+- Correct™ is about the *shape* of the fix, not its size -- don't overengineer. Prefer the smallest solution that's still principled. If you're building a framework where a function would do, stop and offer me the small version first.
 - Don't write code comments that reference past/previous/old implementations, prior bugs, or "the naive approach" -- comments describe the code as it is now. History belongs in commit messages, not source.
 - When I ask you to explain, investigate, summarize, or "help me understand", answer the question first -- don't preemptively edit code unless I asked you to. If a fix becomes obvious during explanation, propose it and wait.
 - Don't silently silence or suppress errors. If you must suppress (e.g. a noisy SDK warning), scope it as narrowly as possible (test/localhost only), and flag it to me -- never let production hide errors.
+- In prose I'll send to others (Slack, docs, PR descriptions, customer replies), don't sound more certain than the evidence supports. Prefer "I think" / "could be" over "is", ask questions and make suggestions rather than declare. I'm often not the expert in that room and don't want to read like I claim to be.
 
 # Terminal power user
 
@@ -48,8 +50,17 @@ CRITICAL - NEVER VIOLATE THESE RULES:
 
 - Never start dev servers yourself -- I run them manually
 - When committing multiple changes, commit each atomic change separately
+- Mechanical noise never rides along with a substantive change: dependency upgrades, formatter reflows, and lint/codemod fixes each get their own commit
+- When fixing many lint errors, commit per rule class (all instances of one rule = one commit), starting with the most trivial and working up
 - When asked to commit, do not attempt to write the commit message yourself -- I prefer to defer to the cheaper/faster `gcm --yolo [<context>]` script to do this
 - Reuse existing components/utilities -- never duplicate or reinvent
+- Publishing is mine: I run `git push`, `npm publish`, and `npx skills update` myself. Prepare the change, then hand it back
+
+# Secrets
+
+- Never read, print, or echo credentials into the transcript -- passwords, API keys, tokens, `.env` values, DB URLs with an embedded password. Use them via env vars, keychain, or a script that reads them at runtime; I should be able to assume you never saw them.
+- Same applies to anything you pass to a subagent or quote back in a summary.
+- If a secret does land in the transcript anyway, say so immediately and tell me exactly what to rotate.
 
 # Code quality
 
@@ -58,6 +69,7 @@ CRITICAL - NEVER VIOLATE THESE RULES:
 - In JSX, always write conditionals as `cond ? (...) : null` -- never `cond && (...)`.
   The `&&` form renders falsy non-booleans (`0`, `""`) straight into the DOM.
 - Split type-only imports from value imports: prefer `import type { Bar, Qux } from "xyz"; import { foo, baz } from "xyz"` over inline `import { foo, type Bar, type Qux, baz } from "xyz"`.
+- All code is English: variable names, internal constants, comments, error messages, commit messages. Only user-visible UI strings get localized (Dutch, in my Dutch apps).
 
 # Writing commit messages
 
