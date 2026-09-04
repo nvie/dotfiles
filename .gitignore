@@ -102,6 +102,7 @@
 /.gnupg
 /.grc
 /.heroku
+/.homebrew
 /.httpie
 /.ipython
 /.irssi
@@ -162,6 +163,7 @@
 /.ttytterkey
 /.vagrant.d
 /.vim*
+/.vite-plus
 /.volta/
 /.vscode/
 /.wget-hsts
