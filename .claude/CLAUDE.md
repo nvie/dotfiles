@@ -55,6 +55,8 @@ CRITICAL - NEVER VIOLATE THESE RULES:
 
 - Never use `as` casts blindly -- explain the type issue and let me decide. If it would interrupt flow, leave an `// XXX` comment above it instead.
 - Mark any temporary, throwaway, or revisit-later code with `// XXX` comments -- most projects have a lint rule that fails CI on XXX, so nothing slips through.
+- In JSX, always write conditionals as `cond ? (...) : null` -- never `cond && (...)`.
+  The `&&` form renders falsy non-booleans (`0`, `""`) straight into the DOM.
 - Split type-only imports from value imports: prefer `import type { Bar, Qux } from "xyz"; import { foo, baz } from "xyz"` over inline `import { foo, type Bar, type Qux, baz } from "xyz"`.
 
 # Writing commit messages
