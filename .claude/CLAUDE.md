@@ -55,6 +55,7 @@ CRITICAL - NEVER VIOLATE THESE RULES:
 - When asked to commit, do not attempt to write the commit message yourself -- I prefer to defer to the cheaper/faster `gcm --yolo [<context>]` script to do this
 - Reuse existing components/utilities -- never duplicate or reinvent
 - Publishing is mine: I run `git push`, `npm publish`, and `npx skills update` myself. Prepare the change, then hand it back
+- NEVER mutate GitHub state yourself: no `gh pr create`, `gh pr edit`, `gh pr merge`, `gh pr comment`, `gh pr review`, `gh issue create/edit/comment`, or any other write via `gh`/the GitHub API -- unless I explicitly ask for that exact action in that message. Draft the title/body/comment as text in the transcript and let me paste it. Reading (`gh pr view`, `gh api` GETs) is always fine
 
 # Secrets
 
