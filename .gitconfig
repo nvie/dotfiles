@@ -129,10 +129,6 @@
 
     # Never forget
     morge = merge
-
-[url "https://github.com/"]
-    insteadOf = gh
-
 [diff]
     # compactionHeuristic = true  # for more beautiful diffs that favor whitespace lines to the hunk boundaries
     indentHeuristic = true  # for more beautiful diffs that favor whitespace lines to the hunk boundaries
@@ -162,3 +158,6 @@
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+	insteadOf = gh
