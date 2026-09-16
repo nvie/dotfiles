@@ -23,8 +23,9 @@ window-step-resize = true
 # macos-titlebar-style = hidden
 focus-follows-mouse = true
 
-# Send alt+a as '\ea' (escape sequence) instead of the unicode char 'å'
-macos-option-as-alt = true
+# Left option sends alt+a as '\ea' (escape sequence) instead of the unicode char 'å';
+# right option stays a macOS modifier so dead keys work (right-opt+u, i = ï)
+macos-option-as-alt = left
 # background-opacity = 0.96
 background-blur = true
 
