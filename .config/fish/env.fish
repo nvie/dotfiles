@@ -5,6 +5,7 @@ set -gx PATH /bin
 
 append-to-path /sbin
 append-to-path /usr/bin
+append-to-path /usr/local/bin
 append-to-path /usr/sbin
 append-to-path ~/bin
 append-to-path ~/.local/bin
@@ -12,8 +13,6 @@ append-to-path ~/.cargo/bin
 append-to-path ~/Projects/syncfrom
 append-to-path ~/Projects/git-toolbelt
 append-to-path ~/Projects/linenos/bin
-append-to-path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-append-to-path "/Applications/Docker.app/Contents/Resources/bin"
 append-to-path "/Applications/Ghostty.app/Contents/MacOS"
 append-to-path ~/Projects/liveblocks/liveblocks/scripts
 
@@ -23,14 +22,6 @@ append-to-path "$BUN_INSTALL/bin"
 
 # pnpm
 set -gx PNPM_HOME "$HOME/Library/pnpm"
-append-to-path "$PNPM_HOME"
-
-# Add global scripts from every Node instance
-for dir in ~/.nvm/versions/node/v*/bin
-    if test -d $dir
-        append-to-path $dir
-    end
-end
 
 # prepend-to-path /opt/homebrew/opt/node@18/bin
 prepend-to-path /opt/homebrew/sbin
@@ -46,7 +37,6 @@ prepend-to-path /opt/homebrew/opt/postgresql@17/bin
 # Python: source pyenv config for fish
 set -gx PIP_DOWNLOAD_CACHE ~/Library/Caches/pip-downloads
 set -Ux PYENV_ROOT $HOME/.pyenv
-append-to-path $PYENV_ROOT/bin
 status is-login; and pyenv init --path | source
 pyenv init - | source
 
