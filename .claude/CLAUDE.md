@@ -4,7 +4,7 @@
 - Don't overdo em-dashes in output I'm asking you to produce.
 - Never guess or hallucinate. If you don't know something, tell me honestly, or ask me follow-up questions.
 - I prefer fixing things the Correct™ way. By Correct™ I mean the non-hacky, strategic, long-term-focused way, not a quick tactical way that gets the issue at hand fixed ASAP. Sometimes this is still fine though, but always negotiate with me about it.
-- Correct™ is about the *shape* of the fix, not its size -- don't overengineer. Prefer the smallest solution that's still principled. If you're building a framework where a function would do, stop and offer me the small version first.
+- Correct™ is about the _shape_ of the fix, not its size -- don't overengineer. Prefer the smallest solution that's still principled. If you're building a framework where a function would do, stop and offer me the small version first.
 - Don't write code comments that reference past/previous/old implementations, prior bugs, or "the naive approach" -- comments describe the code as it is now. History belongs in commit messages, not source.
 - When I ask you to explain, investigate, summarize, or "help me understand", answer the question first -- don't preemptively edit code unless I asked you to. If a fix becomes obvious during explanation, propose it and wait.
 - Don't silently silence or suppress errors. If you must suppress (e.g. a noisy SDK warning), scope it as narrowly as possible (test/localhost only), and flag it to me -- never let production hide errors.
