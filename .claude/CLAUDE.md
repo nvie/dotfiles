@@ -46,6 +46,25 @@ CRITICAL - NEVER VIOLATE THESE RULES:
 
 - "delouse" = my `git delouse` (from nvie/git-toolbelt): soft-reset HEAD and re-commit as empty with the original commit's message. Result: commit message preserved, the original changes return to the working tree unstaged so I can re-select what to keep. If I say "I deloused your commit", the file changes you made are now unstaged and may be partially discarded.
 
+# Mass search & replace (`sr`)
+
+For any rename/replacement spanning more than a couple of files, use my `sr`
+tool (github.com/nvie/sr) instead of hand-editing file by file or writing
+Python/sed one-offs. It's a single Rust binary, instant on big repos, and it
+never writes binary files.
+
+- Always preview first: `sr -s '<regex>'` (search only), then re-run with `-r '<replacement>'` once the matches look right. `-n` = dry run, shows what each
+  match would _become_ without touching anything.
+- `-s` is a full regex (Rust `regex` crate): `\b` word boundaries, `^`/`$`
+  anchor per _line_, `-i` for case-insensitive. Replacement groups are `$1`
+  / `${name}`.
+- Always single-quote both args, so the shell leaves `$` alone.
+- Without path args it operates on files known to Git (tracked + modified,
+  respecting .gitignore); pass paths/globs to narrow: `sr -s 'foo' -r 'bar' src/`. Untracked files are only touched if you name them explicitly.
+- It requires a Git repo and rewrites in place with no backup, so only run the
+  `-r` form on a clean-ish working tree where I can `git diff` the result (or
+  make sure you ran `sr -n` first to preview the change).
+
 # General workflow
 
 - Never start dev servers yourself -- I run them manually
