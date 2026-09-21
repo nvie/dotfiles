@@ -46,6 +46,12 @@ CRITICAL - NEVER VIOLATE THESE RULES:
 
 - "delouse" = my `git delouse` (from nvie/git-toolbelt): soft-reset HEAD and re-commit as empty with the original commit's message. Result: commit message preserved, the original changes return to the working tree unstaged so I can re-select what to keep. If I say "I deloused your commit", the file changes you made are now unstaged and may be partially discarded.
 
+## Vocabulary to avoid
+
+Unless the topic discussed is about these subjects, prefer using synonyms for these words in output you produce:
+
+- Minting (only fine in cryptographic contexts)
+
 # Mass search & replace (`sr`)
 
 For any rename/replacement spanning more than a couple of files, use my `sr`
