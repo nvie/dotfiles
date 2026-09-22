@@ -449,6 +449,11 @@ function color-syntax
     pygmentize -f rtf -l $lang
 end
 
+# The cd* aliases below are Liveblocks-specific: they name repos inside the
+# liveblocks workspace. Outside a worktree group, wt_cd resolves them against
+# this root, so they keep working from anywhere (including from ~).
+set -gx worktrees_source_root ~/Projects/liveblocks
+
 function cdio
     wt_cd 'liveblocks.io'
 end
