@@ -449,8 +449,6 @@ function color-syntax
     pygmentize -f rtf -l $lang
 end
 
-alias gp='cd ~/Projects/liveblocks/liveblocks'
-alias ga='cd ~/Projects/liveblocks/liveblocks.io'
 function cdio
     wt_cd 'liveblocks.io'
 end
@@ -469,7 +467,6 @@ end
 function cdru
     wt_cd liveblocks/packages/liveblocks-react-ui
 end
-alias cdrc=cdru
 function cdrr
     wt_cd liveblocks/packages/liveblocks-redux
 end
@@ -623,4 +620,3 @@ alias bad 'git bisect bad'
 # `wl` is the one entry point: on a TTY it opens the interactive picker
 # (navigate, ⏎ to open, `d` to remove, trailing row to create a new group).
 alias wl 'worktrees list'
-alias ws 'worktrees status'
