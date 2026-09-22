@@ -56,6 +56,7 @@ alias xx 'tig --exclude=production --exclude="*/production" --exclude=canary --e
 alias xxa 'tig --exclude=production --exclude="*/production" --exclude=canary --exclude="*/canary" --exclude="*/dependabot/*" --all'
 alias xxaa 'tig --all'
 alias notes 'rg --hidden --glob=!.git/ "TODO|HACK|FIXME|OPTIMIZE"'
+alias vd viewdown
 
 # Common typos I make
 alias gaa 'git aa'
