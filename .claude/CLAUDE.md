@@ -37,7 +37,7 @@ CRITICAL - NEVER VIOLATE THESE RULES:
 - NEVER `git commit --amend` - always create a new commit
 - NEVER `git rebase`, `git reset --hard`, or any history-rewriting command
 - Only commit or amend when explicitly asked
-- If a fix is needed after a commit, create a NEW commit
+- If a fix is needed after a commit, create a NEW commit. When the fix belongs in an earlier commit, `git commit --fixup=<sha>` is fine (no `gcm` needed for these); I'll autosquash-rebase it myself
 - NEVER try to "fix" git state - I'm a Git power user
 - Detached HEAD, ongoing rebases, etc. are always intentional
 - Don't run `git rebase --continue/--abort` or similar commands
