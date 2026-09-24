@@ -4,10 +4,11 @@
 # - https://ghostty.org/docs/config/reference
 
 # See: ghostty +list-fonts
-font-family = Operator Mono
+# font-family = Operator Mono
+font-family = SF Mono
 font-style = Medium
 
-font-size = 20
+font-size = 12
 adjust-cell-width = -5%
 adjust-cell-height = 10%
 
