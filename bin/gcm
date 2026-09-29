@@ -69,7 +69,7 @@ trap 'rm -f "$respfile" "$msgfile"' EXIT
 
 echo "Generating commit message with Sonnet..." >&2
 git diff --staged | jq -Rs --arg sys "$system_prompt" --arg ctx "$context" '{
-    model: "claude-sonnet-4-6",
+    model: "claude-sonnet-5-5",
     max_tokens: 400,
     system: $sys,
     messages: [{role: "user", content: (
