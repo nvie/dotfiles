@@ -96,6 +96,8 @@ never writes binary files.
   The `&&` form renders falsy non-booleans (`0`, `""`) straight into the DOM.
 - Split type-only imports from value imports: prefer `import type { Bar, Qux } from "xyz"; import { foo, baz } from "xyz"` over inline `import { foo, type Bar, type Qux, baz } from "xyz"`.
 - All code is English: variable names, internal constants, comments, error messages, commit messages. Only user-visible UI strings get localized (Dutch, in my Dutch apps).
+- Tests live in a top-level `test/` directory per package, never as sibling `*.test.ts` files next to the source they test.
+- Tests hardcode their expected values (formats, patterns, prefixes, magic numbers) rather than importing the source's constants. Un-DRY on purpose: a test that imports the constant it checks agrees with any typo in it.
 
 # Writing commit messages
 
