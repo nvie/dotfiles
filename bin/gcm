@@ -70,7 +70,7 @@ trap 'rm -f "$respfile" "$msgfile"' EXIT
 echo "Generating commit message with Sonnet..." >&2
 git diff --staged | jq -Rs --arg sys "$system_prompt" --arg ctx "$context" '{
     model: "claude-sonnet-5-5",
-    max_tokens: 400,
+    max_tokens: 2000,
     system: $sys,
     messages: [{role: "user", content: (
         (if $ctx == "" then "" else "Extra context from the author (use this to inform the subject; only put it in a body if the WHY is genuinely non-obvious from the diff):\n" + $ctx + "\n\n" end)
@@ -91,7 +91,15 @@ if [ "$(jq -r '.type // ""' < "$respfile")" = "error" ]; then
     exit 1
 fi
 
-jq -r '.content[0].text // ""' < "$respfile" > "$msgfile"
+if [ "$(jq -r '.stop_reason // ""' < "$respfile")" = "max_tokens" ]; then
+    red "Response truncated (hit max_tokens). Raw API response:"
+    cat "$respfile" >&2
+    echo >&2
+    exit 1
+fi
+
+# Content may start with a thinking block, so collect all text blocks.
+jq -r '[.content[] | select(.type == "text") | .text] | join("")' < "$respfile" > "$msgfile"
 
 # A blank line (1 byte) slips past a plain -s test, so strip whitespace first.
 if [ -z "$(tr -d '[:space:]' < "$msgfile")" ]; then
