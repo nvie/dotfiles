@@ -98,6 +98,7 @@ never writes binary files.
 - All code is English: variable names, internal constants, comments, error messages, commit messages. Only user-visible UI strings get localized (Dutch, in my Dutch apps).
 - Tests live in a top-level `test/` directory per package, never as sibling `*.test.ts` files next to the source they test.
 - Tests hardcode their expected values (formats, patterns, prefixes, magic numbers) rather than importing the source's constants. Un-DRY on purpose: a test that imports the constant it checks agrees with any typo in it.
+- In code reviews (incl. `/thermo-nuclear-code-quality-review`, overriding its 1k-line rule), file size is never a finding by itself and tests never count towards it. Raise size only when a _lack of abstraction_ caused it -- and then the finding is that missing abstraction, not the line count.
 
 # Writing commit messages
 
