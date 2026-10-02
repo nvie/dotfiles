@@ -83,7 +83,7 @@ function ccc -d 'Run claude in auto mode'
                 case '#1a0d2e'; echo purple
                 case '#0d1a2e'; echo blue
                 case '#0d1f0d'; echo green
-                case '#0d2e1a'; echo cyan
+                case '#0d2e1a'; echo green
                 case '#2e0d1a'; echo pink
                 case '#2e1f0d'; echo orange
                 case '#1f1f0d'; echo yellow
