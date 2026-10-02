@@ -74,7 +74,27 @@ alias vxx 'rg --hidden --glob=!.git/ -l "\b(XXX(_vincent)?)\b" -- 2>/dev/null | 
 alias reset-mailbox 'rm -v ~/Library/Caches/com.dropbox.mbd.external-beta/mailbox.db'
 
 function ccc -d 'Run claude in auto mode'
-    cd (git root) && claude $argv
+    cd (git root); or return
+    set -l branch (git branch --show-current)
+    if test -n "$branch"; and not contains -- $branch main master
+        # Match the worktree's terminal tint. /color must be the sole initial prompt
+        if test (count $argv) -eq 0; and set -q WORKTREE_BG
+            set -l color (switch $WORKTREE_BG
+                case '#1a0d2e'; echo purple
+                case '#0d1a2e'; echo blue
+                case '#0d1f0d'; echo green
+                case '#0d2e1a'; echo cyan
+                case '#2e0d1a'; echo pink
+                case '#2e1f0d'; echo orange
+                case '#1f1f0d'; echo yellow
+                case '#1f1a0d'; echo red
+            end)
+            test -n "$color"; and set argv "/color $color"
+        end
+        claude --name $branch $argv
+    else
+        claude $argv
+    end
 end
 
 function brew-outdated-leaves -d "List outdated packages, but only _leaf_ packages"
