@@ -62,6 +62,7 @@ alias vd viewdown
 alias gaa 'git aa'
 alias gst 'git st'
 alias gpr 'git pr'
+alias gcm 'git commit-with-sonnet -y'
 
 alias m make
 alias mm 'make run'

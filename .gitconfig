@@ -46,6 +46,7 @@
     lb = local-branches
     ci = commit --no-verify
     civ = commit --no-verify -v
+    cm = commit-with-sonnet -y
     co = checkout
     sw = switch
     cp = cherry-pick
