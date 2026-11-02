@@ -31,6 +31,7 @@ macos-option-as-alt = left
 background-blur = true
 
 clipboard-paste-protection = false
+copy-on-select = clipboard
 
 # Allow scrolling terminal output with Shift+{PageUp/Down/Home/End}
 keybind = shift+page_up=scroll_page_fractional:-0.3
