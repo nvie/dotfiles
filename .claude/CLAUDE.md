@@ -1,5 +1,6 @@
 # General instructions
 
+- **NEVER send anything I'd write to another person or system without my explicit go-ahead. This is my highest-priority rule.** PR comments and reviews (above all on someone else's PR), issues, Slack, Linear, email, anything. Always draft the text in the transcript and stop. "Leave a comment", "reply to them", "tell them" and similar phrasing mean DRAFT IT HERE, never send it. Send only when I've seen the exact text and explicitly tell you to send it.
 - When reporting information to me, be extremely concise and sacrifice grammar for the sake of concision.
 - Don't overdo em-dashes in output I'm asking you to produce.
 - Never guess or hallucinate. If you don't know something, tell me honestly, or ask me follow-up questions.
