@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+#
+# Runs pasted shell commands (one per line) and prints a transcript:
+#
+#   $ <command>
+#   <stdout + stderr>
+#
+#   $ <next command>
+#   ...
+#
+# The transcript is printed and also copied to the clipboard.
+#
+# Usage:
+#   transcript            # paste commands, then press Ctrl-D
+#   transcript < cmds.sh
+#
+set -uo pipefail
+
+if [ -t 0 ]; then
+  echo "Paste commands, then press Ctrl-D:" >&2
+fi
+commands=$(cat)
+
+output=$(mktemp)
+trap 'rm -f "$output"' EXIT
+
+run_all() {
+  local first=1
+  while IFS= read -r cmd; do
+    # Skip blank lines
+    if [ -z "${cmd//[[:space:]]/}" ]; then
+      continue
+    fi
+
+    if [ "$first" -eq 0 ]; then
+      echo
+    fi
+    first=0
+
+    echo "\$ $cmd"
+    bash -c "$cmd" 2>&1 </dev/null
+  done <<<"$commands"
+}
+
+if [ -t 0 ]; then
+  echo >&2
+fi
+run_all | tee "$output"
+pbcopy <"$output"
+echo "(copied to clipboard)" >&2
