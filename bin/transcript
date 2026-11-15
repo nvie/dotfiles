@@ -27,8 +27,8 @@ trap 'rm -f "$output"' EXIT
 run_all() {
   local first=1
   while IFS= read -r cmd; do
-    # Skip blank lines
-    if [ -z "${cmd//[[:space:]]/}" ]; then
+    # Skip blank lines and comments
+    if [[ "$cmd" =~ ^[[:space:]]*(#|$) ]]; then
       continue
     fi
 
