@@ -89,6 +89,13 @@ never writes binary files.
 - Same applies to anything you pass to a subagent or quote back in a summary.
 - If a secret does land in the transcript anyway, say so immediately and tell me exactly what to rotate.
 
+# Telemetry
+
+- NEVER let tools or apps phone home. When setting up a project or adding a tool/framework (test runner, build tool, bundler, deploy CLI, etc.) that sends telemetry or usage data (even "anonymous", even dev-only), opt out as part of the setup. Examples: Next.js, Turborepo, Vercel CLI, Nuxt, Astro, Storybook, Prisma, Gatsby, Angular CLI, .NET, Homebrew.
+- Prefer the opt-out that's committed with the project (config file, `package.json` setting, env var in `.envrc`) over a per-machine one, so it holds for every checkout. Mention which opt-out you applied.
+- Only enable telemetry when there's a good reason and I've explicitly approved it.
+- In existing projects: if you notice telemetry is on, ask me to turn it off. Ask once per project, and record my answer in the project's memory so you don't ask again.
+
 # Code quality
 
 - Never use `as` casts blindly -- explain the type issue and let me decide. If it would interrupt flow, leave an `// XXX` comment above it instead.
