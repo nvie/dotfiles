@@ -75,6 +75,7 @@ never writes binary files.
 # General workflow
 
 - Never start dev servers yourself -- I run them manually
+- A lockfile never holds two versions of the same package, direct or transitive, unless there's a very good reason and it's proven harmless. After any install or upgrade, dedupe, then check the lockfile for packages at more than one version and compare with before. Introducing a duplicate is a regression; pre-existing ones get flagged with their cause. (syncpack doesn't catch this: it only compares declared versions.)
 - When committing multiple changes, commit each atomic change separately
 - Mechanical noise never rides along with a substantive change: dependency upgrades, formatter reflows, and lint/codemod fixes each get their own commit
 - When fixing many lint errors, commit per rule class (all instances of one rule = one commit), starting with the most trivial and working up
