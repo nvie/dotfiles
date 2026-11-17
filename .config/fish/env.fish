@@ -46,5 +46,18 @@ pyenv init - | source
 set -gx LC_ALL en_US.UTF-8
 set -gx LANG en_US.UTF-8
 
+# Opt out of telemetry everywhere
+set -gx DO_NOT_TRACK 1
+set -gx ASTRO_TELEMETRY_DISABLED 1
+set -gx CHECKPOINT_DISABLE 1 # Prisma
+set -gx GH_TELEMETRY 0
+set -gx HOMEBREW_NO_ANALYTICS 1
+set -gx NEXT_TELEMETRY_DISABLED 1
+set -gx NUXT_TELEMETRY_DISABLED 1
+set -gx STORYBOOK_DISABLE_TELEMETRY 1
+set -gx TURBO_TELEMETRY_DISABLED 1
+set -gx VERCEL_TELEMETRY_DISABLED 1
+set -gx WRANGLER_SEND_METRICS false
+
 # Configure fzf to use fd by default (fd respects .gitignore defaults)
 set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --exclude .git'
