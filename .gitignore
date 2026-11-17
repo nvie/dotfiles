@@ -3,6 +3,7 @@
 !/bin
 
 # Don't include files with sensitive data
+/.mcp-auth
 /.zshrc-secrets
 
 # Include some config files under version control
