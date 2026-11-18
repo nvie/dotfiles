@@ -26,6 +26,10 @@ function timestamp
     python -c 'import time; print(int(time.time()))'
 end
 
+function bigdown -d 'Like big, with arrows pointing down underneath'
+    big "$argv"\n'↓↓↓'
+end
+
 function extract-websocket-messages-from-har
     jq '[.log.entries[] | select(.request.url | contains("api.liveblocks.io/v8")) | select(._webSocketMessages) | {url: .request.url, startedDateTime: ._webSocketMessages[0].time, messages: ._webSocketMessages}]' $argv
 end
