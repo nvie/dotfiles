@@ -1,4 +1,4 @@
-# Show a message as big as the terminal allows, until `q` is pressed.
+# Show a message as big as the terminal allows, until `q` or ctrl+c is pressed.
 # Renders the text to a transparent PNG with ImageMagick, then draws it
 # full-screen with chafa (sharp pixels via the kitty graphics protocol)
 # on the alternate screen, so the scrollback is left untouched. Redraws
@@ -8,8 +8,9 @@ function big
     tput smcup
     tput civis
     set -l old (stty -g)
-    # Reads time out after 1s, so the loop can notice resizes
-    stty -echo -icanon min 0 time 10
+    # Reads time out after 1s, so the loop can notice resizes. -isig makes
+    # ctrl+c arrive as a plain keypress, so it quits cleanly like `q`
+    stty -echo -icanon -isig min 0 time 10
     set -l drawn
     while true
         set -l size (stty size)
@@ -17,7 +18,8 @@ function big
             __big_draw $size $argv
             set drawn $size
         end
-        string match -q q -- (dd bs=1 count=1 2>/dev/null); and break
+        set -l key (dd bs=1 count=1 2>/dev/null)
+        contains -- "$key" q \cc; and break
     end
     stty $old
     tput cnorm
