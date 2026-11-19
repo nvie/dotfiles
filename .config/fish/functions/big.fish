@@ -26,13 +26,18 @@ end
 
 function __big_draw
     set -l parts (string split ' ' -- $argv[1])
-    set -l rows (math $parts[1] - 1)
+    set -l rows $parts[1]
     set -l cols $parts[2]
     # Delete earlier kitty-protocol images, then clear the text
     printf '\e_Ga=d\e\\'
     clear
+    # C=1 (kitty protocol) keeps the cursor from moving below the image,
+    # so it can fill the full height without scrolling
     magick -background none -fill white \
         -font /Library/Fonts/SF-Pro-Rounded-Heavy.otf -gravity center \
         -size (math $cols x 20)x(math $rows x 40) caption:"$argv[2..]" png:- \
-        | chafa --stretch --size {$cols}x{$rows} -
+        | chafa --stretch --size {$cols}x{$rows} - \
+        | string replace '_Ga=T,' '_Ga=T,C=1,'
+    # chafa re-shows the cursor when done
+    tput civis
 end
